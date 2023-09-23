@@ -8,7 +8,7 @@ public class ReturnToGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // SceneManager.GetActiveScene().name 
+        // SceneManager.GetActiveScene().name == "MainMenu"
         if (Input.GetKeyDown(KeyCode.Space))
         {
             SceneManager.LoadScene("MainLevel");
