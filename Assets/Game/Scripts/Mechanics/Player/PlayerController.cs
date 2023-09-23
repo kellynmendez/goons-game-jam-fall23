@@ -8,6 +8,7 @@ using UnityEngine.Events;
 public class PlayerController : MonoBehaviour
 {
     #region public variables
+    public static PlayerController Instance;
     public int Health { get; private set; }
     public bool IsDead { get; private set; } = false;
     public Vector3 Velocity { get; set; } = Vector3.zero;
@@ -43,6 +44,15 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogError("There should not be more than two players in a secene.");
+        }
+
         // Collider check
         if (chompCollider != null)
         {
@@ -66,7 +76,7 @@ public class PlayerController : MonoBehaviour
 
         if (direction.magnitude >= 0.1f)
         {
-            // Turning character in the direction it moving
+            // Turning character in the direction it is moving
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnVelocity, turnTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);

@@ -1,18 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Events;
 
-public class GoonBase : MonoBehaviour
+public abstract class GoonBase : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public int EnemyCount = 0;
+    public bool Dead { get; private set; } = false;
+
+    [SerializeField]
+    UnityEvent OnSpawn = null;
+
+    [SerializeField]
+    UnityEvent OnDeath = null;
+
+    [SerializeField]
+    new Collider collider = null;
+
+    protected NavMeshAgent agent;
+
+    protected virtual void Awake()
     {
-        
+        agent = GetComponent<NavMeshAgent>();
+
+        // OnAwake();
+        // Spawn();
     }
 
-    // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
-        
+        agent.SetDestination(PlayerController.Instance.transform.position);
     }
+
+    protected virtual void OnAwake() { }
+
+    protected virtual void Kill()
+    {
+        if (Dead) return;
+        Dead = true;
+
+        OnDeath?.Invoke();
+
+        this.enabled = false;
+        EnemyCount--;
+    }
+
+    public virtual void Spawn()
+    {
+        OnSpawn?.Invoke();
+        EnemyCount++;
+    }
+
 }
