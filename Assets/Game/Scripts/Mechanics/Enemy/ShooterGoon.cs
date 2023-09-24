@@ -27,7 +27,8 @@ public class ShooterGoon : GoonBase
     private void Start()
     {
         // Establishing the enemy's ability
-        _shootAbility = new ShootCombatAbility(_bulletPool, _bulletPool.gameObject.transform.position, _bulletVelocity, _bulletLifeTime, _bulletScaleAmount);
+        _shootAbility = new ShootCombatAbility(_bulletPool, _bulletPool.gameObject.transform.position,
+            _bulletVelocity, _bulletLifeTime, _bulletScaleAmount);
     }
 
     protected override void Update()
@@ -42,8 +43,7 @@ public class ShooterGoon : GoonBase
 
     public void Shoot()
     {
-        // Updating the positions before shooting
-        _shootAbility.position = _bulletPool.gameObject.transform.position;
+        _shootAbility.Position = _bulletPool.gameObject.transform.position;
         _shootAbility.UseAbility();
     }
 }
