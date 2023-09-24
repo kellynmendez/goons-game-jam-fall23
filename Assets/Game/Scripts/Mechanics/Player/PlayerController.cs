@@ -9,21 +9,20 @@ public class PlayerController : MonoBehaviour
 {
     #region public variables
     public static PlayerController Instance;
-    public int Health { get; private set; }
+    public int LivesLeft { get; private set; }
     public bool IsDead { get; private set; } = false;
-    public Vector3 Velocity { get; set; } = Vector3.zero;
     #endregion
 
     #region serialized variables
     [Header("Movement")]
     [SerializeField] float moveSpeed = 12f;
     [SerializeField] float turnTime = 0.1f;
-    [SerializeField] UnityEvent OnMove = null;
+    [SerializeField] UnityEvent onMove = null;
 
     [Header("Health")]
     [SerializeField] int lives = 3;
-    [SerializeField] UnityEvent OnHurt = null;
-    [SerializeField] UnityEvent OnDeath = null;
+    [SerializeField] UnityEvent onHurt = null;
+    [SerializeField] UnityEvent onDeath = null;
 
     [Header("Chomp")]
     [SerializeField] Collider chompCollider = null;
@@ -36,14 +35,15 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region private variables
+    ICombatAbility _combatAbility;
     CharacterController _controller;
-    Vector3 _inputMove = Vector3.zero;
     float _turnVelocity;
     bool _chompIsCoolingDown = false;
     #endregion
 
     private void Awake()
     {
+        // Singleton pattern
         if (Instance == null)
         {
             Instance = this;
@@ -58,14 +58,28 @@ public class PlayerController : MonoBehaviour
         {
             chompCollider.enabled = false;
         }
+        else
+        {
+            Debug.LogWarning("The player controller must be given a collider.");
+        }
 
+        // Instantiating combat ability
+        _combatAbility = new NoCombatAbility();
+
+        // Grabbing the controller and setting initial health
         _controller = GetComponent<CharacterController>();
-        Health = lives;
+        LivesLeft = lives;
     }
 
     private void Update()
     {
         Move();
+
+        // If using goon-given ability
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _combatAbility.UseAbility();
+        }
     }
 
     private void Move()
@@ -83,6 +97,9 @@ public class PlayerController : MonoBehaviour
 
             // Moving the character
             _controller.Move(direction * moveSpeed * Time.deltaTime);
+
+            // Invoking on move unity event
+            onMove.Invoke();
         }
     }
 
@@ -146,38 +163,29 @@ public class PlayerController : MonoBehaviour
     }
     */
 
-    /*
-    public void Damage(int amt, Vector3 from)
+    public void Hurt(int damage)
     {
-        if (IsDead) return;
-        if (amt < 0) throw new System.ArgumentOutOfRangeException($"amt must be a non-negative integer. {amt} was provided.");
-        Health -= amt;
-
-        OnHurt.Invoke();
-
-        if (Health <= 0)
+        if (IsDead) 
+            return;
+        // Take damage
+        LivesLeft -= damage;
+        // Invoke on hurt unity event
+        onHurt.Invoke();
+        // Kill if that was the last life
+        if (LivesLeft <= 0)
         {
-            Kill(from);
+            Kill();
         }
     }
-    */
 
-    /*
-    public void Kill(Vector3 from)
+    public void Kill()
     {
-        _rigidbody.constraints = RigidbodyConstraints.None;
-        _rigidbody.useGravity = true;
-
-        // apply death force
-        _rigidbody.AddForce((transform.position - from).normalized * 500 + (Vector3.up * 200));
-        _rigidbody.AddTorque(transform.right * 500);
-
+        // Disable player and set death bool
         this.enabled = false;
         IsDead = true;
-
-        OnDeath.Invoke();
-
-        Health = 0;
+        // Invoke on death unity event
+        onDeath.Invoke();
+        // Set lives to 0
+        LivesLeft = 0;
     }
-    */
 }
