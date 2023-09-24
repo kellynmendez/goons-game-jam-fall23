@@ -9,14 +9,9 @@ public abstract class GoonBase : MonoBehaviour
     public int EnemyCount = 0;
     public bool Dead { get; private set; } = false;
 
-    [SerializeField]
-    UnityEvent OnSpawn = null;
-
-    [SerializeField]
-    UnityEvent OnDeath = null;
-
-    [SerializeField]
-    new Collider collider = null;
+    [SerializeField] UnityEvent OnSpawn = null;
+    [SerializeField] UnityEvent OnDeath = null;
+    [SerializeField] new Collider collider = null;
 
     protected NavMeshAgent agent;
 

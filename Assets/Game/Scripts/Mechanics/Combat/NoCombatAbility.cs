@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShieldCombatAbility : ICombatAbility
+public class NoCombatAbility : ICombatAbility
 {
-    
-
-    public ShieldCombatAbility()
+    public NoCombatAbility()
     {
 
     }
 
     public void UseAbility()
     {
-
+        // no ability to use!
     }
+
 }
