@@ -12,10 +12,10 @@ public class ShootCombatAbility : ICombatAbility
     private float _lifeTime;
     private float _scaleAmount;
 
-    public ShootCombatAbility(BulletPool bulletPool, Vector3 position, float velocity, float lifeTime, float scaleAmount)
+    public ShootCombatAbility(BulletPool bulletPool, float velocity, float lifeTime, float scaleAmount)
     {
         
-        Position = position;
+        Position = bulletPool.gameObject.transform.position;
         _bulletPool = bulletPool;
         _velocity = velocity;
         _lifeTime = lifeTime;
@@ -35,6 +35,8 @@ public class ShootCombatAbility : ICombatAbility
         if (bulletGameObj != null)
         {
             Bullet bullet = bulletGameObj.GetComponent<Bullet>();
+            // Resetting origin position
+            Position = _bulletPool.gameObject.transform.position;
             bullet.Activate(Position, _bulletPool.transform.forward, _velocity, _lifeTime, _scaleAmount);
         }
     }

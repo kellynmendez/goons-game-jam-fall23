@@ -30,6 +30,12 @@ public class PlayerController : MonoBehaviour
     //[SerializeField] string chompAxis = "";
     [SerializeField] UnityEvent OnChomp = null;
 
+    [Header("Shoot Ability")]
+    [SerializeField] BulletPool bulletPool = null;
+    [SerializeField] float bulletVelocity = 15f;
+    [SerializeField] float bulletLifeTime = 6f;
+    [SerializeField] float bulletScaleAmount = 0.98f;
+
     [Header("Animations")]
     [SerializeField] Animator animator = null;
     #endregion
@@ -65,6 +71,7 @@ public class PlayerController : MonoBehaviour
 
         // Instantiating combat ability
         _combatAbility = new NoCombatAbility();
+        //_combatAbility = new ShootCombatAbility(bulletPool, bulletVelocity, bulletLifeTime, bulletScaleAmount);
 
         // Grabbing the controller and setting initial health
         _controller = GetComponent<CharacterController>();
@@ -80,6 +87,11 @@ public class PlayerController : MonoBehaviour
         {
             _combatAbility.UseAbility();
         }
+    }
+
+    public void SetCombatAbility(ICombatAbility combatAbility)
+    {
+        _combatAbility = combatAbility;
     }
 
     private void Move()
@@ -101,6 +113,32 @@ public class PlayerController : MonoBehaviour
             // Invoking on move unity event
             onMove.Invoke();
         }
+    }
+
+    public void Hurt(int damage)
+    {
+        if (IsDead)
+            return;
+        // Take damage
+        LivesLeft -= damage;
+        // Invoke on hurt unity event
+        onHurt.Invoke();
+        // Kill if that was the last life
+        if (LivesLeft <= 0)
+        {
+            Kill();
+        }
+    }
+
+    public void Kill()
+    {
+        // Disable player and set death bool
+        this.enabled = false;
+        IsDead = true;
+        // Invoke on death unity event
+        onDeath.Invoke();
+        // Set lives to 0
+        LivesLeft = 0;
     }
 
     /*
@@ -162,30 +200,4 @@ public class PlayerController : MonoBehaviour
         }
     }
     */
-
-    public void Hurt(int damage)
-    {
-        if (IsDead) 
-            return;
-        // Take damage
-        LivesLeft -= damage;
-        // Invoke on hurt unity event
-        onHurt.Invoke();
-        // Kill if that was the last life
-        if (LivesLeft <= 0)
-        {
-            Kill();
-        }
-    }
-
-    public void Kill()
-    {
-        // Disable player and set death bool
-        this.enabled = false;
-        IsDead = true;
-        // Invoke on death unity event
-        onDeath.Invoke();
-        // Set lives to 0
-        LivesLeft = 0;
-    }
 }
