@@ -55,6 +55,17 @@ public class Bullet : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("bullet was triggered");
+        HealthSystem health = other.gameObject.GetComponent<HealthSystem>();
+
+        if (health != null)
+        {
+            health.Hurt();
+        }
+    }
+
     private IEnumerator FadeToInactive()
     {
         float start = Time.time;

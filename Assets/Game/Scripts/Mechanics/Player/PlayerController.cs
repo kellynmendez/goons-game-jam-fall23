@@ -9,8 +9,7 @@ public class PlayerController : MonoBehaviour
 {
     #region public variables
     public static PlayerController Instance;
-    public int LivesLeft { get; private set; }
-    public bool IsDead { get; private set; } = false;
+    public bool IsDead { get; set; } = false;
     #endregion
 
     #region serialized variables
@@ -19,22 +18,22 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float turnTime = 0.1f;
     [SerializeField] UnityEvent onMove = null;
 
-    [Header("Health")]
-    [SerializeField] int lives = 3;
-    [SerializeField] UnityEvent onHurt = null;
-    [SerializeField] UnityEvent onDeath = null;
-
     [Header("Chomp")]
     [SerializeField] Collider chompCollider = null;
     [SerializeField] float chompCooldown = 2f;
     //[SerializeField] string chompAxis = "";
     [SerializeField] UnityEvent OnChomp = null;
 
-    [Header("Shoot Ability")]
+    [Header("Shoot Settings")]
     [SerializeField] BulletPool bulletPool = null;
     [SerializeField] float bulletVelocity = 15f;
     [SerializeField] float bulletLifeTime = 6f;
     [SerializeField] float bulletScaleAmount = 0.98f;
+
+    [Header("Dash Settings")]
+    [SerializeField] float dashSpeed = 20f;
+    [SerializeField] float dashDuration = 1f;
+    [SerializeField] float dashCooldown = 1f;
 
     [Header("Animations")]
     [SerializeField] Animator animator = null;
@@ -70,12 +69,10 @@ public class PlayerController : MonoBehaviour
         }
 
         // Instantiating combat ability
-        _combatAbility = new NoCombatAbility();
-        //_combatAbility = new ShootCombatAbility(bulletPool, bulletVelocity, bulletLifeTime, bulletScaleAmount);
+        //_combatAbility = new NoCombatAbility();
+        _combatAbility = new ShootCombatAbility(bulletPool, bulletVelocity, bulletLifeTime, bulletScaleAmount);
 
-        // Grabbing the controller and setting initial health
         _controller = GetComponent<CharacterController>();
-        LivesLeft = lives;
     }
 
     private void Update()
@@ -113,32 +110,6 @@ public class PlayerController : MonoBehaviour
             // Invoking on move unity event
             onMove.Invoke();
         }
-    }
-
-    public void Hurt(int damage)
-    {
-        if (IsDead)
-            return;
-        // Take damage
-        LivesLeft -= damage;
-        // Invoke on hurt unity event
-        onHurt.Invoke();
-        // Kill if that was the last life
-        if (LivesLeft <= 0)
-        {
-            Kill();
-        }
-    }
-
-    public void Kill()
-    {
-        // Disable player and set death bool
-        this.enabled = false;
-        IsDead = true;
-        // Invoke on death unity event
-        onDeath.Invoke();
-        // Set lives to 0
-        LivesLeft = 0;
     }
 
     /*

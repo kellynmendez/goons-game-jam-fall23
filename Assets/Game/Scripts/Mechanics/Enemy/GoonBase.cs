@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public abstract class GoonBase : MonoBehaviour
 {
     public int EnemyCount = 0;
-    public bool Dead { get; private set; } = false;
+    public bool IsDead { get; set; } = false;
 
     [SerializeField] UnityEvent OnSpawn = null;
     [SerializeField] UnityEvent OnDeath = null;
@@ -32,8 +32,8 @@ public abstract class GoonBase : MonoBehaviour
 
     protected virtual void Kill()
     {
-        if (Dead) return;
-        Dead = true;
+        if (IsDead) return;
+        IsDead = true;
 
         OnDeath?.Invoke();
 
