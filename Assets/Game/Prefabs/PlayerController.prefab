@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcda56316b643be42941a672476cb694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 12
+  moveSpeed: 7
   turnTime: 0.1
   onMove:
     m_PersistentCalls:
@@ -274,6 +274,9 @@ MonoBehaviour:
   bulletVelocity: 15
   bulletLifeTime: 6
   bulletScaleAmount: 0.98
+  dashSpeed: 20
+  dashDuration: 1
+  dashCooldown: 1
   animator: {fileID: 0}
 --- !u!114 &1808988334721542417
 MonoBehaviour:

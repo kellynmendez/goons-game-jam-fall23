@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     #region private variables
     ICombatAbility _combatAbility;
     CharacterController _controller;
+    Camera _mainCamera;
     float _turnVelocity;
     bool _chompIsCoolingDown = false;
     #endregion
@@ -73,6 +74,7 @@ public class PlayerController : MonoBehaviour
         _combatAbility = new ShootCombatAbility(bulletPool, bulletVelocity, bulletLifeTime, bulletScaleAmount);
 
         _controller = GetComponent<CharacterController>();
+        _mainCamera = CameraMovement.Instance.gameObject.GetComponent<Camera>();
     }
 
     private void Update()
@@ -97,19 +99,25 @@ public class PlayerController : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
+        transform.forward = GetMouseDirection();
+
         if (direction.magnitude >= 0.1f)
         {
-            // Turning character in the direction it is moving
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnVelocity, turnTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
             // Moving the character
-            _controller.Move(direction * moveSpeed * Time.deltaTime);
+            _controller.Move(transform.forward * moveSpeed * Time.deltaTime);
 
             // Invoking on move unity event
             onMove.Invoke();
         }
+    }
+
+    private Vector3 GetMouseDirection()
+    {
+        Vector3 input = Input.mousePosition;
+        Vector3 mousePosition = _mainCamera.ScreenToWorldPoint(new Vector3(input.x, input.y, _mainCamera.transform.position.y));
+        Vector3 mouseDirection = (mousePosition - transform.position).normalized;
+        mouseDirection.y = 0;
+        return mouseDirection;
     }
 
     /*
