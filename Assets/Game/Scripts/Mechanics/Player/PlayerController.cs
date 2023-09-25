@@ -15,7 +15,6 @@ public class PlayerController : MonoBehaviour
     #region serialized variables
     [Header("Movement")]
     [SerializeField] float moveSpeed = 12f;
-    [SerializeField] float turnTime = 0.1f;
     [SerializeField] UnityEvent onMove = null;
 
     [Header("Chomp")]
@@ -45,6 +44,8 @@ public class PlayerController : MonoBehaviour
     Camera _mainCamera;
     float _turnVelocity;
     bool _chompIsCoolingDown = false;
+    bool _isDashing = false;
+    bool _dashIsCoolingDown = false;
     #endregion
 
     private void Awake()
@@ -69,23 +70,36 @@ public class PlayerController : MonoBehaviour
             Debug.LogWarning("The player controller must be given a collider.");
         }
 
-        // Instantiating combat ability
-        //_combatAbility = new NoCombatAbility();
-        _combatAbility = new ShootCombatAbility(bulletPool, bulletVelocity, bulletLifeTime, bulletScaleAmount);
-
         _controller = GetComponent<CharacterController>();
         _mainCamera = CameraMovement.Instance.gameObject.GetComponent<Camera>();
+        // Instantiating combat ability
+        //_combatAbility = new NoCombatAbility();
+        //_combatAbility = new DashCombatAbility();
+        _combatAbility = new ShootCombatAbility(bulletPool, bulletVelocity, bulletLifeTime, bulletScaleAmount);
     }
 
     private void Update()
     {
-        Move();
-
-        // If using goon-given ability
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!_isDashing)
         {
-            _combatAbility.UseAbility();
+            Move();
+
+            // If using goon-given ability
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                DashCombatAbility dashAbility = _combatAbility as DashCombatAbility;
+                if (dashAbility != null && !_dashIsCoolingDown)
+                {
+                    Dash();
+                }
+                else
+                {
+                    _combatAbility.UseAbility();
+                }
+            
+            }
         }
+        
     }
 
     public void SetCombatAbility(ICombatAbility combatAbility)
@@ -120,8 +134,33 @@ public class PlayerController : MonoBehaviour
         return mouseDirection;
     }
 
+    private void Dash()
+    {
+        StartCoroutine(DashCoroutine());
+    }
+
+    private IEnumerator DashCoroutine()
+    {
+        float startTime = Time.time;
+        Vector3 dashDirection = transform.forward;
+        _dashIsCoolingDown = true;
+        _isDashing = true;
+
+        // Dashing
+        while (Time.time < startTime + dashDuration)
+        {
+            _controller.Move(dashDirection * dashSpeed * Time.deltaTime);
+
+            yield return null;
+        }
+        _isDashing = false;
+
+        // Dash cooldown
+        yield return new WaitForSeconds(dashCooldown);
+        _dashIsCoolingDown = false;
+    }
+
     /*
-    [SerializeField] Transform chompOrigin = null;
 
     [SerializeField]
     new Collider collider = null; //TODO

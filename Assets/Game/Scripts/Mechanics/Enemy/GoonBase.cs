@@ -26,6 +26,11 @@ public abstract class GoonBase : MonoBehaviour
     protected virtual void Update()
     {
         agent.SetDestination(PlayerController.Instance.transform.position);
+
+        if (PlayerController.Instance.IsDead)
+        {
+            this.enabled = false;
+        }
     }
 
     protected virtual void OnAwake() { }

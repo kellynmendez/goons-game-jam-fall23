@@ -42,6 +42,7 @@ public class HealthSystem : MonoBehaviour
         if (player != null)
         {
             player.IsDead = true;
+            player.enabled = false;
         }
         else
         {
@@ -49,13 +50,13 @@ public class HealthSystem : MonoBehaviour
             if (goon != null)
             {
                 goon.IsDead = true;
+                goon.enabled = false;
+                Debug.Log("Goon died");
             }
         }
-        
+
         IsDead = true;
         LivesLeft = 0;
         onDeath.Invoke();
-
-        gameObject.SetActive(false);
     }
 }

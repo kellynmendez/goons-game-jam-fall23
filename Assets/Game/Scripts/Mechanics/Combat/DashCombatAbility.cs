@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class DashCombatAbility : ICombatAbility
 {
-    public DashCombatAbility(Vector3 direction) 
+    public DashCombatAbility()
     {
-
+        
     }
 
     public void UseAbility()
     {
-
+        // Dash combat ability is done in the player controller
     }
 }
