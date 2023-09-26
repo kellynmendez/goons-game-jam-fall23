@@ -2124,6 +2124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfa1dd621f9690645baafc506a892155, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InactiveGoons: []
+  ActiveGoons: []
   goonObjectList:
   - {fileID: 2765856842860107149, guid: 8534748328e5897469edb655a1fda863, type: 3}
   - {fileID: 2765856842860107149, guid: 8534748328e5897469edb655a1fda863, type: 3}
@@ -2131,10 +2133,10 @@ MonoBehaviour:
   - {fileID: 2765856842860107149, guid: 8534748328e5897469edb655a1fda863, type: 3}
   - {fileID: 2765856842860107149, guid: 8534748328e5897469edb655a1fda863, type: 3}
   - {fileID: 2765856842860107149, guid: 8534748328e5897469edb655a1fda863, type: 3}
-  - {fileID: 7305494072577206735, guid: 38ccf945efb8757459b7d3bb818bc32a, type: 3}
-  - {fileID: 7305494072577206735, guid: 38ccf945efb8757459b7d3bb818bc32a, type: 3}
-  - {fileID: 7305494072577206735, guid: 38ccf945efb8757459b7d3bb818bc32a, type: 3}
-  - {fileID: 7305494072577206735, guid: 38ccf945efb8757459b7d3bb818bc32a, type: 3}
+  - {fileID: 7028999512464387688, guid: 38ccf945efb8757459b7d3bb818bc32a, type: 3}
+  - {fileID: 7028999512464387688, guid: 38ccf945efb8757459b7d3bb818bc32a, type: 3}
+  - {fileID: 7028999512464387688, guid: 38ccf945efb8757459b7d3bb818bc32a, type: 3}
+  - {fileID: 7028999512464387688, guid: 38ccf945efb8757459b7d3bb818bc32a, type: 3}
   _spawnTime: 1
   _spawnDelay: 3
 --- !u!4 &1703319385
@@ -2145,7 +2147,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1703319383}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 15.17, y: 0, z: 15.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2768,11 +2770,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3521240401172137711, guid: aae8580bfcde3fe4ca7f46239f52e6b4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 12.39
+      value: 10.93
       objectReference: {fileID: 0}
     - target: {fileID: 3521240401172137711, guid: aae8580bfcde3fe4ca7f46239f52e6b4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.05
+      value: -6.6
       objectReference: {fileID: 0}
     - target: {fileID: 3521240401172137711, guid: aae8580bfcde3fe4ca7f46239f52e6b4, type: 3}
       propertyPath: m_LocalRotation.w

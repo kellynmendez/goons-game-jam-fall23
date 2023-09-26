@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
-public abstract class GoonBase : MonoBehaviour
+public class GoonBase : MonoBehaviour
 {
     public int EnemyCount = 0;
     public bool IsDead { get; set; } = false;
@@ -14,6 +14,7 @@ public abstract class GoonBase : MonoBehaviour
     [SerializeField] new Collider collider = null;
 
     protected NavMeshAgent agent;
+    protected GoonSpawner spawner;
 
     protected virtual void Awake()
     {
@@ -33,8 +34,6 @@ public abstract class GoonBase : MonoBehaviour
         }
     }
 
-    protected virtual void OnAwake() { }
-
     protected virtual void Kill()
     {
         if (IsDead) return;
@@ -46,10 +45,26 @@ public abstract class GoonBase : MonoBehaviour
         EnemyCount--;
     }
 
-    public virtual void Spawn()
+    public void Activate()
     {
+        IsDead = false;
         OnSpawn?.Invoke();
-        EnemyCount++;
+        spawner.InactiveGoons.Remove(this.gameObject);
+        spawner.ActiveGoons.Add(this.gameObject);
+        gameObject.SetActive(true);
+    }
+
+    public void Deactivate()
+    {
+        IsDead = true;
+        spawner.ActiveGoons.Remove(this.gameObject);
+        spawner.InactiveGoons.Add(this.gameObject);
+        gameObject.SetActive(false);
+    }
+
+    public void SetSpawner(GoonSpawner spawner)
+    {
+        this.spawner = spawner;
     }
 
 }
