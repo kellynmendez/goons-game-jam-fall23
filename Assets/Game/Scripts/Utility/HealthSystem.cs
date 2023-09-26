@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public class HealthSystem : MonoBehaviour
 {
+    public bool IsInvincible { get; set; } = false;
+
     [SerializeField] int lives = 1;
     [SerializeField] UnityEvent onHurt = null;
     [SerializeField] UnityEvent onDeath = null;
@@ -22,9 +24,12 @@ public class HealthSystem : MonoBehaviour
         if (IsDead)
             return;
 
+        if (IsInvincible)
+            return;
+
         LivesLeft -= 1;
 
-        Debug.Log($"{gameObject} was hurt and lives are {LivesLeft}");
+        Debug.Log($"{gameObject} hurt, lives = {LivesLeft}");
 
         onHurt.Invoke();
 
@@ -36,7 +41,7 @@ public class HealthSystem : MonoBehaviour
 
     public void Kill()
     {
-        Debug.Log("player killed");
+        Debug.Log($"{gameObject} killed");
 
         PlayerController player = gameObject.GetComponent<PlayerController>();
         if (player != null)
@@ -51,7 +56,6 @@ public class HealthSystem : MonoBehaviour
             {
                 goon.IsDead = true;
                 goon.enabled = false;
-                Debug.Log("Goon died");
             }
         }
 

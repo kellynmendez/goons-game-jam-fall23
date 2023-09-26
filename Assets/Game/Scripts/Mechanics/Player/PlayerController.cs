@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     #region public variables
     public static PlayerController Instance;
     public bool IsDead { get; set; } = false;
+    public bool IsDashing { get; set; } = false;
     #endregion
 
     #region serialized variables
@@ -34,6 +35,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float dashDuration = 1f;
     [SerializeField] float dashCooldown = 1f;
 
+    [Header("Shield Settings")]
+    [SerializeField] float invincibilityDuration = 5f;
+
     [Header("Animations")]
     [SerializeField] Animator animator = null;
     #endregion
@@ -44,8 +48,6 @@ public class PlayerController : MonoBehaviour
     Camera _mainCamera;
     float _turnVelocity;
     bool _chompIsCoolingDown = false;
-    bool _isDashing = false;
-    bool _dashIsCoolingDown = false;
     #endregion
 
     private void Awake()
@@ -74,32 +76,23 @@ public class PlayerController : MonoBehaviour
         _mainCamera = CameraMovement.Instance.gameObject.GetComponent<Camera>();
         // Instantiating combat ability
         //_combatAbility = new NoCombatAbility();
-        //_combatAbility = new DashCombatAbility();
-        _combatAbility = new ShootCombatAbility(bulletPool, bulletVelocity, bulletLifeTime, bulletScaleAmount);
+        //_combatAbility = new DashCombatAbility(this, _controller, dashSpeed, dashDuration, dashCooldown);
+        //_combatAbility = new ShootCombatAbility(bulletPool, bulletVelocity, bulletLifeTime, bulletScaleAmount);
+        _combatAbility = new ShieldCombatAbility(this, gameObject.GetComponent<HealthSystem>(), invincibilityDuration);
     }
 
     private void Update()
     {
-        if (!_isDashing)
-        {
-            Move();
+        if (IsDashing)
+            return;
 
-            // If using goon-given ability
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                DashCombatAbility dashAbility = _combatAbility as DashCombatAbility;
-                if (dashAbility != null && !_dashIsCoolingDown)
-                {
-                    Dash();
-                }
-                else
-                {
-                    _combatAbility.UseAbility();
-                }
-            
-            }
+        Move();
+
+        // If using goon-given ability
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _combatAbility.UseAbility();
         }
-        
     }
 
     public void SetCombatAbility(ICombatAbility combatAbility)
@@ -132,32 +125,6 @@ public class PlayerController : MonoBehaviour
         Vector3 mouseDirection = (mousePosition - transform.position).normalized;
         mouseDirection.y = 0;
         return mouseDirection;
-    }
-
-    private void Dash()
-    {
-        StartCoroutine(DashCoroutine());
-    }
-
-    private IEnumerator DashCoroutine()
-    {
-        float startTime = Time.time;
-        Vector3 dashDirection = transform.forward;
-        _dashIsCoolingDown = true;
-        _isDashing = true;
-
-        // Dashing
-        while (Time.time < startTime + dashDuration)
-        {
-            _controller.Move(dashDirection * dashSpeed * Time.deltaTime);
-
-            yield return null;
-        }
-        _isDashing = false;
-
-        // Dash cooldown
-        yield return new WaitForSeconds(dashCooldown);
-        _dashIsCoolingDown = false;
     }
 
     /*
