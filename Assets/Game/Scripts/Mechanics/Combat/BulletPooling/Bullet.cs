@@ -14,11 +14,17 @@ public class Bullet : MonoBehaviour
     private float _lifeTime;
     private Vector3 _startScale;
     private Vector3 _initialForward;
+    private bool _isPlayersBullet;
 
     private void OnEnable()
     {
         _startScale = gameObject.transform.localScale;
         //StartCoroutine(FadeToInactive());
+    }
+
+    public void SetIsPlayersBullet(bool isPlayersBullet)
+    {
+        _isPlayersBullet = isPlayersBullet;
     }
 
     public void Activate(Vector3 initialPosition, Vector3 initialForward, float velocity, float lifeTime, float scaleAmount)
@@ -61,8 +67,12 @@ public class Bullet : MonoBehaviour
 
         if (health != null)
         {
-            health.Hurt();
-            Deactivate();
+            // If this is the player shooting and they hit a goon OR this is the enemy shooting and they hit the player
+            if ( (_isPlayersBullet && other.CompareTag("Goon")) || (!_isPlayersBullet && other.CompareTag("Player")) )
+            {
+                health.Hurt();
+                Deactivate();
+            }
         }
     }
 

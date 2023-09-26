@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3638360226524416528}
   - component: {fileID: 7446845447655455046}
   m_Layer: 6
-  m_Name: Orientation
+  m_Name: BulletOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3701612413925903882}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.463, z: 0.471}
+  m_LocalPosition: {x: 0, y: 2.04, z: 0.46}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -72,8 +72,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4368919145033917033}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.464, z: 0.45}
-  m_LocalScale: {x: 0.49619, y: 0.34101152, z: 0.49619}
+  m_LocalPosition: {x: 0, y: 2.1, z: 0.324}
+  m_LocalScale: {x: 0.32952973, y: 0.22647259, z: 0.32952973}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6967804565952623191}
@@ -276,6 +276,7 @@ MonoBehaviour:
   dashSpeed: 16
   dashDuration: 0.3
   dashCooldown: 0.1
+  invincibilityDuration: 5
   animator: {fileID: 0}
 --- !u!114 &1808988334721542417
 MonoBehaviour:
@@ -323,7 +324,7 @@ Transform:
   m_GameObject: {fileID: 7074676795565208912}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.4, z: 0}
-  m_LocalScale: {x: 1, y: 1.3394033, z: 1}
+  m_LocalScale: {x: 0.65843683, y: 1, z: 0.65843683}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6967804565952623191}

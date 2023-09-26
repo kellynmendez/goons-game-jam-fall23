@@ -54,8 +54,7 @@ public class HealthSystem : MonoBehaviour
             GoonBase goon = gameObject.GetComponent<GoonBase>();
             if (goon != null)
             {
-                goon.IsDead = true;
-                goon.enabled = false;
+                goon.Deactivate();
             }
         }
 
