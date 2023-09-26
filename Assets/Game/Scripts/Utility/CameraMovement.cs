@@ -3,9 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
-public class CameraFollow : MonoBehaviour
+public class CameraMovement : MonoBehaviour
 {
+    public static CameraMovement Instance;
+
     private Vector3 _objectOffset;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {

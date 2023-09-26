@@ -9,20 +9,14 @@ public class PlayerController : MonoBehaviour
 {
     #region public variables
     public static PlayerController Instance;
-    public int LivesLeft { get; private set; }
-    public bool IsDead { get; private set; } = false;
+    public bool IsDead { get; set; } = false;
+    public bool IsDashing { get; set; } = false;
     #endregion
 
     #region serialized variables
     [Header("Movement")]
     [SerializeField] float moveSpeed = 12f;
-    [SerializeField] float turnTime = 0.1f;
     [SerializeField] UnityEvent onMove = null;
-
-    [Header("Health")]
-    [SerializeField] int lives = 3;
-    [SerializeField] UnityEvent onHurt = null;
-    [SerializeField] UnityEvent onDeath = null;
 
     [Header("Chomp")]
     [SerializeField] Collider chompCollider = null;
@@ -30,11 +24,19 @@ public class PlayerController : MonoBehaviour
     //[SerializeField] string chompAxis = "";
     [SerializeField] UnityEvent OnChomp = null;
 
-    [Header("Shoot Ability")]
+    [Header("Shoot Settings")]
     [SerializeField] BulletPool bulletPool = null;
     [SerializeField] float bulletVelocity = 15f;
     [SerializeField] float bulletLifeTime = 6f;
     [SerializeField] float bulletScaleAmount = 0.98f;
+
+    [Header("Dash Settings")]
+    [SerializeField] float dashSpeed = 20f;
+    [SerializeField] float dashDuration = 1f;
+    [SerializeField] float dashCooldown = 1f;
+
+    [Header("Shield Settings")]
+    [SerializeField] float invincibilityDuration = 5f;
 
     [Header("Animations")]
     [SerializeField] Animator animator = null;
@@ -43,6 +45,7 @@ public class PlayerController : MonoBehaviour
     #region private variables
     ICombatAbility _combatAbility;
     CharacterController _controller;
+    Camera _mainCamera;
     float _turnVelocity;
     bool _chompIsCoolingDown = false;
     #endregion
@@ -69,17 +72,20 @@ public class PlayerController : MonoBehaviour
             Debug.LogWarning("The player controller must be given a collider.");
         }
 
-        // Instantiating combat ability
-        _combatAbility = new NoCombatAbility();
-        //_combatAbility = new ShootCombatAbility(bulletPool, bulletVelocity, bulletLifeTime, bulletScaleAmount);
-
-        // Grabbing the controller and setting initial health
         _controller = GetComponent<CharacterController>();
-        LivesLeft = lives;
+        _mainCamera = CameraMovement.Instance.gameObject.GetComponent<Camera>();
+        // Instantiating combat ability
+        //_combatAbility = new NoCombatAbility();
+        //_combatAbility = new DashCombatAbility(this, _controller, dashSpeed, dashDuration, dashCooldown);
+        //_combatAbility = new ShootCombatAbility(bulletPool, bulletVelocity, bulletLifeTime, bulletScaleAmount);
+        _combatAbility = new ShieldCombatAbility(this, gameObject.GetComponent<HealthSystem>(), invincibilityDuration);
     }
 
     private void Update()
     {
+        if (IsDashing)
+            return;
+
         Move();
 
         // If using goon-given ability
@@ -100,49 +106,28 @@ public class PlayerController : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
+        transform.forward = GetMouseDirection();
+
         if (direction.magnitude >= 0.1f)
         {
-            // Turning character in the direction it is moving
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnVelocity, turnTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
             // Moving the character
-            _controller.Move(direction * moveSpeed * Time.deltaTime);
+            _controller.Move(transform.forward * moveSpeed * Time.deltaTime);
 
             // Invoking on move unity event
             onMove.Invoke();
         }
     }
 
-    public void Hurt(int damage)
+    private Vector3 GetMouseDirection()
     {
-        if (IsDead)
-            return;
-        // Take damage
-        LivesLeft -= damage;
-        // Invoke on hurt unity event
-        onHurt.Invoke();
-        // Kill if that was the last life
-        if (LivesLeft <= 0)
-        {
-            Kill();
-        }
-    }
-
-    public void Kill()
-    {
-        // Disable player and set death bool
-        this.enabled = false;
-        IsDead = true;
-        // Invoke on death unity event
-        onDeath.Invoke();
-        // Set lives to 0
-        LivesLeft = 0;
+        Vector3 input = Input.mousePosition;
+        Vector3 mousePosition = _mainCamera.ScreenToWorldPoint(new Vector3(input.x, input.y, _mainCamera.transform.position.y));
+        Vector3 mouseDirection = (mousePosition - transform.position).normalized;
+        mouseDirection.y = 0;
+        return mouseDirection;
     }
 
     /*
-    [SerializeField] Transform chompOrigin = null;
 
     [SerializeField]
     new Collider collider = null; //TODO
