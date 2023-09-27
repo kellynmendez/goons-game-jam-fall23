@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour
         if (direction.magnitude >= 0.1f)
         {
             // Moving the character
-            _controller.Move(transform.forward * moveSpeed * Time.deltaTime);
+            _controller.Move(direction * moveSpeed * Time.deltaTime);
 
             // Invoking on move unity event
             onMove.Invoke();

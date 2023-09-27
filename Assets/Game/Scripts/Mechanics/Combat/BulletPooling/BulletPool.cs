@@ -58,7 +58,6 @@ public class BulletPool : MonoBehaviour
             }
         }
         // If all are active
-        Debug.Log("no more bullets");
         return null;
     }
 }
