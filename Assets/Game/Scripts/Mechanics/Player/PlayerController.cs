@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -20,6 +19,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Chomp")]
     [SerializeField] Collider chompCollider = null;
+    [SerializeField] LayerMask enemyLayerMask;
     [SerializeField] float chompCooldown = 2f;
     //[SerializeField] string chompAxis = "";
     [SerializeField] UnityEvent OnChomp = null;
@@ -43,11 +43,11 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region private variables
-    ICombatAbility _combatAbility;
-    CharacterController _controller;
-    Camera _mainCamera;
-    float _turnVelocity;
-    bool _chompIsCoolingDown = false;
+    private ICombatAbility _combatAbility;
+    private CharacterController _controller;
+    private Camera _mainCamera;
+    private List<GoonBase> _chompList;
+    private bool _chompIsCoolingDown = false;
     #endregion
 
     private void Awake()
@@ -74,6 +74,8 @@ public class PlayerController : MonoBehaviour
 
         _controller = GetComponent<CharacterController>();
         _mainCamera = CameraMovement.Instance.gameObject.GetComponent<Camera>();
+        _chompList = new List<GoonBase>();
+
         // Instantiating combat ability
         //_combatAbility = new NoCombatAbility();
         //_combatAbility = new DashCombatAbility(this, _controller, dashSpeed, dashDuration, dashCooldown);
@@ -89,9 +91,13 @@ public class PlayerController : MonoBehaviour
         Move();
 
         // If using goon-given ability
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetMouseButtonDown(0))
         {
             _combatAbility.UseAbility();
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            
         }
     }
 
@@ -125,6 +131,29 @@ public class PlayerController : MonoBehaviour
         Vector3 mouseDirection = (mousePosition - transform.position).normalized;
         mouseDirection.y = 0;
         return mouseDirection;
+    }
+
+    private void Chomp()
+    {
+        /*
+        int i = 0;
+        while (i < hitColliders.Length)
+        {
+            //Output all of the collider names
+            Debug.Log("Hit : " + hitColliders[i].name + i);
+            //Increase the number of Colliders in the array
+            i++;
+        }*/
+    }
+
+    public void AddGoonToChompList(GoonBase goon)
+    {
+        _chompList.Add(goon);
+    }
+
+    public void RemoveGoonFromChompList(GoonBase goon)
+    {
+        _chompList.Remove(goon);
     }
 
     /*

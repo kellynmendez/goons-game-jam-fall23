@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2936564526729670727}
   - component: {fileID: 96917986099265111}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BulletOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 4593876678199254858}
   - component: {fileID: 2520028161570626260}
   - component: {fileID: 7576615836622392323}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ShooterGoon
   m_TagString: Goon
   m_Icon: {fileID: 0}
@@ -180,7 +180,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3511157107098255626}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Art
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -258,6 +258,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f7add1e69ec0a4e4386d6ef6fc70b734, type: 3}
       propertyPath: m_Name
       value: GunGoone_High
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f7add1e69ec0a4e4386d6ef6fc70b734, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

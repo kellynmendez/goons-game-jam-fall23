@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7461387171343780968}
   - component: {fileID: 5434489001370341274}
   - component: {fileID: 9108414983335679495}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 8414070137813143145}
   - component: {fileID: 3610658877276828838}
   - component: {fileID: 3125688673847953125}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ShielderGoon
   m_TagString: Goon
   m_Icon: {fileID: 0}
@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 7310012535764318922}
   - component: {fileID: 8842408310152893545}
   - component: {fileID: 2359788308273204446}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -295,7 +295,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6065932101051442386}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Art
   m_TagString: Untagged
   m_Icon: {fileID: 0}
