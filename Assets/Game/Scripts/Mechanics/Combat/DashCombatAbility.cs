@@ -36,7 +36,7 @@ public class DashCombatAbility : ICombatAbility
         float startTime = Time.time;
         Vector3 dashDirection = _controller.transform.forward;
         _dashIsCoolingDown = true;
-        _player.IsDashing = true;
+        _player.IsUsingGoonAbility = true;
 
         // Dashing
         while (Time.time < startTime + _dashDuration)
@@ -45,7 +45,7 @@ public class DashCombatAbility : ICombatAbility
 
             yield return null;
         }
-        _player.IsDashing = false;
+        _player.IsUsingGoonAbility = false;
 
         // Dash cooldown
         yield return new WaitForSeconds(_dashCooldown);

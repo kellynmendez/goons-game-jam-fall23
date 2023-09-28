@@ -12,7 +12,7 @@ public class KillableEnemiesCollider : MonoBehaviour
             GoonBase goon = other.GetComponent<GoonBase>();
             if (goon != null && goon.gameObject.activeSelf)
             {
-                PlayerController.Instance.AddGoonToChompList(goon);
+                PlayerController.Instance.AddToKillableGoonsList(goon);
             }
         }
     }
@@ -24,7 +24,7 @@ public class KillableEnemiesCollider : MonoBehaviour
             GoonBase goon = other.GetComponent<GoonBase>();
             if (goon != null && goon.gameObject.activeSelf)
             {
-                PlayerController.Instance.RemoveGoonFromChompList(goon);
+                PlayerController.Instance.RemoveFromKillableGoonsList(goon);
             }
         }
     }

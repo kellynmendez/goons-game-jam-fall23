@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     #region public variables
     public static PlayerController Instance;
     public bool IsDead { get; set; } = false;
-    public bool IsDashing { get; set; } = false;
+    public bool IsUsingGoonAbility { get; set; } = false;
     public bool IsChomping { get; set; } = false;
     #endregion
 
@@ -21,7 +21,6 @@ public class PlayerController : MonoBehaviour
     [Header("Chomp")]
     [SerializeField] Collider chompCollider = null;
     //[SerializeField] float chompCooldown = 2f;
-    //[SerializeField] string chompAxis = "";
     //[SerializeField] UnityEvent OnChomp = null;
 
     [Header("Shoot Settings")]
@@ -46,7 +45,7 @@ public class PlayerController : MonoBehaviour
     private ICombatAbility _combatAbility;
     private CharacterController _controller;
     private Camera _mainCamera;
-    private List<GoonBase> _chompList;
+    private List<GoonBase> _killableGoons;
     //private bool _chompIsCoolingDown = false;
     #endregion
 
@@ -70,19 +69,20 @@ public class PlayerController : MonoBehaviour
 
         _controller = GetComponent<CharacterController>();
         _mainCamera = CameraMovement.Instance.gameObject.GetComponent<Camera>();
-        _chompList = new List<GoonBase>();
-        Debug.Log($"cl = {PrintChompList()}");
+        _killableGoons = new List<GoonBase>();
 
         // Instantiating combat ability
         //_combatAbility = new NoCombatAbility();
         //_combatAbility = new DashCombatAbility(this, _controller, dashSpeed, dashDuration, dashCooldown);
-        _combatAbility = new ShootCombatAbility(bulletPool, bulletVelocity, bulletLifeTime, bulletScaleAmount);
+        //_combatAbility = new ShootCombatAbility(bulletPool, bulletVelocity, bulletLifeTime, bulletScaleAmount);
         //_combatAbility = new ShieldCombatAbility(this, gameObject.GetComponent<HealthSystem>(), invincibilityDuration);
+        _combatAbility = new HammerCombatAbility(this, _killableGoons);
+        //_combatAbility = new PuttPuttCombatAbility();
     }
 
     private void Update()
     {
-        if (IsDashing)
+        if (IsUsingGoonAbility)
             return;
 
         Move();
@@ -138,29 +138,29 @@ public class PlayerController : MonoBehaviour
     {
         IsChomping = true;
         
-        if (_chompList.Count == 0)
+        if (_killableGoons.Count == 0)
         {
             Debug.Log("Nothing to chomp!");
         }
         else // Getting the goon to be chomped
         {
             GoonBase goonToChomp = null;
-            if (_chompList.Count == 1)
+            if (_killableGoons.Count == 1)
             {
-                goonToChomp = _chompList[0];
+                goonToChomp = _killableGoons[0];
             }
             else
             {
                 // Checking goon list to find which one is closer
                 float smallestDistance = 0;
-                for (int i = 0; i < _chompList.Count; i++)
+                for (int i = 0; i < _killableGoons.Count; i++)
                 {
-                    float distance = Vector3.Distance(transform.position, _chompList[i].transform.position);
+                    float distance = Vector3.Distance(transform.position, _killableGoons[i].transform.position);
 
                     if (goonToChomp == null)
                     {
                         smallestDistance = distance;
-                        goonToChomp = _chompList[i];
+                        goonToChomp = _killableGoons[i];
                     }
                     else
                     {
@@ -168,112 +168,38 @@ public class PlayerController : MonoBehaviour
                         if (distance < smallestDistance)
                         {
                             smallestDistance = distance;
-                            goonToChomp = _chompList[i];
+                            goonToChomp = _killableGoons[i];
                         }
                     }
                 }
             }
 
-            _chompList.Remove(goonToChomp);
+            // Chomp goon
             goonToChomp.Kill();
         }
             
         IsChomping = false;
     }
 
-    public void AddGoonToChompList(GoonBase goon)
+    public void AddToKillableGoonsList(GoonBase goon)
     {
-        _chompList.Add(goon);
+        _killableGoons.Add(goon);
     }
 
-    public void RemoveGoonFromChompList(GoonBase goon)
+    public void RemoveFromKillableGoonsList(GoonBase goon)
     {
-        _chompList.Remove(goon);
-    }
-
-    public List<GoonBase> GetChompList()
-    {
-        return _chompList;
-    }
-
-    public string PrintChompList()
-    {
-        string result = "";
-        foreach (var item in _chompList)
-        {
-            result += item.ToString() + ", ";
-        }
-        return result;
+        _killableGoons.Remove(goon);
     }
     #endregion
 
+    public void FreezePlayerTransform()
+    {
+
+    }
+    
     public void Kill()
     {
         IsDead = true;
         this.enabled = false;
     }
-
-    private void FreezePlayerTransform()
-    {
-
-    }
-
-    /*
-
-    [SerializeField]
-    new Collider collider = null; //TODO
-    
-    private bool AttemptChomp()
-    {
-        if (!Input.GetButtonDown(chompAxis))
-        {
-            return false;
-        }
-
-        return Chomp();
-    }
-
-    private bool Chomp()
-    {
-        punchCollider.enabled = true;
-
-        OnPunch?.Invoke();
-        return true;
-    }
-
-    void PunchCheck()
-    {
-        if (Physics.CheckBox(collider.bounds.center, collider.bounds.extents / 2, Quaternion.identity, ~LayerMask.GetMask("Player")))
-        {
-            RaycastHit hitinfo;
-            if (Physics.Raycast(collider.bounds.center, transform.forward, out hitinfo, 2, ~LayerMask.GetMask("Player")))
-            {
-                HitCollider(hitinfo.collider);
-            }
-        }
-    }
-
-    void OnTriggerStay(Collider other) => HitCollider(other);
-
-    void OnTriggerEnter(Collider other) => HitCollider(other);
-
-    void OnTriggerExit(Collider other) => HitCollider(other);
-
-    void HitCollider(Collider other)
-    {
-        if (LayerMask.LayerToName(other.gameObject.layer) == "Enemy")
-        {
-            Enemy.EnemyBase enemy = other.transform.parent.GetComponent<Enemy.EnemyBase>();
-
-            if (enemy != null)
-            {
-                enemy.Kill();
-            }
-            else
-            {
-                Debug.LogError("Unable to find enemy component to kill 'em");
-            }
-        }
-    }
-    */
 }
