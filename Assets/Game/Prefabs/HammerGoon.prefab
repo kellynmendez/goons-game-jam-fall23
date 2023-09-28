@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 142299612832428002}
   - component: {fileID: 4694903429217294740}
   - component: {fileID: 3659512167160974769}
-  - component: {fileID: 7170744344562663079}
+  - component: {fileID: 5385905203498649800}
   - component: {fileID: 7324921038110866306}
   m_Layer: 7
   m_Name: HammerGoon
@@ -82,7 +82,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 5
+  m_StoppingDistance: 3
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -109,11 +109,11 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.9400408
-  m_Height: 3.943632
+  m_Radius: 1.020853
+  m_Height: 4.393261
   m_Direction: 2
-  m_Center: {x: 0, y: 0.7300408, z: -0.06725681}
---- !u!114 &7170744344562663079
+  m_Center: {x: 0, y: 0.7300408, z: 0}
+--- !u!114 &5385905203498649800
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4336282167769449114}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7263f6cd453a7aa4fb2f478d908a3e1d, type: 3}
+  m_Script: {fileID: 11500000, guid: ea25e32962b48114fab5fae948624776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   OnDeath:
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 787afccee4543df4ab93cf6a1d5aad52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lives: 3
+  lives: 1
   onHurt:
     m_PersistentCalls:
       m_Calls: []

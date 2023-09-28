@@ -55,7 +55,7 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    private void Deactivate()
+    public void Deactivate()
     {
         gameObject.transform.localScale = _startScale;
         gameObject.SetActive(false);

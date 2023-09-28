@@ -18,10 +18,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float moveSpeed = 12f;
     [SerializeField] UnityEvent onMove = null;
 
-    [Header("Chomp")]
-    [SerializeField] Collider chompCollider = null;
+    [Header("Chomp Settings")]
     //[SerializeField] float chompCooldown = 2f;
     //[SerializeField] UnityEvent OnChomp = null;
+
+    [Header("Dash Settings")]
+    [SerializeField] float dashSpeed = 20f;
+    [SerializeField] float dashDuration = 1f;
+    [SerializeField] float dashCooldown = 1f;
 
     [Header("Shoot Settings")]
     [SerializeField] BulletPool bulletPool = null;
@@ -29,13 +33,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float bulletLifeTime = 6f;
     [SerializeField] float bulletScaleAmount = 0.98f;
 
-    [Header("Dash Settings")]
-    [SerializeField] float dashSpeed = 20f;
-    [SerializeField] float dashDuration = 1f;
-    [SerializeField] float dashCooldown = 1f;
-
     [Header("Shield Settings")]
     [SerializeField] float invincibilityDuration = 5f;
+
+    [Header("PuttPutt Settings")]
+    [SerializeField] ParticleSystem _puttPuttRingEffect;
+
 
     //[Header("Animations")]
     //[SerializeField] Animator animator = null;
@@ -45,7 +48,8 @@ public class PlayerController : MonoBehaviour
     private ICombatAbility _combatAbility;
     private CharacterController _controller;
     private Camera _mainCamera;
-    private List<GoonBase> _killableGoons;
+    private List<GoonBase> _killableGoonsInFront;
+    private List<GoonBase> _killableGoonsInCircle;
     //private bool _chompIsCoolingDown = false;
     #endregion
 
@@ -61,23 +65,24 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("There should not be more than two players in a secene.");
         }
 
-        // Collider check
-        if (chompCollider == null)
+        // Bullet origin check
+        if (bulletPool == null)
         {
-            Debug.LogError("The player controller must be given a collider.");
+            Debug.LogError("There is no bullet pool on this object or its children.");
         }
 
         _controller = GetComponent<CharacterController>();
         _mainCamera = CameraMovement.Instance.gameObject.GetComponent<Camera>();
-        _killableGoons = new List<GoonBase>();
+        _killableGoonsInFront = new List<GoonBase>();
+        _killableGoonsInCircle = new List<GoonBase>();
 
         // Instantiating combat ability
         //_combatAbility = new NoCombatAbility();
         //_combatAbility = new DashCombatAbility(this, _controller, dashSpeed, dashDuration, dashCooldown);
         //_combatAbility = new ShootCombatAbility(bulletPool, bulletVelocity, bulletLifeTime, bulletScaleAmount);
         //_combatAbility = new ShieldCombatAbility(this, gameObject.GetComponent<HealthSystem>(), invincibilityDuration);
-        _combatAbility = new HammerCombatAbility(this, _killableGoons);
-        //_combatAbility = new PuttPuttCombatAbility();
+        //_combatAbility = new HammerCombatAbility(this, _killableGoonsInFront);
+        _combatAbility = new PuttPuttCombatAbility(this, _puttPuttRingEffect);
     }
 
     private void Update()
@@ -133,34 +138,33 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    #region Chomp functions
     private void Chomp()
     {
         IsChomping = true;
         
-        if (_killableGoons.Count == 0)
+        if (_killableGoonsInFront.Count == 0)
         {
             Debug.Log("Nothing to chomp!");
         }
         else // Getting the goon to be chomped
         {
             GoonBase goonToChomp = null;
-            if (_killableGoons.Count == 1)
+            if (_killableGoonsInFront.Count == 1)
             {
-                goonToChomp = _killableGoons[0];
+                goonToChomp = _killableGoonsInFront[0];
             }
             else
             {
                 // Checking goon list to find which one is closer
                 float smallestDistance = 0;
-                for (int i = 0; i < _killableGoons.Count; i++)
+                for (int i = 0; i < _killableGoonsInFront.Count; i++)
                 {
-                    float distance = Vector3.Distance(transform.position, _killableGoons[i].transform.position);
+                    float distance = Vector3.Distance(transform.position, _killableGoonsInFront[i].transform.position);
 
                     if (goonToChomp == null)
                     {
                         smallestDistance = distance;
-                        goonToChomp = _killableGoons[i];
+                        goonToChomp = _killableGoonsInFront[i];
                     }
                     else
                     {
@@ -168,7 +172,7 @@ public class PlayerController : MonoBehaviour
                         if (distance < smallestDistance)
                         {
                             smallestDistance = distance;
-                            goonToChomp = _killableGoons[i];
+                            goonToChomp = _killableGoonsInFront[i];
                         }
                     }
                 }
@@ -181,17 +185,29 @@ public class PlayerController : MonoBehaviour
         IsChomping = false;
     }
 
-    public void AddToKillableGoonsList(GoonBase goon)
+    public void AddToKillableGoonsInFrontList(GoonBase goon)
     {
-        _killableGoons.Add(goon);
+        _killableGoonsInFront.Add(goon);
     }
 
-    public void RemoveFromKillableGoonsList(GoonBase goon)
+    public void RemoveFromKillableGoonsInFrontList(GoonBase goon)
     {
-        _killableGoons.Remove(goon);
+        _killableGoonsInFront.Remove(goon);
     }
-    #endregion
 
+    public void AddToKillableGoonsInCircleList(GoonBase goon)
+    {
+        _killableGoonsInCircle.Add(goon);
+    }
+
+    public void RemoveFromKillableGoonsInCircleList(GoonBase goon)
+    {
+        _killableGoonsInCircle.Remove(goon);
+    }
+
+    /// <summary>
+    /// Freeze player rotation and position when using abilities
+    /// </summary>
     public void FreezePlayerTransform()
     {
 

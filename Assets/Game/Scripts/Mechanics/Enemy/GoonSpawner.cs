@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GoonSpawner : MonoBehaviour
 {   
-    public List<GameObject> InactiveGoons;
-    public List<GameObject> ActiveGoons;
+    private List<GameObject> _inactiveGoons;
+    private List<GameObject> _activeGoons;
 
     [SerializeField] List<GameObject> goonObjectList;
     [SerializeField] float _spawnTime = 1f;
@@ -13,8 +13,8 @@ public class GoonSpawner : MonoBehaviour
 
     private void Awake()
     {
-        InactiveGoons = new List<GameObject>();
-        ActiveGoons = new List<GameObject>();
+        _inactiveGoons = new List<GameObject>();
+        _activeGoons = new List<GameObject>();
     }
 
     private void Start()
@@ -26,7 +26,7 @@ public class GoonSpawner : MonoBehaviour
             newGoon.GetComponent<GoonBase>().SetSpawner(this);
             newGoon.transform.SetPositionAndRotation(transform.position, transform.rotation);
             newGoon.SetActive(false);
-            InactiveGoons.Add(newGoon);
+            _inactiveGoons.Add(newGoon);
         }
 
         // Repeatedly spawn goons
@@ -36,10 +36,10 @@ public class GoonSpawner : MonoBehaviour
     public GameObject GetPooledObject()
     {
         // Get random number from the inactive goons to choose a goon to spawn
-        if (InactiveGoons.Count != 0)
+        if (_inactiveGoons.Count != 0)
         {
-            int randomIndex = Random.Range(0, InactiveGoons.Count);
-            GoonBase goon = InactiveGoons[randomIndex].GetComponent<GoonBase>();
+            int randomIndex = Random.Range(0, _inactiveGoons.Count);
+            GoonBase goon = _inactiveGoons[randomIndex].GetComponent<GoonBase>();
 
             if (!goon.gameObject.activeSelf)
             {
@@ -61,5 +61,25 @@ public class GoonSpawner : MonoBehaviour
             return null;
         }
         
+    }
+
+    public void AddToInactiveGoonsList(GameObject goon)
+    {
+        _inactiveGoons.Add(goon);
+    }
+
+    public void RemoveFromInactiveGoonsList(GameObject goon)
+    {
+        _inactiveGoons.Remove(goon);
+    }
+
+    public void AddToActiveGoonsList(GameObject goon)
+    {
+        _activeGoons.Add(goon);
+    }
+
+    public void RemoveFromActiveGoonsList(GameObject goon)
+    {
+        _activeGoons.Remove(goon);
     }
 }
