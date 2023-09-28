@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ChompCollider : MonoBehaviour
+public class KillableEnemiesCollider : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {

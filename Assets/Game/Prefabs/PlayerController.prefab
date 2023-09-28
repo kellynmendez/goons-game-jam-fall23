@@ -306,7 +306,7 @@ GameObject:
   - component: {fileID: 8544475650194477726}
   - component: {fileID: 6185881176369101940}
   m_Layer: 6
-  m_Name: ChompCollider
+  m_Name: KillableEnemiesCollider
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -321,7 +321,7 @@ Transform:
   m_GameObject: {fileID: 6969350822720575272}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.423, z: 1.262}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3313738, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1235821819836860548}
