@@ -213,6 +213,11 @@ public class PlayerController : MonoBehaviour
         this.enabled = false;
     }
 
+    private void FreezePlayerTransform()
+    {
+
+    }
+
     /*
 
     [SerializeField]
