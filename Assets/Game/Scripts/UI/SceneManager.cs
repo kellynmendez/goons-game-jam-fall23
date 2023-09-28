@@ -14,7 +14,6 @@ public class UIManager : MonoBehaviour
             {
                 SceneManager.LoadScene("MainLevel");
             }
-            // SceneManager.GetActiveScene().name == "MainMenu"
             if (SceneManager.GetActiveScene().name == "Credits")
             {
                 SceneManager.LoadScene("MainMenu");

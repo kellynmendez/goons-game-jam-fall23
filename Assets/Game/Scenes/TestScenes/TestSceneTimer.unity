@@ -307,7 +307,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1272403902}
   - component: {fileID: 1272403903}
-  - component: {fileID: 1272403901}
   m_Layer: 0
   m_Name: UI Manager
   m_TagString: Untagged
@@ -315,20 +314,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1272403901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1272403900}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f56c4d5fba902a64091bc9eedf577f3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timerText: {fileID: 886249108}
-  secondsLeft: 120
 --- !u!4 &1272403902
 Transform:
   m_ObjectHideFlags: 0
@@ -353,9 +338,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1272403900}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 030415e19ac15bb45870586fb6d391cd, type: 3}
+  m_Script: {fileID: 11500000, guid: 350f96d12ef91ba48a0ed1749b5b93e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timerText: {fileID: 886249108}
+  secondsLeft: 35
 --- !u!1 &1290648429
 GameObject:
   m_ObjectHideFlags: 0
