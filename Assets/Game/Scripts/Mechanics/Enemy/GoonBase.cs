@@ -42,11 +42,12 @@ public class GoonBase : MonoBehaviour
         OnDeath?.Invoke();
 
         // Add goon to inactive goon spawn list and remove from active list
-        spawner.ActiveGoons.Remove(this.gameObject);
-        spawner.InactiveGoons.Add(this.gameObject);
+        spawner.RemoveFromActiveGoonsList(this.gameObject);
+        spawner.AddToInactiveGoonsList(this.gameObject);
 
-        // Remove goon from killable goons list (if in it)
-        PlayerController.Instance.RemoveFromKillableGoonsList(this);
+        // Remove goon from killable goons lists (if in it)
+        PlayerController.Instance.RemoveFromKillableGoonsInFrontList(this);
+        PlayerController.Instance.RemoveFromKillableGoonsInCircleList(this);
         
         // Deactivating game object
         gameObject.SetActive(false);
@@ -63,8 +64,8 @@ public class GoonBase : MonoBehaviour
         health.IsDead = false;
 
         // Add goon to active list and remove from inactive list
-        spawner.InactiveGoons.Remove(this.gameObject);
-        spawner.ActiveGoons.Add(this.gameObject);
+        spawner.RemoveFromInactiveGoonsList(this.gameObject);
+        spawner.AddToActiveGoonsList(this.gameObject);
     }
 
     public void SetSpawner(GoonSpawner spawner)

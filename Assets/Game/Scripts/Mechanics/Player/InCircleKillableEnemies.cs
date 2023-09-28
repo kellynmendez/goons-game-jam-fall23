@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class KillableEnemiesCollider : MonoBehaviour
+public class InCircleKillableEnemies : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
@@ -12,7 +12,7 @@ public class KillableEnemiesCollider : MonoBehaviour
             GoonBase goon = other.GetComponent<GoonBase>();
             if (goon != null && goon.gameObject.activeSelf)
             {
-                PlayerController.Instance.AddToKillableGoonsList(goon);
+                PlayerController.Instance.AddToKillableGoonsInCircleList(goon);
             }
         }
     }
@@ -24,7 +24,7 @@ public class KillableEnemiesCollider : MonoBehaviour
             GoonBase goon = other.GetComponent<GoonBase>();
             if (goon != null && goon.gameObject.activeSelf)
             {
-                PlayerController.Instance.RemoveFromKillableGoonsList(goon);
+                PlayerController.Instance.RemoveFromKillableGoonsInCircleList(goon);
             }
         }
     }
