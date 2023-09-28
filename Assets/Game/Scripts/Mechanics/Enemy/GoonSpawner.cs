@@ -43,7 +43,6 @@ public class GoonSpawner : MonoBehaviour
 
             if (!goon.gameObject.activeSelf)
             {
-                Debug.Log($"spawning {goon.gameObject.name}");
                 goon.gameObject.SetActive(true);
                 goon.gameObject.transform.position = transform.position;
                 goon.gameObject.transform.rotation = transform.rotation;
@@ -58,7 +57,7 @@ public class GoonSpawner : MonoBehaviour
         }
         else
         {
-            Debug.Log("No goons left in spwaner.");
+            Debug.Log("No goons left in spawner.");
             return null;
         }
         

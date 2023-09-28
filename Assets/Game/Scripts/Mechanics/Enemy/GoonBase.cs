@@ -33,7 +33,7 @@ public class GoonBase : MonoBehaviour
     public void Kill()
     {
         if (IsDead) return;
-        Debug.Log($"{gameObject.name} killed!");
+
         // Disabling goon
         this.enabled = false;
         IsDead = true;
@@ -62,7 +62,6 @@ public class GoonBase : MonoBehaviour
         // Add goon to active list and remove from inactive list
         spawner.InactiveGoons.Remove(this.gameObject);
         spawner.ActiveGoons.Add(this.gameObject);
-        Debug.Log($"{gameObject.name} activated, lives are {health.LivesLeft}");
     }
 
     public void SetSpawner(GoonSpawner spawner)

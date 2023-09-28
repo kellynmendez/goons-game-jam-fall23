@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public static PlayerController Instance;
     public bool IsDead { get; set; } = false;
     public bool IsDashing { get; set; } = false;
+    public bool IsChomping { get; set; } = false;
     #endregion
 
     #region serialized variables
@@ -70,6 +71,7 @@ public class PlayerController : MonoBehaviour
         _controller = GetComponent<CharacterController>();
         _mainCamera = CameraMovement.Instance.gameObject.GetComponent<Camera>();
         _chompList = new List<GoonBase>();
+        Debug.Log($"cl = {PrintChompList()}");
 
         // Instantiating combat ability
         //_combatAbility = new NoCombatAbility();
@@ -90,7 +92,8 @@ public class PlayerController : MonoBehaviour
         {
             _combatAbility.UseAbility();
         }
-        else if (Input.GetMouseButtonDown(1))
+        // If chomping
+        else if (!IsChomping && Input.GetMouseButtonDown(1))
         {
             Chomp();
         }
@@ -101,6 +104,7 @@ public class PlayerController : MonoBehaviour
         _combatAbility = combatAbility;
     }
 
+    #region Movement functions
     private void Move()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -127,16 +131,54 @@ public class PlayerController : MonoBehaviour
         mouseDirection.y = 0;
         return mouseDirection;
     }
+    #endregion
 
+    #region Chomp functions
     private void Chomp()
     {
-        Debug.Log("chomp clicked");
-        int i = 0;
-        while (i < _chompList.Count)
+        IsChomping = true;
+        
+        if (_chompList.Count == 0)
         {
-            Debug.Log("Hit : " + _chompList[i].name);
-            i++;
+            Debug.Log("Nothing to chomp!");
         }
+        else // Getting the goon to be chomped
+        {
+            GoonBase goonToChomp = null;
+            if (_chompList.Count == 1)
+            {
+                goonToChomp = _chompList[0];
+            }
+            else
+            {
+                // Checking goon list to find which one is closer
+                float smallestDistance = 0;
+                for (int i = 0; i < _chompList.Count; i++)
+                {
+                    float distance = Vector3.Distance(transform.position, _chompList[i].transform.position);
+
+                    if (goonToChomp == null)
+                    {
+                        smallestDistance = distance;
+                        goonToChomp = _chompList[i];
+                    }
+                    else
+                    {
+                        // If this goon is closer, then chomp this one
+                        if (distance < smallestDistance)
+                        {
+                            smallestDistance = distance;
+                            goonToChomp = _chompList[i];
+                        }
+                    }
+                }
+            }
+
+            _chompList.Remove(goonToChomp);
+            goonToChomp.Kill();
+        }
+            
+        IsChomping = false;
     }
 
     public void AddGoonToChompList(GoonBase goon)
@@ -148,6 +190,22 @@ public class PlayerController : MonoBehaviour
     {
         _chompList.Remove(goon);
     }
+
+    public List<GoonBase> GetChompList()
+    {
+        return _chompList;
+    }
+
+    public string PrintChompList()
+    {
+        string result = "";
+        foreach (var item in _chompList)
+        {
+            result += item.ToString() + ", ";
+        }
+        return result;
+    }
+    #endregion
 
     public void Kill()
     {
