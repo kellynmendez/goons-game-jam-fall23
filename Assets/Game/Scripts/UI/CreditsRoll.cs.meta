@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Game/Scripts/UI/CreditsRoll.cs.meta
+guid: 7b89904b428070343b300ad3e94ab331
+========
+guid: 1db542f9cc5bb9e48836911647a57c1f
+>>>>>>>> 72f3656313dd04fa1d38b1ddb9fe983a08815da3:Assets/Game/Scripts/UI/MainMenuButtons.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
