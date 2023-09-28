@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenuButtonPress : MonoBehaviour
+public class MainMenuButtons : MonoBehaviour
 {
     // Enable the play button
     public void PressPlayButton()
