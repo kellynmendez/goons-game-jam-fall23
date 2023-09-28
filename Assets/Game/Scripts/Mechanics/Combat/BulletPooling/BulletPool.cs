@@ -53,6 +53,7 @@ public class BulletPool : MonoBehaviour
         {
             if (!bullet.activeSelf)
             {
+                bullet.GetComponent<Bullet>().SetIsPlayersBullet(_IsPlayersPool);
                 bullet.SetActive(true);
                 return bullet;
             }

@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5829047585469222527
 MonoBehaviour:
@@ -48,14 +48,6 @@ MonoBehaviour:
   ActiveGoons: []
   goonObjectList:
   - {fileID: 2765856842860107149, guid: 8534748328e5897469edb655a1fda863, type: 3}
-  - {fileID: 2765856842860107149, guid: 8534748328e5897469edb655a1fda863, type: 3}
-  - {fileID: 2765856842860107149, guid: 8534748328e5897469edb655a1fda863, type: 3}
-  - {fileID: 2765856842860107149, guid: 8534748328e5897469edb655a1fda863, type: 3}
-  - {fileID: 2765856842860107149, guid: 8534748328e5897469edb655a1fda863, type: 3}
-  - {fileID: 2765856842860107149, guid: 8534748328e5897469edb655a1fda863, type: 3}
-  - {fileID: 7028999512464387688, guid: 38ccf945efb8757459b7d3bb818bc32a, type: 3}
-  - {fileID: 7028999512464387688, guid: 38ccf945efb8757459b7d3bb818bc32a, type: 3}
-  - {fileID: 7028999512464387688, guid: 38ccf945efb8757459b7d3bb818bc32a, type: 3}
   - {fileID: 7028999512464387688, guid: 38ccf945efb8757459b7d3bb818bc32a, type: 3}
   _spawnTime: 1
   _spawnDelay: 3

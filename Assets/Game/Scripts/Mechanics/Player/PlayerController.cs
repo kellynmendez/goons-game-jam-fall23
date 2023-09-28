@@ -19,10 +19,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("Chomp")]
     [SerializeField] Collider chompCollider = null;
-    [SerializeField] LayerMask enemyLayerMask;
-    [SerializeField] float chompCooldown = 2f;
+    //[SerializeField] float chompCooldown = 2f;
     //[SerializeField] string chompAxis = "";
-    [SerializeField] UnityEvent OnChomp = null;
+    //[SerializeField] UnityEvent OnChomp = null;
 
     [Header("Shoot Settings")]
     [SerializeField] BulletPool bulletPool = null;
@@ -38,8 +37,8 @@ public class PlayerController : MonoBehaviour
     [Header("Shield Settings")]
     [SerializeField] float invincibilityDuration = 5f;
 
-    [Header("Animations")]
-    [SerializeField] Animator animator = null;
+    //[Header("Animations")]
+    //[SerializeField] Animator animator = null;
     #endregion
 
     #region private variables
@@ -47,7 +46,7 @@ public class PlayerController : MonoBehaviour
     private CharacterController _controller;
     private Camera _mainCamera;
     private List<GoonBase> _chompList;
-    private bool _chompIsCoolingDown = false;
+    //private bool _chompIsCoolingDown = false;
     #endregion
 
     private void Awake()
@@ -63,13 +62,9 @@ public class PlayerController : MonoBehaviour
         }
 
         // Collider check
-        if (chompCollider != null)
+        if (chompCollider == null)
         {
-            chompCollider.enabled = false;
-        }
-        else
-        {
-            Debug.LogWarning("The player controller must be given a collider.");
+            Debug.LogError("The player controller must be given a collider.");
         }
 
         _controller = GetComponent<CharacterController>();
@@ -97,7 +92,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (Input.GetMouseButtonDown(1))
         {
-            
+            Chomp();
         }
     }
 
@@ -135,15 +130,13 @@ public class PlayerController : MonoBehaviour
 
     private void Chomp()
     {
-        /*
+        Debug.Log("chomp clicked");
         int i = 0;
-        while (i < hitColliders.Length)
+        while (i < _chompList.Count)
         {
-            //Output all of the collider names
-            Debug.Log("Hit : " + hitColliders[i].name + i);
-            //Increase the number of Colliders in the array
+            Debug.Log("Hit : " + _chompList[i].name);
             i++;
-        }*/
+        }
     }
 
     public void AddGoonToChompList(GoonBase goon)
@@ -154,6 +147,12 @@ public class PlayerController : MonoBehaviour
     public void RemoveGoonFromChompList(GoonBase goon)
     {
         _chompList.Remove(goon);
+    }
+
+    public void Kill()
+    {
+        IsDead = true;
+        this.enabled = false;
     }
 
     /*

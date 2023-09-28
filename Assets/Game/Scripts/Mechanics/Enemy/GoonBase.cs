@@ -6,22 +6,18 @@ using UnityEngine.Events;
 
 public class GoonBase : MonoBehaviour
 {
-    public int EnemyCount = 0;
     public bool IsDead { get; set; } = false;
 
-    [SerializeField] UnityEvent OnSpawn = null;
     [SerializeField] UnityEvent OnDeath = null;
-    [SerializeField] new Collider collider = null;
 
     protected NavMeshAgent agent;
     protected GoonSpawner spawner;
+    protected HealthSystem health;
 
     protected virtual void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-
-        // OnAwake();
-        // Spawn();
+        health = gameObject.GetComponent<HealthSystem>();
     }
 
     protected virtual void Update()
@@ -34,32 +30,39 @@ public class GoonBase : MonoBehaviour
         }
     }
 
-    protected virtual void Kill()
+    public void Kill()
     {
         if (IsDead) return;
+        Debug.Log($"{gameObject.name} killed!");
+        // Disabling goon
+        this.enabled = false;
         IsDead = true;
 
+        // Invoke death event
         OnDeath?.Invoke();
 
-        this.enabled = false;
-        EnemyCount--;
-    }
-
-    public void Activate()
-    {
-        IsDead = false;
-        OnSpawn?.Invoke();
-        spawner.InactiveGoons.Remove(this.gameObject);
-        spawner.ActiveGoons.Add(this.gameObject);
-        gameObject.SetActive(true);
-    }
-
-    public void Deactivate()
-    {
-        IsDead = true;
+        // Add goon to inactive goon spawn list and remove from active list
         spawner.ActiveGoons.Remove(this.gameObject);
         spawner.InactiveGoons.Add(this.gameObject);
+        
+        // Deactivating game object
         gameObject.SetActive(false);
+    }
+
+    public void Spawn()
+    {
+        // Enable goon
+        this.enabled = true;
+        IsDead = false;
+        
+        // Reset its lives
+        health.ResetLives();
+        health.IsDead = false;
+
+        // Add goon to active list and remove from inactive list
+        spawner.InactiveGoons.Remove(this.gameObject);
+        spawner.ActiveGoons.Add(this.gameObject);
+        Debug.Log($"{gameObject.name} activated, lives are {health.LivesLeft}");
     }
 
     public void SetSpawner(GoonSpawner spawner)

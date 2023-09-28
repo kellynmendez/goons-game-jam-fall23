@@ -70,10 +70,15 @@ public class Bullet : MonoBehaviour
             // If this is the player shooting and they hit a goon OR this is the enemy shooting and they hit the player
             if ( (_isPlayersBullet && other.CompareTag("Goon")) || (!_isPlayersBullet && other.CompareTag("Player")) )
             {
+                Debug.Log($"{other.gameObject.name} was hurt");
                 health.Hurt();
                 Deactivate();
             }
-        }
+        }/*
+        else if (!other.CompareTag("Player"))
+        {
+            Deactivate();
+        }*/
     }
 
     private IEnumerator FadeToInactive()

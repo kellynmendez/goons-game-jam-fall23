@@ -35,18 +35,20 @@ public class GoonSpawner : MonoBehaviour
 
     public GameObject GetPooledObject()
     {
-        // Get random number from the inactive goon indices to choose a goon to spawn
+        // Get random number from the inactive goons to choose a goon to spawn
         if (InactiveGoons.Count != 0)
         {
             int randomIndex = Random.Range(0, InactiveGoons.Count);
-            GameObject goon = InactiveGoons[randomIndex];
+            GoonBase goon = InactiveGoons[randomIndex].GetComponent<GoonBase>();
 
-            if (!goon.activeSelf)
+            if (!goon.gameObject.activeSelf)
             {
-                goon.transform.position = transform.position;
-                goon.transform.rotation = transform.rotation;
-                goon.GetComponent<GoonBase>().Activate();
-                return goon;
+                Debug.Log($"spawning {goon.gameObject.name}");
+                goon.gameObject.SetActive(true);
+                goon.gameObject.transform.position = transform.position;
+                goon.gameObject.transform.rotation = transform.rotation;
+                goon.Spawn();
+                return goon.gameObject;
             }
             else
             {

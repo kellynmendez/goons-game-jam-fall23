@@ -265,14 +265,7 @@ MonoBehaviour:
   onMove:
     m_PersistentCalls:
       m_Calls: []
-  chompOverlapBox: {fileID: 6969350822720575272}
-  enemyLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  chompCooldown: 2
-  OnChomp:
-    m_PersistentCalls:
-      m_Calls: []
+  chompCollider: {fileID: 3035229009100832132}
   bulletPool: {fileID: 7446845447655455046}
   bulletVelocity: 15
   bulletLifeTime: 6
@@ -281,7 +274,6 @@ MonoBehaviour:
   dashDuration: 0.3
   dashCooldown: 0.1
   invincibilityDuration: 5
-  animator: {fileID: 0}
 --- !u!114 &1808988334721542417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,6 +303,8 @@ GameObject:
   m_Component:
   - component: {fileID: 647311482244347256}
   - component: {fileID: 3035229009100832132}
+  - component: {fileID: 8544475650194477726}
+  - component: {fileID: 6185881176369101940}
   m_Layer: 6
   m_Name: ChompCollider
   m_TagString: Untagged
@@ -326,7 +320,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6969350822720575272}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.423, z: 0.996}
+  m_LocalPosition: {x: 0, y: 1.423, z: 1.262}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -348,12 +342,51 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.52, y: 1.48, z: 0.85}
   m_Center: {x: 0, y: -0.12, z: -0}
+--- !u!54 &8544475650194477726
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6969350822720575272}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 0
+  m_ImplicitTensor: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!114 &6185881176369101940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6969350822720575272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 853d4112e2d119b4a89fd13f23a9fcc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7074676795565208912
 GameObject:
   m_ObjectHideFlags: 0
