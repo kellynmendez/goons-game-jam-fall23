@@ -693,8 +693,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2014536795}
-        m_TargetAssemblyTypeName: MainMenuButtonPress, Assembly-CSharp
+      - m_Target: {fileID: 1882534519}
+        m_TargetAssemblyTypeName: MainMenuButtons, Assembly-CSharp
         m_MethodName: PressPlayButton
         m_Mode: 1
         m_Arguments:
@@ -987,8 +987,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2014536795}
-        m_TargetAssemblyTypeName: MainMenuButtonPress, Assembly-CSharp
+      - m_Target: {fileID: 1882534519}
+        m_TargetAssemblyTypeName: MainMenuButtons, Assembly-CSharp
         m_MethodName: PressQuitButton
         m_Mode: 1
         m_Arguments:
@@ -1048,7 +1048,7 @@ GameObject:
   - component: {fileID: 1882534520}
   - component: {fileID: 1882534519}
   m_Layer: 0
-  m_Name: UIManager
+  m_Name: UI Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1063,7 +1063,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1882534518}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e10b645f08af4094484a55e64710d176, type: 3}
+  m_Script: {fileID: 11500000, guid: e66c8d5f07443e44d9387e40401e5b04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1882534520
