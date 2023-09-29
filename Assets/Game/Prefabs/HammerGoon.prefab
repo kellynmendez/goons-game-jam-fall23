@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 142299612832428002}
   - component: {fileID: 4694903429217294740}
-  - component: {fileID: 3659512167160974769}
+  - component: {fileID: 4876402268115229714}
   - component: {fileID: 5385905203498649800}
   - component: {fileID: 7324921038110866306}
   m_Layer: 7
@@ -91,8 +91,8 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!136 &3659512167160974769
-CapsuleCollider:
+--- !u!65 &4876402268115229714
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -109,11 +109,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.020853
-  m_Height: 4.393261
-  m_Direction: 2
-  m_Center: {x: 0, y: 0.7300408, z: 0}
+  serializedVersion: 3
+  m_Size: {x: 0.9215044, y: 1.4606044, z: 3.186185}
+  m_Center: {x: 0, y: 0.8496158, z: 0}
 --- !u!114 &5385905203498649800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,7 +175,7 @@ Transform:
   m_GameObject: {fileID: 6441949311697133665}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.81, z: 2.04}
-  m_LocalScale: {x: 0.6388991, y: 1.244, z: 0.72884}
+  m_LocalScale: {x: 0.7639317, y: 1.244, z: 0.9238776}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 142299612832428002}

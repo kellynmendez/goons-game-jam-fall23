@@ -74,8 +74,7 @@ public class TimerCountdown : MonoBehaviour
     void TimerDisplay()
     {
         // Update the timer text object
-        timerText.text = (((int) secondsLeft / 60).ToString("00") + ":" 
-                            + (secondsLeft % 60).ToString("00"));
+        timerText.text = (string.Format("00:{0:00}", secondsLeft));
     }
 
     void TimerSwitchColor(int opt)
