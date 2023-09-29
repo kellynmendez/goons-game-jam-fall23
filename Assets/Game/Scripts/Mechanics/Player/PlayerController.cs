@@ -48,8 +48,7 @@ public class PlayerController : MonoBehaviour
     private ICombatAbility _combatAbility;
     private CharacterController _controller;
     private Camera _mainCamera;
-    private List<GoonBase> _killableGoonsInFront;
-    private List<GoonBase> _killableGoonsInCircle;
+    private List<GoonBase> _killableGoons;
     //private bool _chompIsCoolingDown = false;
     #endregion
 
@@ -73,15 +72,14 @@ public class PlayerController : MonoBehaviour
 
         _controller = GetComponent<CharacterController>();
         _mainCamera = CameraMovement.Instance.gameObject.GetComponent<Camera>();
-        _killableGoonsInFront = new List<GoonBase>();
-        _killableGoonsInCircle = new List<GoonBase>();
+        _killableGoons = new List<GoonBase>();
 
         // Instantiating combat ability
         //_combatAbility = new NoCombatAbility();
         //_combatAbility = new DashCombatAbility(this, _controller, dashSpeed, dashDuration, dashCooldown);
         //_combatAbility = new ShootCombatAbility(bulletPool, bulletVelocity, bulletLifeTime, bulletScaleAmount);
         //_combatAbility = new ShieldCombatAbility(this, gameObject.GetComponent<HealthSystem>(), invincibilityDuration);
-        //_combatAbility = new HammerCombatAbility(this, _killableGoonsInFront);
+        //_combatAbility = new HammerCombatAbility(this, _killableGoons);
         _combatAbility = new PuttPuttCombatAbility(this, _puttPuttRingEffect);
     }
 
@@ -142,29 +140,29 @@ public class PlayerController : MonoBehaviour
     {
         IsChomping = true;
         
-        if (_killableGoonsInFront.Count == 0)
+        if (_killableGoons.Count == 0)
         {
             Debug.Log("Nothing to chomp!");
         }
         else // Getting the goon to be chomped
         {
             GoonBase goonToChomp = null;
-            if (_killableGoonsInFront.Count == 1)
+            if (_killableGoons.Count == 1)
             {
-                goonToChomp = _killableGoonsInFront[0];
+                goonToChomp = _killableGoons[0];
             }
             else
             {
                 // Checking goon list to find which one is closer
                 float smallestDistance = 0;
-                for (int i = 0; i < _killableGoonsInFront.Count; i++)
+                for (int i = 0; i < _killableGoons.Count; i++)
                 {
-                    float distance = Vector3.Distance(transform.position, _killableGoonsInFront[i].transform.position);
+                    float distance = Vector3.Distance(transform.position, _killableGoons[i].transform.position);
 
                     if (goonToChomp == null)
                     {
                         smallestDistance = distance;
-                        goonToChomp = _killableGoonsInFront[i];
+                        goonToChomp = _killableGoons[i];
                     }
                     else
                     {
@@ -172,7 +170,7 @@ public class PlayerController : MonoBehaviour
                         if (distance < smallestDistance)
                         {
                             smallestDistance = distance;
-                            goonToChomp = _killableGoonsInFront[i];
+                            goonToChomp = _killableGoons[i];
                         }
                     }
                 }
@@ -185,24 +183,14 @@ public class PlayerController : MonoBehaviour
         IsChomping = false;
     }
 
-    public void AddToKillableGoonsInFrontList(GoonBase goon)
+    public void AddToKillableGoonsList(GoonBase goon)
     {
-        _killableGoonsInFront.Add(goon);
+        _killableGoons.Add(goon);
     }
 
-    public void RemoveFromKillableGoonsInFrontList(GoonBase goon)
+    public void RemoveFromKillableGoonsList(GoonBase goon)
     {
-        _killableGoonsInFront.Remove(goon);
-    }
-
-    public void AddToKillableGoonsInCircleList(GoonBase goon)
-    {
-        _killableGoonsInCircle.Add(goon);
-    }
-
-    public void RemoveFromKillableGoonsInCircleList(GoonBase goon)
-    {
-        _killableGoonsInCircle.Remove(goon);
+        _killableGoons.Remove(goon);
     }
 
     /// <summary>

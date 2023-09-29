@@ -45,10 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goonObjectList:
-  - {fileID: 4336282167769449114, guid: 4e5fff781f167884880ede933fa23f36, type: 3}
-  - {fileID: 4336282167769449114, guid: 4e5fff781f167884880ede933fa23f36, type: 3}
-  - {fileID: 2755071406000192382, guid: 8534748328e5897469edb655a1fda863, type: 3}
-  - {fileID: 2755071406000192382, guid: 8534748328e5897469edb655a1fda863, type: 3}
   - {fileID: 7055575647181373438, guid: 12e2dffd104de6d42928f7d60f064e7f, type: 3}
   - {fileID: 7055575647181373438, guid: 12e2dffd104de6d42928f7d60f064e7f, type: 3}
   _spawnTime: 1

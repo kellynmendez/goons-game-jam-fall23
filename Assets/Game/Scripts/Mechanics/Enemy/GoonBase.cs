@@ -46,8 +46,7 @@ public class GoonBase : MonoBehaviour
         spawner.AddToInactiveGoonsList(this.gameObject);
 
         // Remove goon from killable goons lists (if in it)
-        PlayerController.Instance.RemoveFromKillableGoonsInFrontList(this);
-        PlayerController.Instance.RemoveFromKillableGoonsInCircleList(this);
+        PlayerController.Instance.RemoveFromKillableGoonsList(this);
         
         // Deactivating game object
         gameObject.SetActive(false);
