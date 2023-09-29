@@ -6,6 +6,6 @@ public class UIManager : MonoBehaviour
 {
     public void UpdateScore()
     {
-        Debug.Log("killed goon");
+        
     }
 }
