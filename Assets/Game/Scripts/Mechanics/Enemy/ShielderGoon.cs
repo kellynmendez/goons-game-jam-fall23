@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class ShielderGoon : GoonBase
 {
@@ -34,6 +35,7 @@ public class ShielderGoon : GoonBase
 
     private IEnumerator Hit()
     {
+        yield return new WaitForSeconds(0.1f);
         while (true)
         {
             if (!agent.pathPending)
@@ -42,8 +44,10 @@ public class ShielderGoon : GoonBase
                 {
                     if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
                     {
-                        Debug.Log("hitting!");
+                        // Using ability and invoking unity event
+                        Debug.Log($"{gameObject.name} HITTING");
                         _hitAbility.UseAbility();
+                        OnCombatAbility?.Invoke();
                         yield return new WaitForSeconds(_attackInterval);
                     }
                 }

@@ -4,25 +4,30 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(AudioSource))]
 public class GoonBase : MonoBehaviour
 {
     public bool IsDead { get; set; } = false;
 
-    [SerializeField] UnityEvent OnDeath = null;
+    [SerializeField] protected UnityEvent OnCombatAbility = null;
 
     protected NavMeshAgent agent;
     protected GoonSpawner spawner;
     protected HealthSystem health;
+    protected AudioSource audioSource;
 
     protected virtual void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         health = gameObject.GetComponent<HealthSystem>();
+        audioSource = gameObject.GetComponent<AudioSource>();
+
+        //StartCoroutine(ChasePlayer());
     }
 
     protected virtual void Update()
     {
-        //agent.SetDestination(PlayerController.Instance.transform.position);
+        agent.SetDestination(PlayerController.Instance.transform.position);
 
         if (PlayerController.Instance.IsDead)
         {
@@ -37,9 +42,6 @@ public class GoonBase : MonoBehaviour
         // Disabling goon
         this.enabled = false;
         IsDead = true;
-
-        // Invoke death event
-        OnDeath?.Invoke();
 
         // Add goon to inactive goon spawn list and remove from active list
         spawner.RemoveFromActiveGoonsList(this.gameObject);
@@ -72,4 +74,25 @@ public class GoonBase : MonoBehaviour
         this.spawner = spawner;
     }
 
+    private IEnumerator ChasePlayer()
+    {
+        while(true)
+        {
+            Debug.Log("chasing");
+            agent.SetDestination(PlayerController.Instance.transform.position);
+            //yield return new WaitForSeconds(0.1f);
+            yield return null;
+        }
+    }
+    public void PlayFX(AudioClip sfx)
+    {
+        if (audioSource != null && sfx != null)
+        {
+            audioSource.PlayOneShot(sfx, audioSource.volume);
+        }
+        else
+        {
+            Debug.LogError("Must have audio component and give sfx.");
+        }
+    }
 }

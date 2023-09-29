@@ -42,6 +42,7 @@ public class ShooterGoon : GoonBase
 
     public void Shoot()
     {
+        OnCombatAbility?.Invoke();
         _shootAbility.UseAbility();
     }
 }

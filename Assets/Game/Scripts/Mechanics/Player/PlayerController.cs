@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(CharacterController), typeof(AudioSource))]
 public class PlayerController : MonoBehaviour
 {
     #region public variables
@@ -16,11 +16,10 @@ public class PlayerController : MonoBehaviour
     #region serialized variables
     [Header("Movement")]
     [SerializeField] float moveSpeed = 12f;
-    [SerializeField] UnityEvent onMove = null;
 
     [Header("Chomp Settings")]
     //[SerializeField] float chompCooldown = 2f;
-    //[SerializeField] UnityEvent OnChomp = null;
+    [SerializeField] UnityEvent OnChomp = null;
 
     [Header("Dash Settings")]
     [SerializeField] float dashSpeed = 20f;
@@ -39,7 +38,6 @@ public class PlayerController : MonoBehaviour
     [Header("PuttPutt Settings")]
     [SerializeField] ParticleSystem _puttPuttRingEffect;
 
-
     //[Header("Animations")]
     //[SerializeField] Animator animator = null;
     #endregion
@@ -49,6 +47,7 @@ public class PlayerController : MonoBehaviour
     private CharacterController _controller;
     private Camera _mainCamera;
     private List<GoonBase> _killableGoons;
+    private AudioSource _audioSource;
     //private bool _chompIsCoolingDown = false;
     #endregion
 
@@ -71,8 +70,8 @@ public class PlayerController : MonoBehaviour
         }
 
         _controller = GetComponent<CharacterController>();
-        _mainCamera = CameraMovement.Instance.gameObject.GetComponent<Camera>();
         _killableGoons = new List<GoonBase>();
+        _audioSource = GetComponent<AudioSource>();
 
         // Instantiating combat ability
         //_combatAbility = new NoCombatAbility();
@@ -81,6 +80,11 @@ public class PlayerController : MonoBehaviour
         //_combatAbility = new ShieldCombatAbility(this, gameObject.GetComponent<HealthSystem>(), invincibilityDuration);
         //_combatAbility = new HammerCombatAbility(this, _killableGoons);
         _combatAbility = new PuttPuttCombatAbility(this, _puttPuttRingEffect);
+    }
+
+    private void Start()
+    {
+        _mainCamera = CameraMovement.Instance.gameObject.GetComponent<Camera>();
     }
 
     private void Update()
@@ -120,9 +124,6 @@ public class PlayerController : MonoBehaviour
         {
             // Moving the character
             _controller.Move(direction * moveSpeed * Time.deltaTime);
-
-            // Invoking on move unity event
-            onMove.Invoke();
         }
     }
 
@@ -178,6 +179,8 @@ public class PlayerController : MonoBehaviour
 
             // Chomp goon
             goonToChomp.Kill();
+            // Invoke chomp event
+            OnChomp.Invoke();
         }
             
         IsChomping = false;
@@ -205,5 +208,17 @@ public class PlayerController : MonoBehaviour
     {
         IsDead = true;
         this.enabled = false;
+    }
+
+    public void PlayFX(AudioClip sfx)
+    {
+        if (_audioSource != null && sfx != null)
+        {
+            _audioSource.PlayOneShot(sfx, _audioSource.volume);
+        }
+        else
+        {
+            Debug.LogError("Must have audio component and give sfx.");
+        }
     }
 }
