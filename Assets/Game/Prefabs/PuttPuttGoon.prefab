@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1906006970856841101}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.718, z: 0.913}
-  m_LocalScale: {x: 0.5189359, y: 1, z: 0.62782514}
+  m_LocalPosition: {x: 0, y: 0.664, z: 0.989}
+  m_LocalScale: {x: 0.68567, y: 1, z: 0.62782514}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3848726012502365007}
@@ -76,11 +76,11 @@ GameObject:
   m_Component:
   - component: {fileID: 3848726012502365007}
   - component: {fileID: 3070409008989003543}
-  - component: {fileID: 4019144185758192149}
-  - component: {fileID: 2272990095282918806}
+  - component: {fileID: 8282398249837990972}
+  - component: {fileID: 2244469405160517283}
   - component: {fileID: 381076873686323678}
   m_Layer: 7
-  m_Name: ShielderGoon
+  m_Name: PuttPuttGoon
   m_TagString: Goon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,7 +112,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 2755071406000192382}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.75
+  m_Radius: 0.96
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -121,12 +121,12 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1.56
+  m_Height: 1.26
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!136 &4019144185758192149
-CapsuleCollider:
+--- !u!65 &8282398249837990972
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -143,12 +143,10 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1
-  m_Height: 1.7706722
-  m_Direction: 1
-  m_Center: {x: 0.018170834, y: 0.75240165, z: 0.005456805}
---- !u!114 &2272990095282918806
+  serializedVersion: 3
+  m_Size: {x: 1.9388988, y: 1.261667, z: 2.2446554}
+  m_Center: {x: 0, y: 0.637285, z: -0.27515426}
+--- !u!114 &2244469405160517283
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -157,19 +155,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 2755071406000192382}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b44da233a4beaa547b06f3d72683262a, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d822d4ff4f08614db99fe859ab8e4c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   OnDeath:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4205006014255329249, guid: 62ca530cd49d17d4eba39a790994a1cc, type: 3}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: UpdateScore
-        m_Mode: 1
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -220,15 +218,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9005865651167925813}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.372, z: 0}
+  m_LocalPosition: {x: 0, y: -1.358, z: 0.198}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2808771789221998421}
+  - {fileID: 1914508465194384166}
   m_Father: {fileID: 3848726012502365007}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &2409560434732058814
+--- !u!1001 &2097281266802941133
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -236,61 +234,61 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8690125388819007197}
     m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 3f95f729ebebb4e42b45840f958c6e86, type: 3}
+    - target: {fileID: -8679921383154817045, guid: ebaf3519a85a66742826fe27d8cfc3a9, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3f95f729ebebb4e42b45840f958c6e86, type: 3}
+    - target: {fileID: -8679921383154817045, guid: ebaf3519a85a66742826fe27d8cfc3a9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3f95f729ebebb4e42b45840f958c6e86, type: 3}
+    - target: {fileID: -8679921383154817045, guid: ebaf3519a85a66742826fe27d8cfc3a9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.9481165
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3f95f729ebebb4e42b45840f958c6e86, type: 3}
+    - target: {fileID: -8679921383154817045, guid: ebaf3519a85a66742826fe27d8cfc3a9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.2978795
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3f95f729ebebb4e42b45840f958c6e86, type: 3}
+    - target: {fileID: -8679921383154817045, guid: ebaf3519a85a66742826fe27d8cfc3a9, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3f95f729ebebb4e42b45840f958c6e86, type: 3}
+    - target: {fileID: -8679921383154817045, guid: ebaf3519a85a66742826fe27d8cfc3a9, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7071068
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3f95f729ebebb4e42b45840f958c6e86, type: 3}
+    - target: {fileID: -8679921383154817045, guid: ebaf3519a85a66742826fe27d8cfc3a9, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3f95f729ebebb4e42b45840f958c6e86, type: 3}
+    - target: {fileID: -8679921383154817045, guid: ebaf3519a85a66742826fe27d8cfc3a9, type: 3}
       propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ebaf3519a85a66742826fe27d8cfc3a9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3f95f729ebebb4e42b45840f958c6e86, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3f95f729ebebb4e42b45840f958c6e86, type: 3}
+    - target: {fileID: -8679921383154817045, guid: ebaf3519a85a66742826fe27d8cfc3a9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 3f95f729ebebb4e42b45840f958c6e86, type: 3}
+    - target: {fileID: -8679921383154817045, guid: ebaf3519a85a66742826fe27d8cfc3a9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 3f95f729ebebb4e42b45840f958c6e86, type: 3}
+    - target: {fileID: 919132149155446097, guid: ebaf3519a85a66742826fe27d8cfc3a9, type: 3}
       propertyPath: m_Name
-      value: ShieldGoone
+      value: PutPut
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 3f95f729ebebb4e42b45840f958c6e86, type: 3}
---- !u!4 &2808771789221998421 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: ebaf3519a85a66742826fe27d8cfc3a9, type: 3}
+--- !u!4 &1914508465194384166 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3f95f729ebebb4e42b45840f958c6e86, type: 3}
-  m_PrefabInstance: {fileID: 2409560434732058814}
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ebaf3519a85a66742826fe27d8cfc3a9, type: 3}
+  m_PrefabInstance: {fileID: 2097281266802941133}
   m_PrefabAsset: {fileID: 0}
