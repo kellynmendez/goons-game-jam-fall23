@@ -9,29 +9,20 @@ public class Bullet : MonoBehaviour
     [SerializeField] UnityEvent OnActivate = null;
     
     private float _activationTimeStamp = 0f;
-    private float _scaleAmount;
     private float _velocity;
     private float _lifeTime;
-    private Vector3 _startScale;
     private Vector3 _initialForward;
     private bool _isPlayersBullet;
-
-    private void OnEnable()
-    {
-        _startScale = gameObject.transform.localScale;
-        //StartCoroutine(FadeToInactive());
-    }
 
     public void SetIsPlayersBullet(bool isPlayersBullet)
     {
         _isPlayersBullet = isPlayersBullet;
     }
 
-    public void Activate(Vector3 initialPosition, Vector3 initialForward, float velocity, float lifeTime, float scaleAmount)
+    public void Activate(Vector3 initialPosition, Vector3 initialForward, float velocity, float lifeTime)
     {
         _velocity = velocity;
         _lifeTime = lifeTime;
-        _scaleAmount = scaleAmount;
         _activationTimeStamp = Time.time;
         this.enabled = true;
 
@@ -57,7 +48,6 @@ public class Bullet : MonoBehaviour
 
     public void Deactivate()
     {
-        gameObject.transform.localScale = _startScale;
         gameObject.SetActive(false);
     }
 
@@ -78,21 +68,5 @@ public class Bullet : MonoBehaviour
         {
             Deactivate();
         }
-    }
-
-    private IEnumerator FadeToInactive()
-    {
-        float start = Time.time;
-
-        while (start + _lifeTime > Time.time)
-        {
-            // Slowly shrink object
-            gameObject.transform.localScale = gameObject.transform.localScale * _scaleAmount;
-            yield return new WaitForSeconds(0.1f); // scale consistently across any machine
-        }
-        Debug.Log("set bullet inactive");
-        gameObject.transform.localScale = _startScale;
-        gameObject.SetActive(false);
-        yield break;
     }
 }

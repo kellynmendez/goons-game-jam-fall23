@@ -43,7 +43,6 @@ public class GoonBase : MonoBehaviour
     public void Kill()
     {
         if (IsDead) return;
-        Debug.Log("goon killed");
         OnDeath?.Invoke();
 
         // Add goon to inactive goon spawn list and remove from active list

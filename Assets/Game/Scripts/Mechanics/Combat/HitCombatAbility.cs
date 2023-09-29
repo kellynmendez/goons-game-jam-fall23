@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Only goons use this ability to attack the player
+/// </summary>
 public class HitCombatAbility : ICombatAbility
 {
     private MonoBehaviour _mono;

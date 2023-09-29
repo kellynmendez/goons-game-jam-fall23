@@ -27,18 +27,23 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float dashSpeed = 20f;
     [SerializeField] float dashDuration = 1f;
     [SerializeField] float dashCooldown = 1f;
+    [SerializeField] int numDashesAllowed = 5;
 
     [Header("Shoot Settings")]
     [SerializeField] BulletPool bulletPool = null;
     [SerializeField] float bulletVelocity = 15f;
     [SerializeField] float bulletLifeTime = 6f;
-    [SerializeField] float bulletScaleAmount = 0.98f;
+    [SerializeField] int numShotsAllowed = 12;
 
     [Header("Shield Settings")]
-    [SerializeField] float invincibilityDuration = 5f;
+    [SerializeField] float invincibilityDuration = 8f;
+
+    [Header("Hammer Settings")]
+    [SerializeField] int numHammersAllowed = 3;
 
     [Header("PuttPutt Settings")]
     [SerializeField] ParticleSystem _puttPuttRingEffect;
+    [SerializeField] int numPuttsAllowed = 1;
 
     //[Header("Animations")]
     //[SerializeField] Animator animator = null;
@@ -49,8 +54,19 @@ public class PlayerController : MonoBehaviour
     private CharacterController _controller;
     private Camera _mainCamera;
     private List<GoonBase> _killableGoons;
-    private AudioSource _audioSource;
+
+    // Tracking 
+    private int numShots = 0;
+    private int numDashes = 0;
+    private int numHammers = 0;
+    private int numPutts = 0;
     //private bool _chompIsCoolingDown = false;
+
+    // Inventory
+    private ICombatAbility[] _goonAbilities;
+
+    // FX
+    private AudioSource _audioSource;
     #endregion
 
     private void Awake()
@@ -62,7 +78,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("There should not be more than two players in a secene.");
+            Debug.LogError("There should not be more than one player in a scene.");
         }
 
         // Bullet origin check
@@ -71,17 +87,19 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("There is no bullet pool on this object or its children.");
         }
 
+        // Instantiating goon abilities
+        _goonAbilities = new ICombatAbility[3];
+        for (int i = 0; i < _goonAbilities.Length; i++)
+        {
+            _goonAbilities[i] = new NoCombatAbility();
+        }
+
         _controller = GetComponent<CharacterController>();
         _killableGoons = new List<GoonBase>();
         _audioSource = GetComponent<AudioSource>();
 
         // Instantiating combat ability
-        //_combatAbility = new NoCombatAbility();
-        //_combatAbility = new DashCombatAbility(this, _controller, dashSpeed, dashDuration, dashCooldown);
-        //_combatAbility = new ShootCombatAbility(bulletPool, bulletVelocity, bulletLifeTime, bulletScaleAmount);
-        //_combatAbility = new ShieldCombatAbility(this, gameObject.GetComponent<HealthSystem>(), invincibilityDuration);
-        //_combatAbility = new HammerCombatAbility(this, _killableGoons);
-        _combatAbility = new PuttPuttCombatAbility(this, _puttPuttRingEffect);
+        _combatAbility = new NoCombatAbility();
     }
 
     private void Start()
@@ -100,6 +118,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             _combatAbility.UseAbility();
+            CheckIfCombatAbilityIsUsedUp();
         }
         // If chomping
         else if (!IsChomping && Input.GetMouseButtonDown(1))
@@ -111,6 +130,46 @@ public class PlayerController : MonoBehaviour
     public void SetCombatAbility(ICombatAbility combatAbility)
     {
         _combatAbility = combatAbility;
+    }
+
+    public void CheckIfCombatAbilityIsUsedUp()
+    {
+        if (_combatAbility is ShootCombatAbility)
+        {
+            numShots++;
+            if (numShots >= numShotsAllowed)
+            {
+                InventorySystem.Instance.RemoveGoonAbilityFromInventory();
+                numShots = 0;
+            }
+        }
+        else if (_combatAbility is DashCombatAbility)
+        {
+            numDashes++;
+            if (numDashes >= numDashesAllowed)
+            {
+                InventorySystem.Instance.RemoveGoonAbilityFromInventory();
+                numDashes = 0;
+            }
+        }
+        else if (_combatAbility is HammerCombatAbility)
+        {
+            numHammers++;
+            if (numHammers >= numHammersAllowed)
+            {
+                InventorySystem.Instance.RemoveGoonAbilityFromInventory();
+                numHammers = 0;
+            }
+        }
+        else if (_combatAbility is PuttPuttCombatAbility)
+        {
+            numPutts++;
+            if (numPutts >= numPuttsAllowed)
+            {
+                InventorySystem.Instance.RemoveGoonAbilityFromInventory();
+                numPutts = 0;
+            }
+        }
     }
 
     #region Movement functions
@@ -139,6 +198,7 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    #region Chomp functions
     private void Chomp()
     {
         IsChomping = true;
@@ -180,6 +240,7 @@ public class PlayerController : MonoBehaviour
             }
 
             // Chomp goon
+            InventorySystem.Instance.AddGoonAbilityToInventory(goonToChomp);
             goonToChomp.Kill();
             // Invoke chomp event
             OnChomp.Invoke();
@@ -197,6 +258,35 @@ public class PlayerController : MonoBehaviour
     {
         _killableGoons.Remove(goon);
     }
+    #endregion
+
+    #region Get Combat Abilities
+    public ShootCombatAbility GetPlayerShootCombatAbility()
+    {
+        return new ShootCombatAbility(bulletPool, bulletVelocity, bulletLifeTime);
+    }
+
+    public ShieldCombatAbility GetPlayerShieldCombatAbility()
+    {
+        return new ShieldCombatAbility(this, gameObject.GetComponent<HealthSystem>(), invincibilityDuration);
+    }
+
+    public DashCombatAbility GetPlayerSpeedCombatAbility()
+    {
+        return new DashCombatAbility(this, _controller, dashSpeed, dashDuration, dashCooldown);
+    }
+
+    public HammerCombatAbility GetPlayerHammerCombatAbility()
+    {
+        return new HammerCombatAbility(this, _killableGoons);
+    }
+
+    public PuttPuttCombatAbility GetPlayerPuttPuttCombatAbility()
+    {
+        return new PuttPuttCombatAbility(this, _puttPuttRingEffect);
+    }
+    #endregion
+
 
     /// <summary>
     /// Freeze player rotation and position when using abilities

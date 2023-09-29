@@ -20,10 +20,16 @@ public class ShieldCombatAbility : ICombatAbility
         _mono.StartCoroutine(MakeInvincible());
     }
 
+    public void AbilityUsedUp()
+    {
+        InventorySystem.Instance.RemoveGoonAbilityFromInventory();
+    }
+
     private IEnumerator MakeInvincible()
     {
         _healthSys.IsInvincible = true;
         yield return new WaitForSeconds(_inviDuration);
         _healthSys.IsInvincible = false;
+        AbilityUsedUp();
     }
 }

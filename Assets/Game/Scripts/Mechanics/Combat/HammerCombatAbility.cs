@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class HammerCombatAbility : ICombatAbility
 {
-    PlayerController _player;
-    List<GoonBase> _killableGoons;
+    private MonoBehaviour _mono;
+    private PlayerController _player;
+    private List<GoonBase> _killableGoons;
 
     public HammerCombatAbility(PlayerController player, List<GoonBase> killableGoons)
     {
+        _mono = player as MonoBehaviour;
         _player = player;
         _killableGoons = killableGoons;
     }

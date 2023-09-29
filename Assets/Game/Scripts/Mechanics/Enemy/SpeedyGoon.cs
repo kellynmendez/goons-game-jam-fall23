@@ -42,7 +42,6 @@ public class SpeedyGoon : GoonBase
                 {
                     if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
                     {
-                        Debug.Log($"{gameObject.name} HITTING");
                         // Using ability and invoking unity event
                         _hitAbility.UseAbility();
                         OnCombatAbility?.Invoke();

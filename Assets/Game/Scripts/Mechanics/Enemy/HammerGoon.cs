@@ -43,7 +43,6 @@ public class HammerGoon : GoonBase
                     if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
                     {
                         // Using ability and invoking unity event
-                        Debug.Log($"{gameObject.name} HITTING");
                         _hitAbility.UseAbility();
                         OnCombatAbility?.Invoke();
                         yield return new WaitForSeconds(_attackInterval);
