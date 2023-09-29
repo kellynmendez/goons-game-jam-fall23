@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region serialized variables
+    [SerializeField] UnityEvent OnDeath = null;
+
     [Header("Movement")]
     [SerializeField] float moveSpeed = 12f;
 
@@ -206,6 +208,7 @@ public class PlayerController : MonoBehaviour
     
     public void Kill()
     {
+        OnDeath?.Invoke();
         IsDead = true;
         this.enabled = false;
     }

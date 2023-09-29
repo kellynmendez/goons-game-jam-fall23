@@ -9,18 +9,23 @@ public class GoonBase : MonoBehaviour
 {
     public bool IsDead { get; set; } = false;
 
+    [SerializeField] GameObject _visualsToDeactivate;
     [SerializeField] protected UnityEvent OnCombatAbility = null;
+    //[SerializeField] protected UnityEvent OnHurt = null;
+    [SerializeField] protected UnityEvent OnDeath = null;
 
     protected NavMeshAgent agent;
     protected GoonSpawner spawner;
     protected HealthSystem health;
     protected AudioSource audioSource;
+    protected Collider _colliderToDeactivate;
 
     protected virtual void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         health = gameObject.GetComponent<HealthSystem>();
         audioSource = gameObject.GetComponent<AudioSource>();
+        _colliderToDeactivate = gameObject.GetComponent<Collider>();
 
         //StartCoroutine(ChasePlayer());
     }
@@ -38,10 +43,8 @@ public class GoonBase : MonoBehaviour
     public void Kill()
     {
         if (IsDead) return;
-
-        // Disabling goon
-        this.enabled = false;
-        IsDead = true;
+        Debug.Log("goon killed");
+        OnDeath?.Invoke();
 
         // Add goon to inactive goon spawn list and remove from active list
         spawner.RemoveFromActiveGoonsList(this.gameObject);
@@ -49,14 +52,22 @@ public class GoonBase : MonoBehaviour
 
         // Remove goon from killable goons lists (if in it)
         PlayerController.Instance.RemoveFromKillableGoonsList(this);
-        
-        // Deactivating game object
-        gameObject.SetActive(false);
+
+        // Disabling goon
+        this.enabled = false;
+        _visualsToDeactivate.SetActive(false);
+        _colliderToDeactivate.enabled = false;
+        IsDead = true;
+
+        // Deactivating game object after sound
+        StartCoroutine(DeactivateAfterSound());
     }
 
     public void Spawn()
     {
         // Enable goon
+        _visualsToDeactivate.SetActive(true);
+        _colliderToDeactivate.enabled = true;
         this.enabled = true;
         IsDead = false;
         
@@ -76,7 +87,7 @@ public class GoonBase : MonoBehaviour
 
     private IEnumerator ChasePlayer()
     {
-        while(true)
+        while (true)
         {
             Debug.Log("chasing");
             agent.SetDestination(PlayerController.Instance.transform.position);
@@ -84,6 +95,7 @@ public class GoonBase : MonoBehaviour
             yield return null;
         }
     }
+
     public void PlayFX(AudioClip sfx)
     {
         if (audioSource != null && sfx != null)
@@ -94,5 +106,15 @@ public class GoonBase : MonoBehaviour
         {
             Debug.LogError("Must have audio component and give sfx.");
         }
+    }
+
+    private IEnumerator DeactivateAfterSound()
+    {
+        while (audioSource.isPlaying)
+        {
+            yield return null;
+        }
+        // Deactivating game object
+        gameObject.SetActive(false);
     }
 }

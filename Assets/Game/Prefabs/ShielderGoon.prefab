@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1906006970856841101}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.718, z: 0.913}
-  m_LocalScale: {x: 0.5189359, y: 1, z: 0.62782514}
+  m_LocalScale: {x: 0.73782307, y: 1, z: 0.62782514}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3848726012502365007}
@@ -114,7 +114,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.75
-  m_Speed: 3.5
+  m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -146,9 +146,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 1
-  m_Height: 1.7706722
+  m_Height: 2.526943
   m_Direction: 1
-  m_Center: {x: 0.018170834, y: 0.75240165, z: 0.005456805}
+  m_Center: {x: 0.018170834, y: 1.0158731, z: 0.005456805}
 --- !u!114 &2272990095282918806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,6 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b44da233a4beaa547b06f3d72683262a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _visualsToDeactivate: {fileID: 9005865651167925813}
   OnCombatAbility:
     m_PersistentCalls:
       m_Calls:
@@ -170,6 +171,21 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 8300000, guid: 106b03d9102e8bd49afb937b8a43e60e, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2272990095282918806}
+        m_TargetAssemblyTypeName: GoonBase, Assembly-CSharp
+        m_MethodName: PlayFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: bb6f6a58a39dbf848b56a7389f8d5ca9, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -200,21 +216,6 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 8300000, guid: 5f4b42249b873974a9cb3eb4223cd1bf, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onDeath:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2272990095282918806}
-        m_TargetAssemblyTypeName: GoonBase, Assembly-CSharp
-        m_MethodName: PlayFX
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: bb6f6a58a39dbf848b56a7389f8d5ca9, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0

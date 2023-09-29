@@ -10,7 +10,6 @@ public class HealthSystem : MonoBehaviour
 
     [SerializeField] int lives = 1;
     [SerializeField] UnityEvent onHurt = null;
-    [SerializeField] UnityEvent onDeath = null;
 
     internal int startNumLives;
     internal int LivesLeft;
@@ -64,6 +63,5 @@ public class HealthSystem : MonoBehaviour
 
         IsDead = true;
         LivesLeft = 0;
-        onDeath.Invoke();
     }
 }
