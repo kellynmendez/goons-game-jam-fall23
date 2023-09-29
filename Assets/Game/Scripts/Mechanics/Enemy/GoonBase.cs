@@ -22,7 +22,7 @@ public class GoonBase : MonoBehaviour
 
     protected virtual void Update()
     {
-        agent.SetDestination(PlayerController.Instance.transform.position);
+        //agent.SetDestination(PlayerController.Instance.transform.position);
 
         if (PlayerController.Instance.IsDead)
         {
