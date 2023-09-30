@@ -50,18 +50,19 @@ public class ShielderGoon : GoonBase
         yield return new WaitForSeconds(0.1f);
         while (true)
         {
-            if (!agent.pathPending)
+            if (agent.isStopped && (agent.remainingDistance <= agent.stoppingDistance))
             {
-                if (agent.remainingDistance <= agent.stoppingDistance)
+                yield return new WaitForSeconds(_pauseBeforeAttack);
+                if (!IsDead)
                 {
-                    if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
-                    {
-                        yield return new WaitForSeconds(_pauseBeforeAttack);
-                        // Using ability and invoking unity event
-                        _hitAbility.UseAbility();
-                        OnCombatAbility?.Invoke();
-                        yield return new WaitForSeconds(_attackInterval);
-                    }
+                    // Using ability and invoking unity event
+                    //_animator.SetBool(IDLE_ANIM, true);
+                    _animator.Play(ATTACK_ANIM);
+                    yield return new WaitForSeconds(0.1f);
+                    //_animator.SetBool(IDLE_ANIM, true);
+                    _hitAbility.UseAbility();
+                    OnCombatAbility?.Invoke();
+                    yield return new WaitForSeconds(_attackInterval);
                 }
             }
             yield return null;

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -10,6 +11,7 @@ public class PlayerController : MonoBehaviour
 {
     #region public variables
     public static PlayerController Instance;
+    public bool IsMoving { get; set; } = false;
     public bool IsDead { get; set; } = false;
     public bool IsInvincible { get; set; } = false;
     public bool IsUsingGoonAbility { get; set; } = false;
@@ -28,6 +30,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] float moveSpeed = 12f;
+    [SerializeField] Animator animator;
 
     [Header("Chomp Settings")]
     //[SerializeField] float chompCooldown = 2f;
@@ -77,6 +80,12 @@ public class PlayerController : MonoBehaviour
     private int _numHammers;
     private int _numPutts;
     //private bool _chompIsCoolingDown = false;
+
+    // Animations
+    protected const string IDLE_ANIM = "Idle";
+    protected const string WALK_ANIM = "Walk";
+    protected const string CHOMP_ANIM = "Chomp";
+    protected const string HAMMER_ANIM = "Hammer";
 
     // FX
     private AudioSource _audioSource;
@@ -223,8 +232,22 @@ public class PlayerController : MonoBehaviour
 
         if (direction.magnitude >= 0.1f)
         {
+            if (!IsMoving)
+            {
+                IsMoving = true;
+                animator.Play(WALK_ANIM);
+            }
             // Moving the character
             _controller.Move(direction * moveSpeed * Time.deltaTime);
+            
+        }
+        else
+        {
+            if (IsMoving)
+            {
+                IsMoving = false;
+                animator.Play(IDLE_ANIM);
+            }
         }
     }
 

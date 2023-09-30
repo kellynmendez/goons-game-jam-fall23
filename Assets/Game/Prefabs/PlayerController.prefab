@@ -9801,7 +9801,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4675366868680609067}
+  - {fileID: 3127000749134775086}
   m_Father: {fileID: 1235821819836860548}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9955,6 +9955,7 @@ MonoBehaviour:
   knockbackDuration: 0.4
   knockbackForce: 6
   moveSpeed: 7
+  animator: {fileID: 6057632016849186705}
   OnChomp:
     m_PersistentCalls:
       m_Calls:
@@ -19947,7 +19948,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!1001 &5145507813504314048
+--- !u!1001 &3238070404034749637
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -20006,10 +20007,39 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: eab9d6aaab8443841bdfb0cc6419e50e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6057632016849186705}
   m_SourcePrefab: {fileID: 100100000, guid: eab9d6aaab8443841bdfb0cc6419e50e, type: 3}
---- !u!4 &4675366868680609067 stripped
+--- !u!1 &2318938406278617492 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: eab9d6aaab8443841bdfb0cc6419e50e, type: 3}
+  m_PrefabInstance: {fileID: 3238070404034749637}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &6057632016849186705
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2318938406278617492}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 876f1736d35e45f45a6859761394b6ab, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!4 &3127000749134775086 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: eab9d6aaab8443841bdfb0cc6419e50e, type: 3}
-  m_PrefabInstance: {fileID: 5145507813504314048}
+  m_PrefabInstance: {fileID: 3238070404034749637}
   m_PrefabAsset: {fileID: 0}

@@ -24,6 +24,7 @@ public class GoonBase : MonoBehaviour
     [Header("Animations")]
     [SerializeField] protected Animator _animator;
 
+    protected const string IDLE_ANIM = "Idle";
     protected const string WALK_ANIM = "Walk";
     protected const string ATTACK_ANIM = "Attack";
 
@@ -64,8 +65,8 @@ public class GoonBase : MonoBehaviour
             if (IsMoving == true)
             {
                 IsMoving = false;
+                _animator.Play(IDLE_ANIM);
             }
-            
         }
         else
         {
@@ -73,6 +74,8 @@ public class GoonBase : MonoBehaviour
             if (IsMoving == false)
             {
                 IsMoving = true;
+                _animator.Play(WALK_ANIM);
+                
             }
         }
 
