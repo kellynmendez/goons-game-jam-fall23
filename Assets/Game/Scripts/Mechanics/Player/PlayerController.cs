@@ -4,7 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 [RequireComponent(typeof(CharacterController), typeof(AudioSource))]
 public class PlayerController : MonoBehaviour
