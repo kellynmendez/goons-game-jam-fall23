@@ -9866,7 +9866,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.99
+  m_Radius: 0.83
   m_Height: 2.7595491
   m_Direction: 1
   m_Center: {x: 0, y: 1.4037395, z: 0}
@@ -9890,7 +9890,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 2.09
-  m_Radius: 0.35
+  m_Radius: 0.56
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -9971,6 +9971,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  chompCooldown: 3
   dashSpeed: 16
   dashDuration: 0.3
   dashCooldown: 0.1
@@ -9985,7 +9986,12 @@ MonoBehaviour:
   numHammersAllowed: 3
   puttPuttRingVFX: {fileID: 1728024789272228486}
   numPuttsAllowed: 1
-  noAbility: {fileID: 8300000, guid: 40f5dbb40eff85c4a953cbf2f0e07369, type: 3}
+  noAbilityClip: {fileID: 0}
+  shootAbilityClip: {fileID: 0}
+  shieldAbilityClip: {fileID: 0}
+  speedAbilityClip: {fileID: 0}
+  hammerAbilityClip: {fileID: 0}
+  puttAbilityClip: {fileID: 0}
 --- !u!82 &1091895218027691023
 AudioSource:
   m_ObjectHideFlags: 0
@@ -14996,7 +15002,7 @@ Transform:
   m_GameObject: {fileID: 6969350822720575272}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.423, z: 1.262}
-  m_LocalScale: {x: 1.3313738, y: 1, z: 1}
+  m_LocalScale: {x: 2.3307996, y: 1, z: 1.6120965}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1235821819836860548}

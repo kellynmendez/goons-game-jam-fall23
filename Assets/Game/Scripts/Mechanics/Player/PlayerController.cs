@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     [Header("Chomp Settings")]
     //[SerializeField] float chompCooldown = 2f;
     [SerializeField] UnityEvent OnChomp = null;
+    [SerializeField] float chompCooldown = 3f;
 
     [Header("Dash Settings")]
     [SerializeField] float dashSpeed = 20f;
@@ -61,7 +62,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public int numPuttsAllowed = 1;
 
     [Header("Audio")]
-    [SerializeField] AudioClip noAbility = null;
+    [SerializeField] AudioClip noAbilityClip = null;
+    [SerializeField] AudioClip shootAbilityClip = null;
+    [SerializeField] AudioClip shieldAbilityClip = null;
+    [SerializeField] AudioClip speedAbilityClip = null;
+    [SerializeField] AudioClip hammerAbilityClip = null;
+    [SerializeField] AudioClip puttAbilityClip = null;
 
     //[Header("Animations")]
     //[SerializeField] Animator animator = null;
@@ -79,7 +85,7 @@ public class PlayerController : MonoBehaviour
     private int _numDashes;
     private int _numHammers;
     private int _numPutts;
-    //private bool _chompIsCoolingDown = false;
+    private bool _chompIsCoolingDown = false;
 
     // Animations
     protected const string IDLE_ANIM = "Idle";
@@ -146,7 +152,7 @@ public class PlayerController : MonoBehaviour
         {
             if (_combatAbility is NoCombatAbility)
             {
-                PlayFX(noAbility);
+                PlayFX(noAbilityClip);
             }
             else
             {
@@ -177,6 +183,8 @@ public class PlayerController : MonoBehaviour
         {
             _numShots--;
             UIManager.Instance.UpdateCurrentAbilityText(_numShots);
+            PlayFX(shootAbilityClip);
+
             if (_numShots <= 0)
             {
                 UIManager.Instance.RemoveGoonAbilityFromInventory();
@@ -187,11 +195,14 @@ public class PlayerController : MonoBehaviour
         {
             UIManager.Instance.UpdateCurrentAbilityText(0);
             UIManager.Instance.RemoveGoonAbilityFromInventory();
+            PlayFX(shieldAbilityClip);
         }
         else if (_combatAbility is DashCombatAbility)
         {
             _numDashes--;
             UIManager.Instance.UpdateCurrentAbilityText(_numDashes);
+            PlayFX(speedAbilityClip);
+
             if (_numDashes <= 0)
             {
                 UIManager.Instance.RemoveGoonAbilityFromInventory();
@@ -202,6 +213,9 @@ public class PlayerController : MonoBehaviour
         {
             _numHammers--;
             UIManager.Instance.UpdateCurrentAbilityText(_numHammers);
+            PlayFX(hammerAbilityClip);
+            //animator.Play(HAMMER_ANIM);
+
             if (_numHammers <= 0)
             {
                 UIManager.Instance.RemoveGoonAbilityFromInventory();
@@ -212,6 +226,8 @@ public class PlayerController : MonoBehaviour
         {
             _numPutts--;
             UIManager.Instance.UpdateCurrentAbilityText(_numPutts);
+            PlayFX(puttAbilityClip);
+
             if (_numPutts <= 0)
             {
                 UIManager.Instance.RemoveGoonAbilityFromInventory();
@@ -232,6 +248,7 @@ public class PlayerController : MonoBehaviour
 
         if (direction.magnitude >= 0.1f)
         {
+            // Playing move animation
             if (!IsMoving)
             {
                 IsMoving = true;
@@ -243,6 +260,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            // Playing idle animation
             if (IsMoving)
             {
                 IsMoving = false;
@@ -265,6 +283,8 @@ public class PlayerController : MonoBehaviour
     private void Chomp()
     {
         IsChomping = true;
+
+        animator.Play(CHOMP_ANIM);
         
         if (_killableGoons.Count == 0)
         {
@@ -308,8 +328,8 @@ public class PlayerController : MonoBehaviour
             // Invoke chomp event
             OnChomp.Invoke();
         }
-            
-        IsChomping = false;
+
+        StartCoroutine(ChompCoolDown());
     }
 
     public void AddToKillableGoonsList(GoonBase goon)
@@ -429,6 +449,14 @@ public class PlayerController : MonoBehaviour
             _controller.Move(knockbackDir * currKnockbackSpeed * Time.deltaTime);
             yield return null;
         }
+    }
+
+    private IEnumerator ChompCoolDown()
+    {
+        _chompIsCoolingDown = true;
+        yield return new WaitForSeconds(chompCooldown);
+        _chompIsCoolingDown = false;
+        IsChomping = false;
     }
 
     private IEnumerator EndGame()

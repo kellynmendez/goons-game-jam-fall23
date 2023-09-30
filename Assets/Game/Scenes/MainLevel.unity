@@ -2051,7 +2051,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goonObjectList:
-  - {fileID: 2755071406000192382, guid: 8534748328e5897469edb655a1fda863, type: 3}
+  - {fileID: 2755071406000192382, guid: fd208e7b265dccc4f8173f2def0be79d, type: 3}
   _spawnTime: 2
   _spawnDelay: 8
 --- !u!1 &1424005170

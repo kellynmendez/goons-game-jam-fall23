@@ -56,10 +56,8 @@ public class ShielderGoon : GoonBase
                 if (!IsDead)
                 {
                     // Using ability and invoking unity event
-                    //_animator.SetBool(IDLE_ANIM, true);
                     _animator.Play(ATTACK_ANIM);
                     yield return new WaitForSeconds(0.1f);
-                    //_animator.SetBool(IDLE_ANIM, true);
                     _hitAbility.UseAbility();
                     OnCombatAbility?.Invoke();
                     yield return new WaitForSeconds(_attackInterval);
