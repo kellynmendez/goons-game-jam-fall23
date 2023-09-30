@@ -5,10 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuButtons : MonoBehaviour
 {
+    [SerializeField] AudioClip levelClip;
+
     // Enable the play button
     public void PressPlayButton()
     {
         SceneManager.LoadScene("MainLevel");
+        AudioManager.Instance.PlayGameScore(levelClip);
     }
     
     // Enable the quit button

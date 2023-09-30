@@ -62,7 +62,7 @@ public class Bullet : MonoBehaviour
         else if (!_isPlayersBullet && other.CompareTag("Player"))
         {
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
-            player?.Hurt();
+            player?.Hurt(this.transform.forward);
             Deactivate();
         }
         else if (!(other.CompareTag("Player")) && !(other.CompareTag("Goon")))

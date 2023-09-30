@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 [RequireComponent(typeof(CharacterController), typeof(AudioSource))]
 public class PlayerController : MonoBehaviour
@@ -13,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public bool IsInvincible { get; set; } = false;
     public bool IsUsingGoonAbility { get; set; } = false;
     public bool IsChomping { get; set; } = false;
+    public bool IsFrozen { get; set; } = false;
     #endregion
 
     #region serialized variables
@@ -20,6 +22,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int lives = 3;
     [SerializeField] UnityEvent OnHurt = null;
     [SerializeField] UnityEvent OnDeath = null;
+    [SerializeField] float knockbackDuration = 0.6f;
+    [SerializeField] float knockbackForce = 4f;
 
     [Header("Movement")]
     [SerializeField] float moveSpeed = 12f;
@@ -121,7 +125,10 @@ public class PlayerController : MonoBehaviour
         if (IsUsingGoonAbility)
             return;
 
-        Move();
+        if (!IsFrozen)
+        {
+            Move();
+        }
 
         // If using goon-given ability
         if (Input.GetMouseButtonDown(0))
@@ -322,19 +329,23 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Freeze player rotation and position when using abilities
     /// </summary>
-    public void FreezePlayerTransform()
+    private IEnumerator FreezePlayerTransform(float duration)
     {
-        this.enabled = false;
-
+        IsFrozen = true;
+        transform.forward = GetMouseDirection();
+        yield return new WaitForSeconds(duration);
+        IsFrozen = false;
     }
 
-    public void Hurt()
+    public void Hurt(Vector3 knockbackDir)
     {
         if (IsDead)
             return;
 
         if (IsInvincible)
             return;
+
+        StartCoroutine(Knockback(knockbackDir));
 
         _livesLeft -= 1;
 
@@ -366,6 +377,26 @@ public class PlayerController : MonoBehaviour
         else
         {
             Debug.LogError("Must have audio component and give sfx.");
+        }
+    }
+
+    private IEnumerator Knockback(Vector3 knockbackDir)
+    {
+        float startTime = Time.time;
+        Vector3 dashDirection = _controller.transform.forward;
+        float tempTime = 0;
+        float currKnockbackSpeed = knockbackForce;
+        // Dashing
+        while (Time.time < startTime + knockbackDuration)
+        {
+            tempTime += Time.deltaTime;
+            if (tempTime > 0.1f)
+            {
+                tempTime = 0;
+                currKnockbackSpeed *= 0.85f;
+            }
+            _controller.Move(knockbackDir * currKnockbackSpeed * Time.deltaTime);
+            yield return null;
         }
     }
 

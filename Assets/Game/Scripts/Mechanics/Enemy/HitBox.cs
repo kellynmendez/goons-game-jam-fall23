@@ -11,7 +11,7 @@ public class HitBox : MonoBehaviour
             PlayerController player = other.GetComponentInParent<PlayerController>();
             if (player != null)
             {
-                player.Hurt();
+                player.Hurt(this.transform.forward);
             }
         }
     }
