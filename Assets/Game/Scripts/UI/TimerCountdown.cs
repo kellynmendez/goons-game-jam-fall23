@@ -35,17 +35,14 @@ public class TimerCountdown : MonoBehaviour
             // Switching colors:
             if (secondsLeft == 30)
             {
-                if (secondsLeft == 10)
-                {
-                    TimerSwitchColor(2);
-                    
-                }
-                else
-                {
-                    TimerSwitchColor(1);
-                }
+                TimerSwitchColor(1);
             }
-            
+            if (secondsLeft == 10)
+            {
+                TimerSwitchColor(2);
+
+            }
+
             // Display time
             TimerDisplay();
             
@@ -82,22 +79,13 @@ public class TimerCountdown : MonoBehaviour
         switch (opt)
         {
             // Under 30 seonds - Yellow
-            case 1:     timerText.material.SetColor("_Color", new Vector4(0.6509804f,
-                                                                          0.6509804f,
-                                                                          0.5215687f,
-                                                                          1));
+            case 1:     timerText.color = Color.yellow;
                         break;
-            // Under 10 seconds - Red
-            case 2:     timerText.material.SetColor("_Color", new Vector4(0.6509804f,
-                                                                          0.5215687f,
-                                                                          0.5411765f,
-                                                                          1));
+            // Under 10 seconds - Green
+            case 2:     timerText.color = Color.green;
                         break;
-            // Otherwise - Green
-            default:    timerText.material.SetColor("_Color", new Vector4(0.5215687f,
-                                                                          0.6509804f,
-                                                                          0.5215687f,
-                                                                          1));
+            // Otherwise - White
+            default:    timerText.color = Color.white;
                         break;
         }
     }

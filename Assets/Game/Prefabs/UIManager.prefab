@@ -129,7 +129,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8943750161525747006
 RectTransform:
   m_ObjectHideFlags: 0
@@ -511,7 +511,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9036713571430143276
 RectTransform:
   m_ObjectHideFlags: 0
@@ -667,7 +667,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4404636213551552930
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1175,10 +1175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01c9030860d2ecd468d42b983ab2e282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHearts:
-  - {fileID: 3570941361576114462}
-  - {fileID: 5671647905030116244}
-  - {fileID: 1634759746069758760}
+  playerHearts: []
 --- !u!114 &3083317264559173137
 MonoBehaviour:
   m_ObjectHideFlags: 0
