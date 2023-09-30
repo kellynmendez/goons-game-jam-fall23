@@ -1,18 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class ShieldCombatAbility : ICombatAbility
 {
     private MonoBehaviour _mono;
-    private HealthSystem _healthSys;
+    private PlayerController _player;
+    private GoonBase _goon;
     private float _inviDuration;
+    ParticleSystem _invincibilityVFX;
 
-    public ShieldCombatAbility(MonoBehaviour mono, HealthSystem healthSys, float inviDuration)
+    public ShieldCombatAbility(MonoBehaviour mono, PlayerController player, GoonBase goon, 
+        float inviDuration, ParticleSystem invincibilityVFX)
     {
         _mono = mono;
-        _healthSys = healthSys;
+        _player = player;
+        _goon = goon;
         _inviDuration = inviDuration;
+        _invincibilityVFX = invincibilityVFX;
     }
 
     public void UseAbility()
@@ -20,10 +26,24 @@ public class ShieldCombatAbility : ICombatAbility
         _mono.StartCoroutine(MakeInvincible());
     }
 
+    public void AbilityUsedUp()
+    {
+        UIManager.Instance.RemoveGoonAbilityFromInventory();
+    }
+
     private IEnumerator MakeInvincible()
     {
-        _healthSys.IsInvincible = true;
+        if (_player != null)
+        {
+            _player.IsInvincible = true;
+            _invincibilityVFX.Play();
+        }
         yield return new WaitForSeconds(_inviDuration);
-        _healthSys.IsInvincible = false;
+        if (_player != null)
+        {
+            _player.IsInvincible = false;
+            _invincibilityVFX.Stop();
+        }
+        AbilityUsedUp();
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
+[RequireComponent(typeof(Camera))]
 public class CameraMovement : MonoBehaviour
 {
     public static CameraMovement Instance;
@@ -13,7 +14,6 @@ public class CameraMovement : MonoBehaviour
     {
         if (Instance == null)
         {
-            DontDestroyOnLoad(gameObject);
             Instance = this;
         }
         else if (Instance != this)

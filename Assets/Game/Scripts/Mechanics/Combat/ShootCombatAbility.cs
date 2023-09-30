@@ -4,22 +4,18 @@ using UnityEngine;
 
 public class ShootCombatAbility : ICombatAbility
 {
-    
     public Vector3 Position { get; set; }
-    
+
     private BulletPool _bulletPool;
     private float _velocity;
     private float _lifeTime;
-    private float _scaleAmount;
 
-    public ShootCombatAbility(BulletPool bulletPool, float velocity, float lifeTime, float scaleAmount)
+    public ShootCombatAbility(BulletPool bulletPool, float velocity, float lifeTime)
     {
-        
         Position = bulletPool.gameObject.transform.position;
         _bulletPool = bulletPool;
         _velocity = velocity;
         _lifeTime = lifeTime;
-        _scaleAmount = scaleAmount;
     }
 
     public void UseAbility()
@@ -37,7 +33,7 @@ public class ShootCombatAbility : ICombatAbility
             Bullet bullet = bulletGameObj.GetComponent<Bullet>();
             // Resetting origin position
             Position = _bulletPool.gameObject.transform.position;
-            bullet.Activate(Position, _bulletPool.transform.forward, _velocity, _lifeTime, _scaleAmount);
+            bullet.Activate(Position, _bulletPool.transform.forward, _velocity, _lifeTime);
         }
     }
 }
