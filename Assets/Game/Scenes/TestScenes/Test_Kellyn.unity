@@ -1562,6 +1562,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoonSpawner (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3116133481236373691, guid: f6158355b5a689a4780dcf9433a21f8e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5439410681599423924, guid: f6158355b5a689a4780dcf9433a21f8e, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -2271,6 +2275,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoonSpawner (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 3116133481236373691, guid: f6158355b5a689a4780dcf9433a21f8e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5439410681599423924, guid: f6158355b5a689a4780dcf9433a21f8e, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -2405,6 +2413,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoonSpawner (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 3116133481236373691, guid: f6158355b5a689a4780dcf9433a21f8e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5439410681599423924, guid: f6158355b5a689a4780dcf9433a21f8e, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -2470,6 +2482,10 @@ PrefabInstance:
     - target: {fileID: 3116133481236373691, guid: f6158355b5a689a4780dcf9433a21f8e, type: 3}
       propertyPath: m_Name
       value: GoonSpawner (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116133481236373691, guid: f6158355b5a689a4780dcf9433a21f8e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5439410681599423924, guid: f6158355b5a689a4780dcf9433a21f8e, type: 3}
       propertyPath: m_RootOrder
@@ -2956,6 +2972,10 @@ PrefabInstance:
     - target: {fileID: 3116133481236373691, guid: f6158355b5a689a4780dcf9433a21f8e, type: 3}
       propertyPath: m_Name
       value: GoonSpawner (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3116133481236373691, guid: f6158355b5a689a4780dcf9433a21f8e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5439410681599423924, guid: f6158355b5a689a4780dcf9433a21f8e, type: 3}
       propertyPath: m_RootOrder

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -19,28 +20,50 @@ public class GoonBase : MonoBehaviour
     [SerializeField] protected UnityEvent OnHurt = null;
     [SerializeField] protected UnityEvent OnDeath = null;
 
+    [Header("Animations")]
+    [SerializeField] protected Animator _animator;
+
+    protected const string WALK_ANIM = "Walk";
+    protected const string ATTACK_ANIM = "Attack";
+
     protected int livesLeft;
     protected NavMeshAgent agent;
     protected GoonSpawner spawner;
-    protected HealthSystem health;
     protected AudioSource audioSource;
     protected Collider colliderToDeactivate;
+
+    private float _tempTime = 0;
 
     protected virtual void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        health = gameObject.GetComponent<HealthSystem>();
         audioSource = gameObject.GetComponent<AudioSource>();
         colliderToDeactivate = gameObject.GetComponent<Collider>();
 
         IsInvincible = false;
         livesLeft = lives;
-        //StartCoroutine(ChasePlayer()); TODO
     }
 
     protected virtual void Update()
     {
-        agent.SetDestination(PlayerController.Instance.transform.position);
+        // Setting destination every tenth of a second
+        _tempTime += Time.deltaTime;
+        if (_tempTime > 0.1f)
+        {
+            _tempTime = 0;
+            agent.SetDestination(PlayerController.Instance.transform.position);
+        }
+
+        // Checking if agent has stopped
+        if (!agent.pathPending && (agent.remainingDistance <= agent.stoppingDistance) && 
+            (!agent.hasPath || agent.velocity.sqrMagnitude == 0f))
+        {
+            agent.isStopped = true;
+        }
+        else
+        {
+            agent.isStopped = false;
+        }
 
         // TODO: make freezing enemies more efficient on death of player
         if (PlayerController.Instance.IsDead)
@@ -115,18 +138,6 @@ public class GoonBase : MonoBehaviour
     public void SetSpawner(GoonSpawner spawner)
     {
         this.spawner = spawner;
-    }
-
-    // TODO: nav mesh set destination efficiency fix
-    private IEnumerator ChasePlayer()
-    {
-        while (true)
-        {
-            Debug.Log("chasing");
-            agent.SetDestination(PlayerController.Instance.transform.position);
-            //yield return new WaitForSeconds(0.1f);
-            yield return null;
-        }
     }
 
     public void PlayFX(AudioClip sfx)
