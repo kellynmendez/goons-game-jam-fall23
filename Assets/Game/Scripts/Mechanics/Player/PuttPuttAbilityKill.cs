@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PuttPuttParticleKill : MonoBehaviour
+public class PuttPuttAbilityKill : MonoBehaviour
 {
     private ParticleSystem _particles;
     private List<ParticleCollisionEvent> _collisionEvents;
@@ -16,11 +16,14 @@ public class PuttPuttParticleKill : MonoBehaviour
     {
         int numCollisionEvents = _particles.GetCollisionEvents(other, _collisionEvents);
 
-        for (int i = 0; i < numCollisionEvents; i++)
+        bool collided = false;
+
+        for (int i = 0; i < numCollisionEvents && !collided; i++)
         {
             GoonBase goon = _collisionEvents[i].colliderComponent.gameObject.GetComponent<GoonBase>();
             if (goon != null)
             {
+                collided = true;
                 goon.Hurt();
             }
 
