@@ -1008,7 +1008,7 @@ MonoBehaviour:
   - {fileID: 2755071406000192382, guid: fd208e7b265dccc4f8173f2def0be79d, type: 3}
   - {fileID: 2755071406000192382, guid: fd208e7b265dccc4f8173f2def0be79d, type: 3}
   _spawnTime: 2
-  _spawnDelay: 16
+  _spawnDelay: 8
 --- !u!1 &746694709
 GameObject:
   m_ObjectHideFlags: 0
@@ -2867,7 +2867,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8018868, g: 0.8018868, b: 0.8018868, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3940,7 +3940,7 @@ MonoBehaviour:
   - {fileID: 2755071406000192382, guid: fd208e7b265dccc4f8173f2def0be79d, type: 3}
   - {fileID: 2755071406000192382, guid: fd208e7b265dccc4f8173f2def0be79d, type: 3}
   _spawnTime: 2
-  _spawnDelay: 16
+  _spawnDelay: 8
 --- !u!114 &5829047585061482183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3965,7 +3965,7 @@ MonoBehaviour:
   - {fileID: 2755071406000192382, guid: fd208e7b265dccc4f8173f2def0be79d, type: 3}
   - {fileID: 2755071406000192382, guid: fd208e7b265dccc4f8173f2def0be79d, type: 3}
   _spawnTime: 2
-  _spawnDelay: 16
+  _spawnDelay: 8
 --- !u!114 &5829047585349913832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3990,7 +3990,7 @@ MonoBehaviour:
   - {fileID: 2755071406000192382, guid: fd208e7b265dccc4f8173f2def0be79d, type: 3}
   - {fileID: 2755071406000192382, guid: fd208e7b265dccc4f8173f2def0be79d, type: 3}
   _spawnTime: 2
-  _spawnDelay: 16
+  _spawnDelay: 8
 --- !u!114 &5829047585757594974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4015,7 +4015,7 @@ MonoBehaviour:
   - {fileID: 2755071406000192382, guid: fd208e7b265dccc4f8173f2def0be79d, type: 3}
   - {fileID: 2755071406000192382, guid: fd208e7b265dccc4f8173f2def0be79d, type: 3}
   _spawnTime: 2
-  _spawnDelay: 16
+  _spawnDelay: 8
 --- !u!222 &5911788165696643309
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     #region serialized variables
     [Header("Health")]
     [SerializeField] int lives = 3;
+    [SerializeField] GameObject visualsToDeactivate;
     [SerializeField] UnityEvent OnHurt = null;
     [SerializeField] UnityEvent OnDeath = null;
     [SerializeField] float knockbackDuration = 0.6f;
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float dashDuration = 1f;
     [SerializeField] float dashCooldown = 1f;
     [SerializeField] public int numDashesAllowed = 5;
+    [SerializeField] ParticleSystem dashFX;
 
     [Header("Shoot Settings")]
     [SerializeField] BulletPool bulletPool = null;
@@ -311,7 +313,7 @@ public class PlayerController : MonoBehaviour
 
     public DashCombatAbility GetPlayerSpeedCombatAbility()
     {
-        return new DashCombatAbility(this, _controller, dashSpeed, dashDuration, dashCooldown);
+        return new DashCombatAbility(this, _controller, dashSpeed, dashDuration, dashCooldown, dashFX);
     }
 
     public HammerCombatAbility GetPlayerHammerCombatAbility()
@@ -364,6 +366,7 @@ public class PlayerController : MonoBehaviour
         OnDeath?.Invoke();
         IsDead = true;
         this.enabled = false;
+        visualsToDeactivate.SetActive(false);
 
         StartCoroutine(EndGame());
     }
@@ -402,6 +405,7 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator EndGame()
     {
+        yield return new WaitForSecondsRealtime(3f);
         Time.timeScale = 0;
         yield return new WaitForSecondsRealtime(3f);
         Time.timeScale = 1;
