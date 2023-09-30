@@ -9866,7 +9866,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.99
+  m_Radius: 0.83
   m_Height: 2.7595491
   m_Direction: 1
   m_Center: {x: 0, y: 1.4037395, z: 0}
@@ -9986,7 +9986,12 @@ MonoBehaviour:
   numHammersAllowed: 3
   puttPuttRingVFX: {fileID: 1728024789272228486}
   numPuttsAllowed: 1
-  noAbility: {fileID: 8300000, guid: 40f5dbb40eff85c4a953cbf2f0e07369, type: 3}
+  noAbilityClip: {fileID: 0}
+  shootAbilityClip: {fileID: 0}
+  shieldAbilityClip: {fileID: 0}
+  speedAbilityClip: {fileID: 0}
+  hammerAbilityClip: {fileID: 0}
+  puttAbilityClip: {fileID: 0}
 --- !u!82 &1091895218027691023
 AudioSource:
   m_ObjectHideFlags: 0
