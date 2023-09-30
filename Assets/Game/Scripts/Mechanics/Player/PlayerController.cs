@@ -103,8 +103,7 @@ public class PlayerController : MonoBehaviour
         _numDashes = numDashesAllowed;
         _numHammers = numHammersAllowed;
         _numPutts = numPuttsAllowed;
-        Debug.Log($"num putts allowed = {numPuttsAllowed}");
-}
+    }
 
     private void Start()
     {

@@ -4,12 +4,14 @@ using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using static UnityEngine.GraphicsBuffer;
 
 [RequireComponent(typeof(AudioSource))]
 public class GoonBase : MonoBehaviour
 {
     public bool IsDead { get; set; } = false;
     public bool IsInvincible { get; set; } = false;
+    public bool IsMoving = true;
 
     [Header("Combat")]
     [SerializeField] protected UnityEvent OnCombatAbility = null;
@@ -54,15 +56,26 @@ public class GoonBase : MonoBehaviour
             agent.SetDestination(PlayerController.Instance.transform.position);
         }
 
+        transform.LookAt(PlayerController.Instance.transform.position);
+
         // Checking if agent has stopped
         if (!agent.pathPending && (agent.remainingDistance <= agent.stoppingDistance) && 
             (!agent.hasPath || agent.velocity.sqrMagnitude == 0f))
         {
             agent.isStopped = true;
+            if (IsMoving == true)
+            {
+                IsMoving = false;
+            }
+            
         }
         else
         {
             agent.isStopped = false;
+            if (IsMoving == false)
+            {
+                IsMoving = true;
+            }
         }
 
         // TODO: make freezing enemies more efficient on death of player

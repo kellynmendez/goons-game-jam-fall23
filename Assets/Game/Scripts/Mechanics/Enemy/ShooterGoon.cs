@@ -32,6 +32,7 @@ public class ShooterGoon : GoonBase
     protected override void Update()
     {
         base.Update();
+
         if (Time.time >= _shootTimeStamp + _shootInterval)
         {
             Shoot();

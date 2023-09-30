@@ -5,6 +5,7 @@ using UnityEngine;
 public class HammerGoon : GoonBase
 {
     [SerializeField] float _attackInterval = 2.5f;
+    [SerializeField] float _pauseBeforeAttack = 0.5f;
     [SerializeField] Collider _hitCollider;
 
     private HitCombatAbility _hitAbility;
@@ -42,6 +43,7 @@ public class HammerGoon : GoonBase
                 {
                     if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
                     {
+                        yield return new WaitForSeconds(_pauseBeforeAttack);
                         // Using ability and invoking unity event
                         _hitAbility.UseAbility();
                         OnCombatAbility?.Invoke();

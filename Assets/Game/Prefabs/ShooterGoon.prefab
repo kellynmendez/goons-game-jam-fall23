@@ -44,7 +44,6 @@ GameObject:
   - component: {fileID: 2983339877371750705}
   - component: {fileID: 8450043362769177011}
   - component: {fileID: 8329124127469209427}
-  - component: {fileID: 2243407451870766755}
   - component: {fileID: 6581050434977512263}
   m_Layer: 7
   m_Name: ShooterGoon
@@ -162,30 +161,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _animator: {fileID: 5353472166285599626}
   _shootInterval: 3
   _bulletVelocity: 12
   _bulletLifeTime: 5
---- !u!95 &2243407451870766755
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3455886567851162828}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: cb69c4ab8d2dc324694c6c0e693e3579, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!82 &6581050434977512263
 AudioSource:
   m_ObjectHideFlags: 0
@@ -387,8 +366,37 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f7add1e69ec0a4e4386d6ef6fc70b734, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5353472166285599626}
   m_SourcePrefab: {fileID: 100100000, guid: f7add1e69ec0a4e4386d6ef6fc70b734, type: 3}
+--- !u!1 &2735664426098696763 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f7add1e69ec0a4e4386d6ef6fc70b734, type: 3}
+  m_PrefabInstance: {fileID: 2969668330199457642}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5353472166285599626
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2735664426098696763}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cb69c4ab8d2dc324694c6c0e693e3579, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &3367805085415995521 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f7add1e69ec0a4e4386d6ef6fc70b734, type: 3}

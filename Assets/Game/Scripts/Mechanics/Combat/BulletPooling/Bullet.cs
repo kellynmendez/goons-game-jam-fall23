@@ -12,6 +12,12 @@ public class Bullet : MonoBehaviour
     private float _velocity;
     private float _lifeTime;
     private Vector3 _initialForward;
+    private bool _isPlayersBullet;
+
+    public void SetIsPlayersBullet(bool isPlayersBullet)
+    {
+        _isPlayersBullet = isPlayersBullet;
+    }
 
     public void Activate(Vector3 initialPosition, Vector3 initialForward, float velocity, float lifeTime)
     {
@@ -47,26 +53,19 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        GoonBase goon = other.gameObject.GetComponent<GoonBase>();
-        PlayerController player = other.gameObject.GetComponent<PlayerController>();
-
-        if (goon != null)
+        if (_isPlayersBullet && other.CompareTag("Goon"))
         {
-            if (other.CompareTag("Goon"))
-            {
-                goon.Hurt();
-                Deactivate();
-            }
+            GoonBase goon = other.gameObject.GetComponent<GoonBase>();
+            goon?.Hurt();
+            Deactivate();
         }
-        else if (player != null)
+        else if (!_isPlayersBullet && other.CompareTag("Player"))
         {
-            if (!other.CompareTag("Player"))
-            {
-                player.Hurt();
-                Deactivate();
-            }
+            PlayerController player = other.gameObject.GetComponent<PlayerController>();
+            player?.Hurt();
+            Deactivate();
         }
-        else
+        else if (!(other.CompareTag("Player")) && !(other.CompareTag("Goon")))
         {
             Deactivate();
         }

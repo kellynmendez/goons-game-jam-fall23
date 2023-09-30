@@ -5,8 +5,10 @@ using UnityEngine;
 public class SpeedyGoon : GoonBase
 {
     [Header("Speedy Goon Settings")]
-    [SerializeField] float _attackInterval = 2.5f;
+    [SerializeField] float _attackInterval = 3f;
+    [SerializeField] float _pauseBeforeAttack = 0.5f;
     [SerializeField] Collider _hitCollider;
+    
 
     private HitCombatAbility _hitAbility;
 
@@ -37,11 +39,11 @@ public class SpeedyGoon : GoonBase
         yield return new WaitForSeconds(0.1f);
         while (true)
         {
-            if (agent.isStopped)
+            if (agent.isStopped && (agent.remainingDistance <= agent.stoppingDistance))
             {
+                yield return new WaitForSeconds(_pauseBeforeAttack);
                 // Using ability and invoking unity event
-                Debug.Log("Triggering animation");
-                _animator.SetTrigger(ATTACK_ANIM);
+                //_animator.SetTrigger(ATTACK_ANIM);
                 _hitAbility.UseAbility();
                 OnCombatAbility?.Invoke();
                 yield return new WaitForSeconds(_attackInterval);
