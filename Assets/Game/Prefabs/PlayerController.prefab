@@ -5078,6 +5078,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcda56316b643be42941a672476cb694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   moveSpeed: 8
   OnChomp:
     m_PersistentCalls:
@@ -5097,12 +5100,15 @@ MonoBehaviour:
   dashSpeed: 16
   dashDuration: 0.3
   dashCooldown: 0.1
+  numDashesAllowed: 5
   bulletPool: {fileID: 7446845447655455046}
   bulletVelocity: 15
   bulletLifeTime: 6
-  bulletScaleAmount: 0.98
+  numShotsAllowed: 12
   invincibilityDuration: 5
+  numHammersAllowed: 3
   _puttPuttRingEffect: {fileID: 1728024789272228486}
+  numPuttsAllowed: 1
 --- !u!114 &1808988334721542417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5119,13 +5125,13 @@ MonoBehaviour:
   onHurt:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2102524618868652509, guid: 62ca530cd49d17d4eba39a790994a1cc, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
+      - m_Target: {fileID: 3885696628475956065, guid: 62ca530cd49d17d4eba39a790994a1cc, type: 3}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: PlayerHurt
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5137,33 +5143,6 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 8300000, guid: 9df39aa094008e641ab6222f71a0e382, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onDeath:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2102524618868652509, guid: 62ca530cd49d17d4eba39a790994a1cc, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 841176913824382709}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: PlayFX
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 53b54494f010f2c4cad6b15de9960d5c, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0

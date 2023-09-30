@@ -56,14 +56,11 @@ public class PlayerController : MonoBehaviour
     private List<GoonBase> _killableGoons;
 
     // Tracking 
-    private int numShots = 0;
-    private int numDashes = 0;
-    private int numHammers = 0;
-    private int numPutts = 0;
+    private int _numShots;
+    private int _numDashes;
+    private int _numHammers;
+    private int _numPutts;
     //private bool _chompIsCoolingDown = false;
-
-    // Inventory
-    private ICombatAbility[] _goonAbilities;
 
     // FX
     private AudioSource _audioSource;
@@ -87,23 +84,25 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("There is no bullet pool on this object or its children.");
         }
 
-        // Instantiating goon abilities
-        _goonAbilities = new ICombatAbility[3];
-        for (int i = 0; i < _goonAbilities.Length; i++)
-        {
-            _goonAbilities[i] = new NoCombatAbility();
-        }
-
+        // Filling in references
         _controller = GetComponent<CharacterController>();
         _killableGoons = new List<GoonBase>();
         _audioSource = GetComponent<AudioSource>();
 
         // Instantiating combat ability
         _combatAbility = new NoCombatAbility();
-    }
+
+        // Setting start ability values
+        _numShots = numShotsAllowed;
+        _numDashes = numDashesAllowed;
+        _numHammers = numHammersAllowed;
+        _numPutts = numPuttsAllowed;
+        Debug.Log($"num putts allowed = {numPuttsAllowed}");
+}
 
     private void Start()
     {
+        // Filling in main camera reference
         _mainCamera = CameraMovement.Instance.gameObject.GetComponent<Camera>();
     }
 
@@ -127,50 +126,56 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    #region Combat ability switches
     public void SetCombatAbility(ICombatAbility combatAbility)
     {
         _combatAbility = combatAbility;
     }
 
+    /// <summary>
+    /// Checks if the ability the player has current has been used up; if it has
+    /// then remove it from the player's inventory
+    /// </summary>
     public void CheckIfCombatAbilityIsUsedUp()
     {
         if (_combatAbility is ShootCombatAbility)
         {
-            numShots++;
-            if (numShots >= numShotsAllowed)
+            _numShots--;
+            if (_numShots <= 0)
             {
                 InventorySystem.Instance.RemoveGoonAbilityFromInventory();
-                numShots = 0;
+                _numShots = numShotsAllowed;
             }
         }
         else if (_combatAbility is DashCombatAbility)
         {
-            numDashes++;
-            if (numDashes >= numDashesAllowed)
+            _numDashes--;
+            if (_numDashes <= 0)
             {
                 InventorySystem.Instance.RemoveGoonAbilityFromInventory();
-                numDashes = 0;
+                _numDashes = numDashesAllowed;
             }
         }
         else if (_combatAbility is HammerCombatAbility)
         {
-            numHammers++;
-            if (numHammers >= numHammersAllowed)
+            _numHammers--;
+            if (_numHammers <= 0)
             {
                 InventorySystem.Instance.RemoveGoonAbilityFromInventory();
-                numHammers = 0;
+                _numHammers = numHammersAllowed;
             }
         }
         else if (_combatAbility is PuttPuttCombatAbility)
         {
-            numPutts++;
-            if (numPutts >= numPuttsAllowed)
+            _numPutts--;
+            if (_numPutts <= 0)
             {
                 InventorySystem.Instance.RemoveGoonAbilityFromInventory();
-                numPutts = 0;
+                _numPutts = numPuttsAllowed;
             }
         }
     }
+    #endregion
 
     #region Movement functions
     private void Move()

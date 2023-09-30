@@ -1,12 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventorySystem : MonoBehaviour
 {
     public static InventorySystem Instance;
 
-    private ICombatAbility[] _goonAbilities;
+    [SerializeField] Texture noAbilityTx;
+    [SerializeField] Texture shootGoonTx;
+    [SerializeField] Texture shieldGoonTx;
+    [SerializeField] Texture speedGoonTx;
+    [SerializeField] Texture hammerGoonTx;
+    [SerializeField] Texture puttGoonTx;
+    [SerializeField] Texture inventorySlotTx;
+    [SerializeField] Texture selectedInvSlotTx;
+    [SerializeField] RawImage[] abilityImages;
+    [SerializeField] RawImage[] slotImages;
+    [SerializeField] Text[] abilityNumText;
+
+    private ICombatAbility[] _goonInventory;
+    private int _numAbilitiesAllowed = 3;
     private int _currAbilityIndex = 0;
 
     private void Awake()
@@ -21,59 +35,77 @@ public class InventorySystem : MonoBehaviour
             Debug.LogError("There should not be more than one inventory in a scene.");
         }
 
-        _goonAbilities = new ICombatAbility[3];
-        for (int i = 0; i < _goonAbilities.Length; i++)
+        _goonInventory = new ICombatAbility[_numAbilitiesAllowed];
+        for (int i = 0; i < _numAbilitiesAllowed; i++)
         {
-            _goonAbilities[i] = new NoCombatAbility();
+            _goonInventory[i] = new NoCombatAbility();
+            abilityImages[_currAbilityIndex].texture = noAbilityTx;
+            slotImages[_currAbilityIndex].texture = inventorySlotTx;
         }
+
+        // Set first slot as the one selected automatically
+        slotImages[0].texture = selectedInvSlotTx;
     }
     private void Update()
     {
         // Changing goon ability in  inventory
         if (Input.GetKeyDown(KeyCode.Tab))
         {
+            slotImages[_currAbilityIndex].texture = inventorySlotTx;
             _currAbilityIndex++;
 
-            if (_currAbilityIndex >= _goonAbilities.Length)
+            if (_currAbilityIndex >= _goonInventory.Length)
             {
                 _currAbilityIndex = 0;
             }
 
-            PlayerController.Instance.SetCombatAbility(_goonAbilities[_currAbilityIndex]);
+            slotImages[_currAbilityIndex].texture = selectedInvSlotTx;
+            PlayerController.Instance.SetCombatAbility(_goonInventory[_currAbilityIndex]);
         }
     }
 
     public void AddGoonAbilityToInventory(GoonBase goon)
     {
-        for (int i = 0; i < _goonAbilities.Length; i++)
+        bool placed = false;
+        for (int i = 0; i < _goonInventory.Length && !placed; i++)
         {
             // If no goon in spot, fill spot with goon eaten
-            if (_goonAbilities[i] is NoCombatAbility)
+            if (_goonInventory[i] is NoCombatAbility)
             {
                 if (goon is ShooterGoon)
                 {
-                    _goonAbilities[i] = PlayerController.Instance.GetPlayerShootCombatAbility();
+                    _goonInventory[i] = PlayerController.Instance.GetPlayerShootCombatAbility();
+                    abilityImages[i].texture = shootGoonTx;
+                    placed = true;
                 }
                 else if (goon is ShielderGoon)
                 {
-                    _goonAbilities[i] = PlayerController.Instance.GetPlayerShieldCombatAbility();
+                    _goonInventory[i] = PlayerController.Instance.GetPlayerShieldCombatAbility();
+                    abilityImages[i].texture = shieldGoonTx;
+                    placed = true;
                 }
                 else if (goon is SpeedyGoon)
                 {
-                    _goonAbilities[i] = PlayerController.Instance.GetPlayerSpeedCombatAbility();
+                    _goonInventory[i] = PlayerController.Instance.GetPlayerSpeedCombatAbility();
+                    abilityImages[i].texture = speedGoonTx;
+                    placed = true;
                 }
                 else if (goon is HammerGoon)
                 {
-                    _goonAbilities[i] = PlayerController.Instance.GetPlayerHammerCombatAbility();
+                    _goonInventory[i] = PlayerController.Instance.GetPlayerHammerCombatAbility();
+                    abilityImages[i].texture = hammerGoonTx;
+                    placed = true;
                 }
                 else if (goon is PutterGoon)
                 {
-                    _goonAbilities[i] = PlayerController.Instance.GetPlayerPuttPuttCombatAbility();
+                    _goonInventory[i] = PlayerController.Instance.GetPlayerPuttPuttCombatAbility();
+                    abilityImages[i].texture = puttGoonTx;
+                    placed = true;
                 }
 
                 if (_currAbilityIndex == i)
                 {
-                    PlayerController.Instance.SetCombatAbility(_goonAbilities[i]);
+                    PlayerController.Instance.SetCombatAbility(_goonInventory[i]);
                 }
             }
             else
@@ -85,7 +117,8 @@ public class InventorySystem : MonoBehaviour
 
     public void RemoveGoonAbilityFromInventory()
     {
-        _goonAbilities[_currAbilityIndex] = new NoCombatAbility();
-        PlayerController.Instance.SetCombatAbility(_goonAbilities[_currAbilityIndex]);
+        _goonInventory[_currAbilityIndex] = new NoCombatAbility();
+        abilityImages[_currAbilityIndex].texture = noAbilityTx;
+        PlayerController.Instance.SetCombatAbility(_goonInventory[_currAbilityIndex]);
     }
 }

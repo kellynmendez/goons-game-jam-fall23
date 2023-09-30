@@ -18,22 +18,23 @@ public class GoonBase : MonoBehaviour
     protected GoonSpawner spawner;
     protected HealthSystem health;
     protected AudioSource audioSource;
-    protected Collider _colliderToDeactivate;
+    protected Collider colliderToDeactivate;
 
     protected virtual void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         health = gameObject.GetComponent<HealthSystem>();
         audioSource = gameObject.GetComponent<AudioSource>();
-        _colliderToDeactivate = gameObject.GetComponent<Collider>();
+        colliderToDeactivate = gameObject.GetComponent<Collider>();
 
-        //StartCoroutine(ChasePlayer());
+        //StartCoroutine(ChasePlayer()); TODO
     }
 
     protected virtual void Update()
     {
         agent.SetDestination(PlayerController.Instance.transform.position);
 
+        // TODO: make freezing enemies more efficient on death of player
         if (PlayerController.Instance.IsDead)
         {
             this.enabled = false;
@@ -55,7 +56,7 @@ public class GoonBase : MonoBehaviour
         // Disabling goon
         this.enabled = false;
         _visualsToDeactivate.SetActive(false);
-        _colliderToDeactivate.enabled = false;
+        colliderToDeactivate.enabled = false;
         IsDead = true;
 
         // Deactivating game object after sound
@@ -66,7 +67,7 @@ public class GoonBase : MonoBehaviour
     {
         // Enable goon
         _visualsToDeactivate.SetActive(true);
-        _colliderToDeactivate.enabled = true;
+        colliderToDeactivate.enabled = true;
         this.enabled = true;
         IsDead = false;
         
@@ -84,6 +85,7 @@ public class GoonBase : MonoBehaviour
         this.spawner = spawner;
     }
 
+    // TODO: nav mesh set destination efficiency fix
     private IEnumerator ChasePlayer()
     {
         while (true)
