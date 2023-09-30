@@ -161,7 +161,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         // If chomping
-        else if (!IsChomping && Input.GetMouseButtonDown(1))
+        else if (!IsChomping && Input.GetMouseButtonDown(1) && !_chompIsCoolingDown)
         {
             Chomp();
         }
@@ -329,6 +329,7 @@ public class PlayerController : MonoBehaviour
             OnChomp.Invoke();
         }
 
+        IsChomping = false;
         StartCoroutine(ChompCoolDown());
     }
 
@@ -456,7 +457,6 @@ public class PlayerController : MonoBehaviour
         _chompIsCoolingDown = true;
         yield return new WaitForSeconds(chompCooldown);
         _chompIsCoolingDown = false;
-        IsChomping = false;
     }
 
     private IEnumerator EndGame()
