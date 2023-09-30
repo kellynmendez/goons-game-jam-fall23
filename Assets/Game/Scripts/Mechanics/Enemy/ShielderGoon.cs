@@ -9,8 +9,19 @@ public class ShielderGoon : GoonBase
     [SerializeField] float _attackInterval = 2.5f;
     [SerializeField] float _pauseBeforeAttack = 0.5f;
     [SerializeField] Collider _hitCollider;
+    [SerializeField] ParticleSystem _shieldVFX;
 
     private HitCombatAbility _hitAbility;
+
+    public override void Hurt()
+    {
+        if (livesLeft > 1)
+        {
+            StartCoroutine(PlayShieldVFX());
+        }
+        
+        base.Hurt();
+    }
 
     protected override void Awake()
     {
@@ -55,5 +66,12 @@ public class ShielderGoon : GoonBase
             }
             yield return null;
         }
+    }
+
+    private IEnumerator PlayShieldVFX()
+    {
+        _shieldVFX.Play();
+        yield return new WaitForSeconds(0.4f);
+        _shieldVFX.Stop();
     }
 }

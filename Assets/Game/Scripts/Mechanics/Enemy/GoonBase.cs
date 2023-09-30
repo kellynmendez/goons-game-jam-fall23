@@ -10,7 +10,7 @@ using static UnityEngine.GraphicsBuffer;
 public class GoonBase : MonoBehaviour
 {
     public bool IsDead { get; set; } = false;
-    public bool IsMoving = true;
+    public bool IsMoving { get; set; } = true;
 
     [Header("Combat")]
     [SerializeField] protected UnityEvent OnCombatAbility = null;
@@ -99,7 +99,7 @@ public class GoonBase : MonoBehaviour
         spawner.AddToActiveGoonsList(this.gameObject);
     }
 
-    public void Hurt()
+    public virtual void Hurt()
     {
         if (IsDead)
             return;

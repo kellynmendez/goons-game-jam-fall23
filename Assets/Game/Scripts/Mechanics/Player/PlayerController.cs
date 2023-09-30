@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(CharacterController), typeof(AudioSource))]
 public class PlayerController : MonoBehaviour
@@ -49,6 +50,9 @@ public class PlayerController : MonoBehaviour
     [Header("PuttPutt Settings")]
     [SerializeField] ParticleSystem puttPuttRingVFX;
     [SerializeField] public int numPuttsAllowed = 1;
+
+    [Header("Audio")]
+    [SerializeField] AudioClip noAbility = null;
 
     //[Header("Animations")]
     //[SerializeField] Animator animator = null;
@@ -122,8 +126,15 @@ public class PlayerController : MonoBehaviour
         // If using goon-given ability
         if (Input.GetMouseButtonDown(0))
         {
-            _combatAbility.UseAbility();
-            CheckIfCombatAbilityIsUsedUp();
+            if (_combatAbility is NoCombatAbility)
+            {
+                PlayFX(noAbility);
+            }
+            else
+            {
+                _combatAbility.UseAbility();
+                CheckIfCombatAbilityIsUsedUp();
+            }
         }
         // If chomping
         else if (!IsChomping && Input.GetMouseButtonDown(1))
@@ -342,6 +353,8 @@ public class PlayerController : MonoBehaviour
         OnDeath?.Invoke();
         IsDead = true;
         this.enabled = false;
+
+        StartCoroutine(EndGame());
     }
 
     public void PlayFX(AudioClip sfx)
@@ -354,5 +367,14 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogError("Must have audio component and give sfx.");
         }
+    }
+
+    private IEnumerator EndGame()
+    {
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(3f);
+        Time.timeScale = 1;
+        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        SceneManager.LoadScene(nextSceneIndex);
     }
 }

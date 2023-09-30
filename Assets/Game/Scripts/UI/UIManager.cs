@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(AudioSource))]
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
@@ -28,6 +29,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] RawImage[] slotImages;
     [SerializeField] Text[] abilityNumText;
 
+    [Header("Audio")]
+    [SerializeField] AudioClip moveThruInventory;
+
     private ICombatAbility[] _goonInventory;
     private int _numAbilitiesAllowed = 3;
     private int _currAbilityIndex = 0;
@@ -36,6 +40,8 @@ public class UIManager : MonoBehaviour
     private int _numShotsAllowed = 12;
     private int _numHammersAllowed = 3;
     private int _numPuttsAllowed = 1;
+
+    private AudioSource _audioSource;
 
     private void Awake()
     {
@@ -72,6 +78,9 @@ public class UIManager : MonoBehaviour
         _numShotsAllowed = PlayerController.Instance.numShotsAllowed;
         _numHammersAllowed = PlayerController.Instance.numHammersAllowed;
         _numPuttsAllowed = PlayerController.Instance.numPuttsAllowed;
+
+        // Audio source
+        _audioSource = GetComponent<AudioSource>(); 
     }
 
     private void Update()
@@ -89,6 +98,7 @@ public class UIManager : MonoBehaviour
 
             slotImages[_currAbilityIndex].texture = selectedInvSlotTx;
             PlayerController.Instance.SetCombatAbility(_goonInventory[_currAbilityIndex]);
+            PlayFX(moveThruInventory);
         }
     }
 
@@ -172,6 +182,18 @@ public class UIManager : MonoBehaviour
                 playerLives[i].enabled = false;
                 hurt = true;
             }
+        }
+    }
+
+    public void PlayFX(AudioClip sfx)
+    {
+        if (_audioSource != null && sfx != null)
+        {
+            _audioSource.PlayOneShot(sfx, _audioSource.volume);
+        }
+        else
+        {
+            Debug.LogError("Must have audio component and give sfx.");
         }
     }
 }
