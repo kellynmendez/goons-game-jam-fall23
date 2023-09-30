@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +8,12 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-    [Header("Health")]
+    public int Score { get; private set; } = 0;
+
+    [Header("Health and Score")]
     [SerializeField] Image[] playerLives;
+    [SerializeField] int goonKillPoints = 1000;
+    [SerializeField] Text scoreText;
 
     [Header("Inventory")]
     [SerializeField] Texture noAbilityTx;
@@ -27,6 +32,11 @@ public class UIManager : MonoBehaviour
     private int _numAbilitiesAllowed = 3;
     private int _currAbilityIndex = 0;
 
+    private int _numDashesAllowed = 5;
+    private int _numShotsAllowed = 12;
+    private int _numHammersAllowed = 3;
+    private int _numPuttsAllowed = 1;
+
     private void Awake()
     {
         // Singleton pattern
@@ -39,6 +49,7 @@ public class UIManager : MonoBehaviour
             Debug.LogError("There should not be more than one UI Manager in a scene.");
         }
 
+        // Populating inventory
         _goonInventory = new ICombatAbility[_numAbilitiesAllowed];
         for (int i = 0; i < _numAbilitiesAllowed; i++)
         {
@@ -55,6 +66,12 @@ public class UIManager : MonoBehaviour
         {
             playerLives[i].enabled = true;
         }
+
+        // Fill in ability information
+        _numDashesAllowed = PlayerController.Instance.numDashesAllowed;
+        _numShotsAllowed = PlayerController.Instance.numShotsAllowed;
+        _numHammersAllowed = PlayerController.Instance.numHammersAllowed;
+        _numPuttsAllowed = PlayerController.Instance.numPuttsAllowed;
     }
 
     private void Update()
@@ -87,30 +104,35 @@ public class UIManager : MonoBehaviour
                 {
                     _goonInventory[i] = PlayerController.Instance.GetPlayerShootCombatAbility();
                     abilityImages[i].texture = shootGoonTx;
+                    abilityNumText[i].text = _numShotsAllowed.ToString();
                     placed = true;
                 }
                 else if (goon is ShielderGoon)
                 {
                     _goonInventory[i] = PlayerController.Instance.GetPlayerShieldCombatAbility();
                     abilityImages[i].texture = shieldGoonTx;
+                    abilityNumText[i].text = "1";
                     placed = true;
                 }
                 else if (goon is SpeedyGoon)
                 {
                     _goonInventory[i] = PlayerController.Instance.GetPlayerSpeedCombatAbility();
                     abilityImages[i].texture = speedGoonTx;
+                    abilityNumText[i].text = _numDashesAllowed.ToString();
                     placed = true;
                 }
                 else if (goon is HammerGoon)
                 {
                     _goonInventory[i] = PlayerController.Instance.GetPlayerHammerCombatAbility();
                     abilityImages[i].texture = hammerGoonTx;
+                    abilityNumText[i].text = _numHammersAllowed.ToString();
                     placed = true;
                 }
                 else if (goon is PutterGoon)
                 {
                     _goonInventory[i] = PlayerController.Instance.GetPlayerPuttPuttCombatAbility();
                     abilityImages[i].texture = puttGoonTx;
+                    abilityNumText[i].text = _numPuttsAllowed.ToString();
                     placed = true;
                 }
 
@@ -118,10 +140,6 @@ public class UIManager : MonoBehaviour
                 {
                     PlayerController.Instance.SetCombatAbility(_goonInventory[i]);
                 }
-            }
-            else
-            {
-                Debug.Log("Inventory full!");
             }
         }
     }
@@ -133,9 +151,15 @@ public class UIManager : MonoBehaviour
         PlayerController.Instance.SetCombatAbility(_goonInventory[_currAbilityIndex]);
     }
 
-    public void UpdateScore()
+    public void UpdateCurrentAbilityText(int newNum)
     {
-        
+        abilityNumText[_currAbilityIndex].text = newNum.ToString();
+    }
+
+    public void IncrementScore()
+    {
+        Score += goonKillPoints;
+        scoreText.text = (string.Format("{0:000000}", Score));
     }
 
     public void PlayerHurt()

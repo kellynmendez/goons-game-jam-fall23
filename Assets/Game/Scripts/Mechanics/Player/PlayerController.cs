@@ -31,23 +31,24 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float dashSpeed = 20f;
     [SerializeField] float dashDuration = 1f;
     [SerializeField] float dashCooldown = 1f;
-    [SerializeField] int numDashesAllowed = 5;
+    [SerializeField] public int numDashesAllowed = 5;
 
     [Header("Shoot Settings")]
     [SerializeField] BulletPool bulletPool = null;
     [SerializeField] float bulletVelocity = 15f;
     [SerializeField] float bulletLifeTime = 6f;
-    [SerializeField] int numShotsAllowed = 12;
+    [SerializeField] public int numShotsAllowed = 12;
 
     [Header("Shield Settings")]
     [SerializeField] float invincibilityDuration = 8f;
+    [SerializeField] ParticleSystem shieldInvincibilityVFX;
 
     [Header("Hammer Settings")]
-    [SerializeField] int numHammersAllowed = 3;
+    [SerializeField] public int numHammersAllowed = 3;
 
     [Header("PuttPutt Settings")]
-    [SerializeField] ParticleSystem _puttPuttRingEffect;
-    [SerializeField] int numPuttsAllowed = 1;
+    [SerializeField] ParticleSystem puttPuttRingVFX;
+    [SerializeField] public int numPuttsAllowed = 1;
 
     //[Header("Animations")]
     //[SerializeField] Animator animator = null;
@@ -146,15 +147,22 @@ public class PlayerController : MonoBehaviour
         if (_combatAbility is ShootCombatAbility)
         {
             _numShots--;
+            UIManager.Instance.UpdateCurrentAbilityText(_numShots);
             if (_numShots <= 0)
             {
                 UIManager.Instance.RemoveGoonAbilityFromInventory();
                 _numShots = numShotsAllowed;
             }
         }
+        else if (_combatAbility is ShieldCombatAbility)
+        {
+            UIManager.Instance.UpdateCurrentAbilityText(0);
+            UIManager.Instance.RemoveGoonAbilityFromInventory();
+        }
         else if (_combatAbility is DashCombatAbility)
         {
             _numDashes--;
+            UIManager.Instance.UpdateCurrentAbilityText(_numDashes);
             if (_numDashes <= 0)
             {
                 UIManager.Instance.RemoveGoonAbilityFromInventory();
@@ -164,6 +172,7 @@ public class PlayerController : MonoBehaviour
         else if (_combatAbility is HammerCombatAbility)
         {
             _numHammers--;
+            UIManager.Instance.UpdateCurrentAbilityText(_numHammers);
             if (_numHammers <= 0)
             {
                 UIManager.Instance.RemoveGoonAbilityFromInventory();
@@ -173,6 +182,7 @@ public class PlayerController : MonoBehaviour
         else if (_combatAbility is PuttPuttCombatAbility)
         {
             _numPutts--;
+            UIManager.Instance.UpdateCurrentAbilityText(_numPutts);
             if (_numPutts <= 0)
             {
                 UIManager.Instance.RemoveGoonAbilityFromInventory();
@@ -278,7 +288,7 @@ public class PlayerController : MonoBehaviour
 
     public ShieldCombatAbility GetPlayerShieldCombatAbility()
     {
-        return new ShieldCombatAbility(this, this, null, invincibilityDuration);
+        return new ShieldCombatAbility(this, this, null, invincibilityDuration, shieldInvincibilityVFX);
     }
 
     public DashCombatAbility GetPlayerSpeedCombatAbility()
@@ -293,7 +303,7 @@ public class PlayerController : MonoBehaviour
 
     public PuttPuttCombatAbility GetPlayerPuttPuttCombatAbility()
     {
-        return new PuttPuttCombatAbility(this, _puttPuttRingEffect);
+        return new PuttPuttCombatAbility(this, puttPuttRingVFX);
     }
     #endregion
 
@@ -303,6 +313,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void FreezePlayerTransform()
     {
+        this.enabled = false;
 
     }
 

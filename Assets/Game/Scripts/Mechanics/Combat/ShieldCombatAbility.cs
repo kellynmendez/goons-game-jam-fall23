@@ -9,13 +9,16 @@ public class ShieldCombatAbility : ICombatAbility
     private PlayerController _player;
     private GoonBase _goon;
     private float _inviDuration;
+    ParticleSystem _invincibilityVFX;
 
-    public ShieldCombatAbility(MonoBehaviour mono, PlayerController player, GoonBase goon, float inviDuration)
+    public ShieldCombatAbility(MonoBehaviour mono, PlayerController player, GoonBase goon, 
+        float inviDuration, ParticleSystem invincibilityVFX)
     {
         _mono = mono;
         _player = player;
         _goon = goon;
         _inviDuration = inviDuration;
+        _invincibilityVFX = invincibilityVFX;
     }
 
     public void UseAbility()
@@ -33,19 +36,13 @@ public class ShieldCombatAbility : ICombatAbility
         if (_player != null)
         {
             _player.IsInvincible = true;
-        }
-        else
-        {
-            _goon.IsInvincible = true;
+            _invincibilityVFX.Play();
         }
         yield return new WaitForSeconds(_inviDuration);
         if (_player != null)
         {
             _player.IsInvincible = false;
-        }
-        else
-        {
-            _goon.IsInvincible = false;
+            _invincibilityVFX.Stop();
         }
         AbilityUsedUp();
     }

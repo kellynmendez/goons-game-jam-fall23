@@ -11,7 +11,6 @@ public class HitBox : MonoBehaviour
             PlayerController player = other.GetComponentInParent<PlayerController>();
             if (player != null)
             {
-                Debug.Log("Player is hurt");
                 player.Hurt();
             }
         }

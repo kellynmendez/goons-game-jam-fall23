@@ -10,7 +10,6 @@ using static UnityEngine.GraphicsBuffer;
 public class GoonBase : MonoBehaviour
 {
     public bool IsDead { get; set; } = false;
-    public bool IsInvincible { get; set; } = false;
     public bool IsMoving = true;
 
     [Header("Combat")]
@@ -42,7 +41,6 @@ public class GoonBase : MonoBehaviour
         audioSource = gameObject.GetComponent<AudioSource>();
         colliderToDeactivate = gameObject.GetComponent<Collider>();
 
-        IsInvincible = false;
         livesLeft = lives;
     }
 
@@ -106,9 +104,6 @@ public class GoonBase : MonoBehaviour
         if (IsDead)
             return;
 
-        if (IsInvincible)
-            return;
-
         livesLeft -= 1;
 
         if (livesLeft <= 0)
@@ -132,6 +127,9 @@ public class GoonBase : MonoBehaviour
 
         // Remove goon from killable goons lists (if in it)
         PlayerController.Instance.RemoveFromKillableGoonsList(this);
+
+        // Update score
+        UIManager.Instance.IncrementScore();
 
         // Disabling goon
         this.enabled = false;
