@@ -1144,7 +1144,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.1
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 900ed89e5b4c3874cbaa6e701439da9a, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 05ca590b1acf3b34fbdb3ca109b4a001, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &772457396
 GameObject:
@@ -1981,7 +1981,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1379771042}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Environment
   m_TagString: Untagged
   m_Icon: {fileID: 0}

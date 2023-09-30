@@ -13,10 +13,16 @@ public class Bullet : MonoBehaviour
     private float _lifeTime;
     private Vector3 _initialForward;
     private bool _isPlayersBullet;
+    private Collider _thisObjsCollider;
 
     public void SetIsPlayersBullet(bool isPlayersBullet)
     {
         _isPlayersBullet = isPlayersBullet;
+    }
+
+    public void SetThisObjectsCollider(Collider thisObjsCollider)
+    {
+        _thisObjsCollider = thisObjsCollider;
     }
 
     public void Activate(Vector3 initialPosition, Vector3 initialForward, float velocity, float lifeTime)
@@ -65,7 +71,7 @@ public class Bullet : MonoBehaviour
             player?.Hurt(this.transform.forward);
             Deactivate();
         }
-        else if (!(other.CompareTag("Player")) && !(other.CompareTag("Goon")))
+        else if (!_isPlayersBullet && !(_thisObjsCollider == other))
         {
             Deactivate();
         }

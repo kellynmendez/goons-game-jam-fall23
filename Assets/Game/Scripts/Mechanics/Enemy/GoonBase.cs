@@ -163,6 +163,11 @@ public class GoonBase : MonoBehaviour
         }
     }
 
+    public void PlayVFX(ParticleSystem ps)
+    {
+        ps?.Play();
+    }
+
     private IEnumerator DeactivateAfterSound()
     {
         while (audioSource.isPlaying)

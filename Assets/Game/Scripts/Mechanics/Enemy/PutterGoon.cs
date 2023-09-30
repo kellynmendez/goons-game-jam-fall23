@@ -8,7 +8,6 @@ public class PutterGoon : GoonBase
     [SerializeField] float _attackInterval = 2.5f;
     [SerializeField] float _pauseBeforeAttack = 0.5f;
     [SerializeField] Collider _hitCollider;
-    [SerializeField] ParticleSystem puttAttackFX;
 
     private HitCombatAbility _hitAbility;
 
@@ -47,7 +46,6 @@ public class PutterGoon : GoonBase
                     {
                         yield return new WaitForSeconds(_pauseBeforeAttack);
                         // Using ability and invoking unity event
-                        puttAttackFX.Play();
                         _hitAbility.UseAbility();
                         OnCombatAbility?.Invoke();
                         yield return new WaitForSeconds(_attackInterval);

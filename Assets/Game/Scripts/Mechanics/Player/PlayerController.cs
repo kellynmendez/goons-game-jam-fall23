@@ -383,6 +383,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void PlayVFX(ParticleSystem ps)
+    {
+        ps?.Play();
+    }
+
     private IEnumerator Knockback(Vector3 knockbackDir)
     {
         float startTime = Time.time;
