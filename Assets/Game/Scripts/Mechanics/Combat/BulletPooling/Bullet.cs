@@ -12,12 +12,6 @@ public class Bullet : MonoBehaviour
     private float _velocity;
     private float _lifeTime;
     private Vector3 _initialForward;
-    private bool _isPlayersBullet;
-
-    public void SetIsPlayersBullet(bool isPlayersBullet)
-    {
-        _isPlayersBullet = isPlayersBullet;
-    }
 
     public void Activate(Vector3 initialPosition, Vector3 initialForward, float velocity, float lifeTime)
     {
@@ -53,18 +47,26 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        HealthSystem health = other.gameObject.GetComponent<HealthSystem>();
+        GoonBase goon = other.gameObject.GetComponent<GoonBase>();
+        PlayerController player = other.gameObject.GetComponent<PlayerController>();
 
-        if (health != null)
+        if (goon != null)
         {
-            // If this is the player shooting and they hit a goon OR this is the enemy shooting and they hit the player
-            if ( (_isPlayersBullet && other.CompareTag("Goon")) || (!_isPlayersBullet && other.CompareTag("Player")) )
+            if (other.CompareTag("Goon"))
             {
-                health.Hurt();
+                goon.Hurt();
                 Deactivate();
             }
         }
-        else if (!other.CompareTag("Player"))
+        else if (player != null)
+        {
+            if (!other.CompareTag("Player"))
+            {
+                player.Hurt();
+                Deactivate();
+            }
+        }
+        else
         {
             Deactivate();
         }

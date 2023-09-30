@@ -12,8 +12,7 @@ public class HitBox : MonoBehaviour
             if (player != null)
             {
                 Debug.Log("Player is hurt");
-                HealthSystem playerHealth = player.GetComponent<HealthSystem>();
-                playerHealth.Hurt();
+                player.Hurt();
             }
         }
     }

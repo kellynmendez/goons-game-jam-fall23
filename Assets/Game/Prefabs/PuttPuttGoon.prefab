@@ -78,7 +78,6 @@ GameObject:
   - component: {fileID: 3070409008989003543}
   - component: {fileID: 8282398249837990972}
   - component: {fileID: 2244469405160517283}
-  - component: {fileID: 381076873686323678}
   - component: {fileID: 5467123743342043237}
   m_Layer: 7
   m_Name: PuttPuttGoon
@@ -159,7 +158,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d822d4ff4f08614db99fe859ab8e4c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _visualsToDeactivate: {fileID: 9005865651167925813}
   OnCombatAbility:
     m_PersistentCalls:
       m_Calls:
@@ -175,6 +173,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  lives: 1
+  _visualsToDeactivate: {fileID: 9005865651167925813}
+  OnHurt:
+    m_PersistentCalls:
+      m_Calls: []
   OnDeath:
     m_PersistentCalls:
       m_Calls:
@@ -192,22 +195,6 @@ MonoBehaviour:
         m_CallState: 2
   _attackInterval: 2.5
   _hitCollider: {fileID: 3688531723185541795}
---- !u!114 &381076873686323678
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2755071406000192382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 787afccee4543df4ab93cf6a1d5aad52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lives: 3
-  onHurt:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!82 &5467123743342043237
 AudioSource:
   m_ObjectHideFlags: 0

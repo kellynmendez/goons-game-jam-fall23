@@ -28,8 +28,8 @@ public class HammerCombatAbility : ICombatAbility
             // Damage all goons in killable goons list
             for (int i = 0; i < _killableGoons.Count; i++)
             {
-                HealthSystem health = _killableGoons[i].GetComponent<HealthSystem>();
-                health.Hurt();
+                GoonBase goonToKill = _killableGoons[i].GetComponent<GoonBase>();
+                goonToKill.Hurt();
             }
         }
 

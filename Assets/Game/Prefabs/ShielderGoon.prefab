@@ -78,7 +78,6 @@ GameObject:
   - component: {fileID: 3070409008989003543}
   - component: {fileID: 4019144185758192149}
   - component: {fileID: 2272990095282918806}
-  - component: {fileID: 381076873686323678}
   - component: {fileID: 5467123743342043237}
   m_Layer: 7
   m_Name: ShielderGoon
@@ -161,8 +160,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b44da233a4beaa547b06f3d72683262a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _visualsToDeactivate: {fileID: 9005865651167925813}
   OnCombatAbility:
+    m_PersistentCalls:
+      m_Calls: []
+  lives: 3
+  _visualsToDeactivate: {fileID: 9005865651167925813}
+  OnHurt:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2272990095282918806}
@@ -194,34 +197,6 @@ MonoBehaviour:
         m_CallState: 2
   _attackInterval: 2.5
   _hitCollider: {fileID: 3688531723185541795}
---- !u!114 &381076873686323678
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2755071406000192382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 787afccee4543df4ab93cf6a1d5aad52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lives: 3
-  onHurt:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2272990095282918806}
-        m_TargetAssemblyTypeName: GoonBase, Assembly-CSharp
-        m_MethodName: PlayFX
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 5f4b42249b873974a9cb3eb4223cd1bf, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!82 &5467123743342043237
 AudioSource:
   m_ObjectHideFlags: 0

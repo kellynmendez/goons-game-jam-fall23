@@ -44,7 +44,6 @@ GameObject:
   - component: {fileID: 4694903429217294740}
   - component: {fileID: 4876402268115229714}
   - component: {fileID: 5385905203498649800}
-  - component: {fileID: 7324921038110866306}
   - component: {fileID: 7993840537210334390}
   m_Layer: 7
   m_Name: HammerGoon
@@ -125,7 +124,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea25e32962b48114fab5fae948624776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _visualsToDeactivate: {fileID: 4130554652197483884}
   OnCombatAbility:
     m_PersistentCalls:
       m_Calls:
@@ -141,6 +139,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  lives: 1
+  _visualsToDeactivate: {fileID: 4130554652197483884}
+  OnHurt:
+    m_PersistentCalls:
+      m_Calls: []
   OnDeath:
     m_PersistentCalls:
       m_Calls:
@@ -158,22 +161,6 @@ MonoBehaviour:
         m_CallState: 2
   _attackInterval: 3
   _hitCollider: {fileID: 986192018203035125}
---- !u!114 &7324921038110866306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4336282167769449114}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 787afccee4543df4ab93cf6a1d5aad52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lives: 1
-  onHurt:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!82 &7993840537210334390
 AudioSource:
   m_ObjectHideFlags: 0

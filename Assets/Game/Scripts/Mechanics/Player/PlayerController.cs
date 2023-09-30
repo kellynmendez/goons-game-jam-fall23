@@ -9,11 +9,15 @@ public class PlayerController : MonoBehaviour
     #region public variables
     public static PlayerController Instance;
     public bool IsDead { get; set; } = false;
+    public bool IsInvincible { get; set; } = false;
     public bool IsUsingGoonAbility { get; set; } = false;
     public bool IsChomping { get; set; } = false;
     #endregion
 
     #region serialized variables
+    [Header("Health")]
+    [SerializeField] int lives = 3;
+    [SerializeField] UnityEvent OnHurt = null;
     [SerializeField] UnityEvent OnDeath = null;
 
     [Header("Movement")]
@@ -50,12 +54,13 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region private variables
+    private int _livesLeft;
     private ICombatAbility _combatAbility;
     private CharacterController _controller;
     private Camera _mainCamera;
     private List<GoonBase> _killableGoons;
 
-    // Tracking 
+    // Tracking goon ability uses
     private int _numShots;
     private int _numDashes;
     private int _numHammers;
@@ -88,6 +93,7 @@ public class PlayerController : MonoBehaviour
         _controller = GetComponent<CharacterController>();
         _killableGoons = new List<GoonBase>();
         _audioSource = GetComponent<AudioSource>();
+        _livesLeft = lives;
 
         // Instantiating combat ability
         _combatAbility = new NoCombatAbility();
@@ -143,7 +149,7 @@ public class PlayerController : MonoBehaviour
             _numShots--;
             if (_numShots <= 0)
             {
-                InventorySystem.Instance.RemoveGoonAbilityFromInventory();
+                UIManager.Instance.RemoveGoonAbilityFromInventory();
                 _numShots = numShotsAllowed;
             }
         }
@@ -152,7 +158,7 @@ public class PlayerController : MonoBehaviour
             _numDashes--;
             if (_numDashes <= 0)
             {
-                InventorySystem.Instance.RemoveGoonAbilityFromInventory();
+                UIManager.Instance.RemoveGoonAbilityFromInventory();
                 _numDashes = numDashesAllowed;
             }
         }
@@ -161,7 +167,7 @@ public class PlayerController : MonoBehaviour
             _numHammers--;
             if (_numHammers <= 0)
             {
-                InventorySystem.Instance.RemoveGoonAbilityFromInventory();
+                UIManager.Instance.RemoveGoonAbilityFromInventory();
                 _numHammers = numHammersAllowed;
             }
         }
@@ -170,7 +176,7 @@ public class PlayerController : MonoBehaviour
             _numPutts--;
             if (_numPutts <= 0)
             {
-                InventorySystem.Instance.RemoveGoonAbilityFromInventory();
+                UIManager.Instance.RemoveGoonAbilityFromInventory();
                 _numPutts = numPuttsAllowed;
             }
         }
@@ -245,7 +251,7 @@ public class PlayerController : MonoBehaviour
             }
 
             // Chomp goon
-            InventorySystem.Instance.AddGoonAbilityToInventory(goonToChomp);
+            UIManager.Instance.AddGoonAbilityToInventory(goonToChomp);
             goonToChomp.Kill();
             // Invoke chomp event
             OnChomp.Invoke();
@@ -273,7 +279,7 @@ public class PlayerController : MonoBehaviour
 
     public ShieldCombatAbility GetPlayerShieldCombatAbility()
     {
-        return new ShieldCombatAbility(this, gameObject.GetComponent<HealthSystem>(), invincibilityDuration);
+        return new ShieldCombatAbility(this, this, null, invincibilityDuration);
     }
 
     public DashCombatAbility GetPlayerSpeedCombatAbility()
@@ -300,7 +306,27 @@ public class PlayerController : MonoBehaviour
     {
 
     }
-    
+
+    public void Hurt()
+    {
+        if (IsDead)
+            return;
+
+        if (IsInvincible)
+            return;
+
+        _livesLeft -= 1;
+
+        OnHurt.Invoke();
+
+        UIManager.Instance.PlayerHurt();
+
+        if (_livesLeft <= 0)
+        {
+            Kill();
+        }
+    }
+
     public void Kill()
     {
         OnDeath?.Invoke();

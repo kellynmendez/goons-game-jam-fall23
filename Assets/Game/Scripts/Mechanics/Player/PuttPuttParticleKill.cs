@@ -21,7 +21,7 @@ public class PuttPuttParticleKill : MonoBehaviour
             GoonBase goon = _collisionEvents[i].colliderComponent.gameObject.GetComponent<GoonBase>();
             if (goon != null)
             {
-                goon.Kill();
+                goon.Hurt();
             }
 
             Bullet bullet = _collisionEvents[i].colliderComponent.gameObject.GetComponent<Bullet>();

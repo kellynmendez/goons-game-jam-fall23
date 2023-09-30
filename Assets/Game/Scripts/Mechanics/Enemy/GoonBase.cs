@@ -8,12 +8,18 @@ using UnityEngine.Events;
 public class GoonBase : MonoBehaviour
 {
     public bool IsDead { get; set; } = false;
+    public bool IsInvincible { get; set; } = false;
 
-    [SerializeField] GameObject _visualsToDeactivate;
+    [Header("Combat")]
     [SerializeField] protected UnityEvent OnCombatAbility = null;
-    //[SerializeField] protected UnityEvent OnHurt = null;
+
+    [Header("Health")]
+    [SerializeField] int lives = 1;
+    [SerializeField] GameObject _visualsToDeactivate;
+    [SerializeField] protected UnityEvent OnHurt = null;
     [SerializeField] protected UnityEvent OnDeath = null;
 
+    protected int livesLeft;
     protected NavMeshAgent agent;
     protected GoonSpawner spawner;
     protected HealthSystem health;
@@ -27,6 +33,8 @@ public class GoonBase : MonoBehaviour
         audioSource = gameObject.GetComponent<AudioSource>();
         colliderToDeactivate = gameObject.GetComponent<Collider>();
 
+        IsInvincible = false;
+        livesLeft = lives;
         //StartCoroutine(ChasePlayer()); TODO
     }
 
@@ -38,6 +46,42 @@ public class GoonBase : MonoBehaviour
         if (PlayerController.Instance.IsDead)
         {
             this.enabled = false;
+        }
+    }
+
+    public void Spawn()
+    {
+        // Enable goon
+        _visualsToDeactivate.SetActive(true);
+        colliderToDeactivate.enabled = true;
+        this.enabled = true;
+        IsDead = false;
+        
+        // Reset its lives
+        ResetLives();
+
+        // Add goon to active list and remove from inactive list
+        spawner.RemoveFromInactiveGoonsList(this.gameObject);
+        spawner.AddToActiveGoonsList(this.gameObject);
+    }
+
+    public void Hurt()
+    {
+        if (IsDead)
+            return;
+
+        if (IsInvincible)
+            return;
+
+        livesLeft -= 1;
+
+        if (livesLeft <= 0)
+        {
+            Kill();
+        }
+        else
+        {
+            OnHurt.Invoke();
         }
     }
 
@@ -63,21 +107,9 @@ public class GoonBase : MonoBehaviour
         StartCoroutine(DeactivateAfterSound());
     }
 
-    public void Spawn()
+    public void ResetLives()
     {
-        // Enable goon
-        _visualsToDeactivate.SetActive(true);
-        colliderToDeactivate.enabled = true;
-        this.enabled = true;
-        IsDead = false;
-        
-        // Reset its lives
-        health.ResetLives();
-        health.IsDead = false;
-
-        // Add goon to active list and remove from inactive list
-        spawner.RemoveFromInactiveGoonsList(this.gameObject);
-        spawner.AddToActiveGoonsList(this.gameObject);
+        livesLeft = lives;
     }
 
     public void SetSpawner(GoonSpawner spawner)
