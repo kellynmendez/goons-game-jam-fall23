@@ -6,6 +6,7 @@ public class PuttPuttAbilityKill : MonoBehaviour
 {
     private ParticleSystem _particles;
     private List<ParticleCollisionEvent> _collisionEvents;
+    private bool checkedForCollisions = false;
 
     private void Awake()
     {
@@ -14,23 +15,27 @@ public class PuttPuttAbilityKill : MonoBehaviour
     }
     private void OnParticleCollision(GameObject other)
     {
-        int numCollisionEvents = _particles.GetCollisionEvents(other, _collisionEvents);
-
-        bool collided = false;
-
-        for (int i = 0; i < numCollisionEvents && !collided; i++)
+        if (!checkedForCollisions)
         {
-            GoonBase goon = _collisionEvents[i].colliderComponent.gameObject.GetComponent<GoonBase>();
-            if (goon != null)
-            {
-                collided = true;
-                goon.Hurt();
-            }
+            checkedForCollisions = true;
+            int numCollisionEvents = _particles.GetCollisionEvents(other, _collisionEvents);
 
-            Bullet bullet = _collisionEvents[i].colliderComponent.gameObject.GetComponent<Bullet>();
-            if (bullet != null)
+            bool collided = false;
+
+            for (int i = 0; i < numCollisionEvents && !collided; i++)
             {
-                bullet.Deactivate();
+                GoonBase goon = _collisionEvents[i].colliderComponent.gameObject.GetComponent<GoonBase>();
+                if (goon != null)
+                {
+                    collided = true;
+                    goon.Hurt();
+                }
+
+                Bullet bullet = _collisionEvents[i].colliderComponent.gameObject.GetComponent<Bullet>();
+                if (bullet != null)
+                {
+                    bullet.Deactivate();
+                }
             }
         }
     }
