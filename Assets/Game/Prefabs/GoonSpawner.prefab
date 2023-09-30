@@ -45,11 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goonObjectList:
-  - {fileID: 4336282167769449114, guid: 4e5fff781f167884880ede933fa23f36, type: 3}
-  - {fileID: 4336282167769449114, guid: 4e5fff781f167884880ede933fa23f36, type: 3}
-  - {fileID: 2755071406000192382, guid: 8534748328e5897469edb655a1fda863, type: 3}
+  - {fileID: 3455886567851162828, guid: 38ccf945efb8757459b7d3bb818bc32a, type: 3}
   - {fileID: 2755071406000192382, guid: 8534748328e5897469edb655a1fda863, type: 3}
   - {fileID: 7055575647181373438, guid: 12e2dffd104de6d42928f7d60f064e7f, type: 3}
-  - {fileID: 7055575647181373438, guid: 12e2dffd104de6d42928f7d60f064e7f, type: 3}
-  _spawnTime: 1
-  _spawnDelay: 9
+  - {fileID: 4336282167769449114, guid: 4e5fff781f167884880ede933fa23f36, type: 3}
+  - {fileID: 2755071406000192382, guid: fd208e7b265dccc4f8173f2def0be79d, type: 3}
+  _spawnTime: 2
+  _spawnDelay: 16

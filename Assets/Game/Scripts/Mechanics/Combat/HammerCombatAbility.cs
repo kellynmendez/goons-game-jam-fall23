@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class HammerCombatAbility : ICombatAbility
 {
-    PlayerController _player;
-    List<GoonBase> _killableGoons;
+    private MonoBehaviour _mono;
+    private PlayerController _player;
+    private List<GoonBase> _killableGoons;
 
     public HammerCombatAbility(PlayerController player, List<GoonBase> killableGoons)
     {
+        _mono = player as MonoBehaviour;
         _player = player;
         _killableGoons = killableGoons;
     }
@@ -26,8 +28,8 @@ public class HammerCombatAbility : ICombatAbility
             // Damage all goons in killable goons list
             for (int i = 0; i < _killableGoons.Count; i++)
             {
-                HealthSystem health = _killableGoons[i].GetComponent<HealthSystem>();
-                health.Hurt();
+                GoonBase goonToKill = _killableGoons[i].GetComponent<GoonBase>();
+                goonToKill.Hurt();
             }
         }
 

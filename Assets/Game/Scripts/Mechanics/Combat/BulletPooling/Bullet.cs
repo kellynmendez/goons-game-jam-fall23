@@ -9,29 +9,26 @@ public class Bullet : MonoBehaviour
     [SerializeField] UnityEvent OnActivate = null;
     
     private float _activationTimeStamp = 0f;
-    private float _scaleAmount;
     private float _velocity;
     private float _lifeTime;
-    private Vector3 _startScale;
     private Vector3 _initialForward;
     private bool _isPlayersBullet;
-
-    private void OnEnable()
-    {
-        _startScale = gameObject.transform.localScale;
-        //StartCoroutine(FadeToInactive());
-    }
+    private Collider _thisObjsCollider;
 
     public void SetIsPlayersBullet(bool isPlayersBullet)
     {
         _isPlayersBullet = isPlayersBullet;
     }
 
-    public void Activate(Vector3 initialPosition, Vector3 initialForward, float velocity, float lifeTime, float scaleAmount)
+    public void SetThisObjectsCollider(Collider thisObjsCollider)
+    {
+        _thisObjsCollider = thisObjsCollider;
+    }
+
+    public void Activate(Vector3 initialPosition, Vector3 initialForward, float velocity, float lifeTime)
     {
         _velocity = velocity;
         _lifeTime = lifeTime;
-        _scaleAmount = scaleAmount;
         _activationTimeStamp = Time.time;
         this.enabled = true;
 
@@ -57,42 +54,26 @@ public class Bullet : MonoBehaviour
 
     public void Deactivate()
     {
-        gameObject.transform.localScale = _startScale;
         gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        HealthSystem health = other.gameObject.GetComponent<HealthSystem>();
-
-        if (health != null)
+        if (_isPlayersBullet && other.CompareTag("Goon"))
         {
-            // If this is the player shooting and they hit a goon OR this is the enemy shooting and they hit the player
-            if ( (_isPlayersBullet && other.CompareTag("Goon")) || (!_isPlayersBullet && other.CompareTag("Player")) )
-            {
-                health.Hurt();
-                Deactivate();
-            }
+            GoonBase goon = other.gameObject.GetComponent<GoonBase>();
+            goon?.Hurt();
+            Deactivate();
         }
-        else if (!other.CompareTag("Player"))
+        else if (!_isPlayersBullet && other.CompareTag("Player"))
+        {
+            PlayerController player = other.gameObject.GetComponent<PlayerController>();
+            player?.Hurt(this.transform.forward);
+            Deactivate();
+        }
+        else if (!_isPlayersBullet && !(_thisObjsCollider == other))
         {
             Deactivate();
         }
-    }
-
-    private IEnumerator FadeToInactive()
-    {
-        float start = Time.time;
-
-        while (start + _lifeTime > Time.time)
-        {
-            // Slowly shrink object
-            gameObject.transform.localScale = gameObject.transform.localScale * _scaleAmount;
-            yield return new WaitForSeconds(0.1f); // scale consistently across any machine
-        }
-        Debug.Log("set bullet inactive");
-        gameObject.transform.localScale = _startScale;
-        gameObject.SetActive(false);
-        yield break;
     }
 }

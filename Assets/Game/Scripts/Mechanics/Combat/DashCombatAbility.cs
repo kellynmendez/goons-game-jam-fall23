@@ -11,16 +11,20 @@ public class DashCombatAbility : ICombatAbility
     private float _dashDuration;
     private float _dashCooldown;
     private bool _dashIsCoolingDown = false;
+    private ParticleSystem _dashFX;
+
+    private float _currDashSpeed;
 
     public DashCombatAbility(PlayerController player, CharacterController controller, float dashSpeed, 
-        float dashDuration, float dashCooldown)
+        float dashDuration, float dashCooldown, ParticleSystem dashFX)
     {
         _mono = player as MonoBehaviour;
         _player = player;
         _controller = controller;
-        _dashSpeed = dashSpeed; 
+        _dashSpeed = _currDashSpeed = dashSpeed; 
         _dashDuration = dashDuration;
         _dashCooldown = dashCooldown;
+        _dashFX = dashFX;
     }
 
     public void UseAbility()
@@ -37,14 +41,21 @@ public class DashCombatAbility : ICombatAbility
         Vector3 dashDirection = _controller.transform.forward;
         _dashIsCoolingDown = true;
         _player.IsUsingGoonAbility = true;
-
+        float tempTime = 0;
         // Dashing
+        _dashFX.Play();
         while (Time.time < startTime + _dashDuration)
         {
-            _controller.Move(dashDirection * _dashSpeed * Time.deltaTime);
-
+            tempTime += Time.deltaTime;
+            if (tempTime > 0.1f)
+            {
+                tempTime = 0;
+                _currDashSpeed *= 0.9f;
+            }
+            _controller.Move(dashDirection * _currDashSpeed * Time.deltaTime);
             yield return null;
         }
+        _currDashSpeed = _dashSpeed;
         _player.IsUsingGoonAbility = false;
 
         // Dash cooldown
