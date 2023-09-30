@@ -9986,12 +9986,12 @@ MonoBehaviour:
   numHammersAllowed: 3
   puttPuttRingVFX: {fileID: 1728024789272228486}
   numPuttsAllowed: 1
-  noAbilityClip: {fileID: 8300000, guid: 40f5dbb40eff85c4a953cbf2f0e07369, type: 3}
-  shootAbilityClip: {fileID: 8300000, guid: 7db2de768f204634c9fb69753e2dd69f, type: 3}
-  shieldAbilityClip: {fileID: 8300000, guid: 106b03d9102e8bd49afb937b8a43e60e, type: 3}
-  speedAbilityClip: {fileID: 8300000, guid: c026ba9fd1101bc469b3c2c92359cbd3, type: 3}
-  hammerAbilityClip: {fileID: 8300000, guid: 88e777343d7336d43b855cbfda9812a1, type: 3}
-  puttAbilityClip: {fileID: 8300000, guid: 33f6f9d3ffc1e3f4794f79ced20372d8, type: 3}
+  noAbilityClip: {fileID: 0}
+  shootAbilityClip: {fileID: 0}
+  shieldAbilityClip: {fileID: 0}
+  speedAbilityClip: {fileID: 0}
+  hammerAbilityClip: {fileID: 0}
+  puttAbilityClip: {fileID: 0}
 --- !u!82 &1091895218027691023
 AudioSource:
   m_ObjectHideFlags: 0
