@@ -68,9 +68,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip speedAbilityClip = null;
     [SerializeField] AudioClip hammerAbilityClip = null;
     [SerializeField] AudioClip puttAbilityClip = null;
-
-    //[Header("Animations")]
-    //[SerializeField] Animator animator = null;
     #endregion
 
     #region private variables
@@ -161,7 +158,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         // If chomping
-        else if (!IsChomping && Input.GetMouseButtonDown(1))
+        else if (!_chompIsCoolingDown && Input.GetMouseButtonDown(1))
         {
             Chomp();
         }
@@ -214,7 +211,7 @@ public class PlayerController : MonoBehaviour
             _numHammers--;
             UIManager.Instance.UpdateCurrentAbilityText(_numHammers);
             PlayFX(hammerAbilityClip);
-            //animator.Play(HAMMER_ANIM);
+            animator.Play(HAMMER_ANIM);
 
             if (_numHammers <= 0)
             {
@@ -261,7 +258,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             // Playing idle animation
-            if (IsMoving)
+            if (IsMoving && !IsChomping)
             {
                 IsMoving = false;
                 animator.Play(IDLE_ANIM);
@@ -284,6 +281,7 @@ public class PlayerController : MonoBehaviour
     {
         IsChomping = true;
 
+        OnChomp.Invoke();
         animator.Play(CHOMP_ANIM);
         
         if (_killableGoons.Count == 0)
@@ -325,10 +323,8 @@ public class PlayerController : MonoBehaviour
             // Chomp goon
             UIManager.Instance.AddGoonAbilityToInventory(goonToChomp);
             goonToChomp.Kill();
-            // Invoke chomp event
-            OnChomp.Invoke();
         }
-
+        _chompIsCoolingDown = true;
         StartCoroutine(ChompCoolDown());
     }
 
@@ -453,10 +449,11 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator ChompCoolDown()
     {
-        _chompIsCoolingDown = true;
-        yield return new WaitForSeconds(chompCooldown);
-        _chompIsCoolingDown = false;
+        float animWait = 0.5f;
+        yield return new WaitForSeconds(animWait);
         IsChomping = false;
+        yield return new WaitForSeconds(chompCooldown - animWait);
+        _chompIsCoolingDown = false;
     }
 
     private IEnumerator EndGame()

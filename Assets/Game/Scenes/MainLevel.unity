@@ -969,7 +969,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &734612678
 Transform:
   m_ObjectHideFlags: 0
@@ -2022,7 +2022,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1423682648
 Transform:
   m_ObjectHideFlags: 0
@@ -3412,7 +3412,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &3116133480820785155
 GameObject:
   m_ObjectHideFlags: 0
@@ -3429,7 +3429,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &3116133481623003692
 GameObject:
   m_ObjectHideFlags: 0
@@ -3446,7 +3446,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &3116133482021546906
 GameObject:
   m_ObjectHideFlags: 0
@@ -3463,7 +3463,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &3147136097077806140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4338,7 +4338,7 @@ MonoBehaviour:
   - {fileID: 3147136097077806140}
   - {fileID: 868695855264333824}
   - {fileID: 746807846921012709}
-  moveThruInventory: {fileID: 8300000, guid: 009b9fcfb23df9745b906361afe1e1da, type: 3}
+  moveThruInventory: {fileID: 8300000, guid: 19c9437364b739543aa209015e79c1d3, type: 3}
 --- !u!82 &8263573901089394585
 AudioSource:
   m_ObjectHideFlags: 0
