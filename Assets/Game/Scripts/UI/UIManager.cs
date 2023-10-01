@@ -88,7 +88,7 @@ public class UIManager : MonoBehaviour
         // Audio source
         _audioSource = GetComponent<AudioSource>();
 
-        slider.maxValue = chompCooldown;
+        //slider.maxValue = chompCooldown;
     }
 
     private void Update()
@@ -110,10 +110,10 @@ public class UIManager : MonoBehaviour
         }
         // Slider update
         //slider.value += speed * Time.deltaTime;
-        if (slider.value >= slider.maxValue)
-        {
+        //if (slider.value >= slider.maxValue)
+        //{
             
-        }
+        //}
     }
 
     public void AddGoonAbilityToInventory(GoonBase goon)
