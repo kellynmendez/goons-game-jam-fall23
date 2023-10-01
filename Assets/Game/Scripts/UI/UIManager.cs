@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] Image[] playerLives;
     [SerializeField] int goonKillPoints = 1000;
     [SerializeField] Text scoreText;
+    [SerializeField] Image image;
+    [SerializeField] Color flashColor;
 
     [Header("Inventory")]
     [SerializeField] Texture noAbilityTx;
@@ -43,6 +45,8 @@ public class UIManager : MonoBehaviour
     private int _numPuttsAllowed = 1;
 
     private AudioSource _audioSource;
+
+    Coroutine _currentFlashRoutine = null;
 
     private void Awake()
     {
@@ -84,6 +88,7 @@ public class UIManager : MonoBehaviour
 
         // Audio source
         _audioSource = GetComponent<AudioSource>();
+
     }
 
     private void Update()
@@ -192,6 +197,8 @@ public class UIManager : MonoBehaviour
                 hurt = true;
             }
         }
+        
+        StartFlash(0.25f, 0.5f, flashColor);
     }
 
     public void PlayFX(AudioClip sfx)
@@ -204,5 +211,41 @@ public class UIManager : MonoBehaviour
         {
             Debug.LogError("Must have audio component and give sfx.");
         }
+    }
+
+    public void StartFlash(float secondsForOneFlash, float maxAlpha, Color newColor)
+    {
+        image.color = newColor;
+        maxAlpha = Mathf.Clamp(maxAlpha, 0, 1);
+
+        if (_currentFlashRoutine != null)
+        {
+            StopCoroutine(_currentFlashRoutine);
+        }
+
+        _currentFlashRoutine = StartCoroutine(Flash(secondsForOneFlash, maxAlpha));
+    }
+
+    IEnumerator Flash(float secondsForOneFlash, float maxAlpha)
+    {
+        float flashInDuration = secondsForOneFlash / 2;
+        for (float t = 0; t <= flashInDuration; t += Time.deltaTime)
+        {
+            Color colorThisFrame = image.color;
+            colorThisFrame.a = Mathf.Lerp(0, maxAlpha, t / flashInDuration);
+            image.color = colorThisFrame;
+            yield return null;
+        }
+
+        float flashOutDuration = secondsForOneFlash / 2;
+        for (float t = 0; t <= flashOutDuration; t += Time.deltaTime)
+        {
+            Color colorThisFrame = image.color;
+            colorThisFrame.a = Mathf.Lerp(maxAlpha, 0, t / flashOutDuration);
+            image.color = colorThisFrame;
+            yield return null;
+        }
+
+        image.color = new Color32(0, 0, 0, 0);
     }
 }
