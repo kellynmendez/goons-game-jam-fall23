@@ -10,7 +10,7 @@ public class MainMenuButtons : MonoBehaviour
     // Enable the play button
     public void PressPlayButton()
     {
-        SceneManager.LoadScene("MainLevel");
+        SceneManager.LoadScene("Controls");
         AudioManager.Instance.PlayGameScore(levelClip);
     }
     

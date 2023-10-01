@@ -94,7 +94,7 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         // Changing goon ability in  inventory
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             slotImages[_currAbilityIndex].texture = inventorySlotTx;
             _currAbilityIndex++;
@@ -172,6 +172,7 @@ public class UIManager : MonoBehaviour
     {
         _goonInventory[_currAbilityIndex] = new NoCombatAbility();
         abilityImages[_currAbilityIndex].texture = noAbilityTx;
+        abilityNumText[_currAbilityIndex].text = "0";
         PlayerController.Instance.SetCombatAbility(_goonInventory[_currAbilityIndex]);
     }
 
