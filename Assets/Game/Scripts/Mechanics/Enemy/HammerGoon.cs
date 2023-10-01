@@ -52,7 +52,7 @@ public class HammerGoon : GoonBase
                 {
                     // Using ability and invoking unity event
                     _animator.Play(ATTACK_ANIM);
-                    yield return new WaitForSeconds(0.1f);
+                    yield return new WaitForSeconds(0.4f);
                     _hitAbility.UseAbility();
                     OnCombatAbility?.Invoke();
                     yield return new WaitForSeconds(_attackInterval);
