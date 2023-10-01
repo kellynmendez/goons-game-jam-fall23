@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
@@ -9,12 +10,17 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
+
     public int Score { get; private set; } = 0;
 
     [Header("Health and Score")]
     [SerializeField] Image[] playerLives;
     [SerializeField] int goonKillPoints = 1000;
     [SerializeField] Text scoreText;
+
+    [Header("Chomp Bar")]
+    [SerializeField] private Slider slider;
+    [SerializeField] private float chompCooldown;
 
     [Header("Inventory")]
     [SerializeField] Texture noAbilityTx;
@@ -80,7 +86,9 @@ public class UIManager : MonoBehaviour
         _numPuttsAllowed = PlayerController.Instance.numPuttsAllowed;
 
         // Audio source
-        _audioSource = GetComponent<AudioSource>(); 
+        _audioSource = GetComponent<AudioSource>();
+
+        slider.maxValue = chompCooldown;
     }
 
     private void Update()
@@ -99,6 +107,12 @@ public class UIManager : MonoBehaviour
             slotImages[_currAbilityIndex].texture = selectedInvSlotTx;
             PlayerController.Instance.SetCombatAbility(_goonInventory[_currAbilityIndex]);
             PlayFX(moveThruInventory);
+        }
+        // Slider update
+        //slider.value += speed * Time.deltaTime;
+        if (slider.value >= slider.maxValue)
+        {
+            
         }
     }
 

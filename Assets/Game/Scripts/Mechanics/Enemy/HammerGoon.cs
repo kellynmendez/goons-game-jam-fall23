@@ -1,14 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class HammerGoon : GoonBase
 {
     [SerializeField] float _attackInterval = 2.5f;
     [SerializeField] float _pauseBeforeAttack = 0.5f;
     [SerializeField] Collider _hitCollider;
+    [SerializeField] ParticleSystem _shieldVFX;
 
     private HitCombatAbility _hitAbility;
+
+    public override void Hurt()
+    {
+        base.Hurt();
+    }
 
     protected override void Awake()
     {

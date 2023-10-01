@@ -278,53 +278,7 @@ public class PlayerController : MonoBehaviour
     #region Chomp functions
     private void Chomp()
     {
-        IsChomping = true;
-
-        OnChomp.Invoke();
-        animator.Play(CHOMP_ANIM);
-        
-        if (_killableGoons.Count == 0)
-        {
-            Debug.Log("Nothing to chomp!");
-        }
-        else // Getting the goon to be chomped
-        {
-            GoonBase goonToChomp = null;
-            if (_killableGoons.Count == 1)
-            {
-                goonToChomp = _killableGoons[0];
-            }
-            else
-            {
-                // Checking goon list to find which one is closer
-                float smallestDistance = 0;
-                for (int i = 0; i < _killableGoons.Count; i++)
-                {
-                    float distance = Vector3.Distance(transform.position, _killableGoons[i].transform.position);
-
-                    if (goonToChomp == null)
-                    {
-                        smallestDistance = distance;
-                        goonToChomp = _killableGoons[i];
-                    }
-                    else
-                    {
-                        // If this goon is closer, then chomp this one
-                        if (distance < smallestDistance)
-                        {
-                            smallestDistance = distance;
-                            goonToChomp = _killableGoons[i];
-                        }
-                    }
-                }
-            }
-
-            // Chomp goon
-            UIManager.Instance.AddGoonAbilityToInventory(goonToChomp);
-            goonToChomp.Kill();
-        }
-        _chompIsCoolingDown = true;
-        StartCoroutine(ChompCoolDown());
+        StartCoroutine(ChompCoroutine());
     }
 
     public void AddToKillableGoonsList(GoonBase goon)
@@ -446,11 +400,68 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private IEnumerator ChompCoroutine()
+    {
+        IsChomping = true;
+        IsFrozen = true;
+        transform.forward = GetMouseDirection();
+
+        float animWait = 0.3f;
+        yield return new WaitForSeconds(animWait);
+
+        OnChomp.Invoke();
+        animator.Play(CHOMP_ANIM);
+
+        if (_killableGoons.Count == 0)
+        {
+            Debug.Log("Nothing to chomp!");
+        }
+        else // Getting the goon to be chomped
+        {
+            GoonBase goonToChomp = null;
+            if (_killableGoons.Count == 1)
+            {
+                goonToChomp = _killableGoons[0];
+            }
+            else
+            {
+                // Checking goon list to find which one is closer
+                float smallestDistance = 0;
+                for (int i = 0; i < _killableGoons.Count; i++)
+                {
+                    float distance = Vector3.Distance(transform.position, _killableGoons[i].transform.position);
+
+                    if (goonToChomp == null)
+                    {
+                        smallestDistance = distance;
+                        goonToChomp = _killableGoons[i];
+                    }
+                    else
+                    {
+                        // If this goon is closer, then chomp this one
+                        if (distance < smallestDistance)
+                        {
+                            smallestDistance = distance;
+                            goonToChomp = _killableGoons[i];
+                        }
+                    }
+                }
+            }
+
+            // Chomp goon
+            UIManager.Instance.AddGoonAbilityToInventory(goonToChomp);
+            goonToChomp.Kill();
+        }
+        _chompIsCoolingDown = true;
+        StartCoroutine(ChompCoolDown());
+    }
+    
     private IEnumerator ChompCoolDown()
     {
-        float animWait = 0.5f;
+        float animWait = 0.7f;
         yield return new WaitForSeconds(animWait);
         IsChomping = false;
+        IsFrozen = false;
         yield return new WaitForSeconds(chompCooldown - animWait);
         _chompIsCoolingDown = false;
     }
