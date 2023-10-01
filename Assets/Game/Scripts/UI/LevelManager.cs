@@ -19,5 +19,10 @@ public class LevelManager : MonoBehaviour
                 SceneManager.LoadScene("MainMenu");
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 }

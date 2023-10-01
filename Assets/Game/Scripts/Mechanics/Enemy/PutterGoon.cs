@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class PutterGoon : GoonBase
 {
-    [Header("Putt Putt Settings")]
     [SerializeField] float _attackInterval = 2.5f;
     [SerializeField] float _pauseBeforeAttack = 0.5f;
     [SerializeField] Collider _hitCollider;
+
+    private HitCombatAbility _hitAbility;
+
+    public override void Hurt()
+    {
+        base.Hurt();
+    }
 
     protected override void Awake()
     {
@@ -25,6 +31,9 @@ public class PutterGoon : GoonBase
 
     private void Start()
     {
+        // Establishing the enemy's ability
+        _hitAbility = new HitCombatAbility(this, _hitCollider);
+
         StartCoroutine(Hit());
     }
 
@@ -38,9 +47,11 @@ public class PutterGoon : GoonBase
                 yield return new WaitForSeconds(_pauseBeforeAttack);
                 if (!IsDead)
                 {
+                    Debug.Log("Puttting");
                     // Using ability and invoking unity event
                     _animator.Play(ATTACK_ANIM);
                     yield return new WaitForSeconds(0.1f);
+                    _hitAbility.UseAbility();
                     OnCombatAbility?.Invoke();
                     yield return new WaitForSeconds(_attackInterval);
                 }
