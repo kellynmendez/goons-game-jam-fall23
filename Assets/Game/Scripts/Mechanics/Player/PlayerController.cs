@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     public bool IsInvincible { get; set; } = false;
     public bool IsUsingGoonAbility { get; set; } = false;
     public bool IsChomping { get; set; } = false;
+    public bool ChompIsCoolingDown { get; set; } = false;
     public bool IsFrozen { get; set; } = false;
     public bool InKnockback { get; set; } = false;
     #endregion
@@ -83,7 +84,6 @@ public class PlayerController : MonoBehaviour
     private int _numDashes;
     private int _numHammers;
     private int _numPutts;
-    private bool _chompIsCoolingDown = false;
 
     // Animations
     protected const string IDLE_ANIM = "Idle";
@@ -159,7 +159,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         // If chomping
-        else if (!_chompIsCoolingDown && !IsFrozen && !InKnockback && Input.GetMouseButtonDown(1))
+        else if (!ChompIsCoolingDown && !IsFrozen && !InKnockback && Input.GetMouseButtonDown(1))
         {
             Chomp();
         }
@@ -457,7 +457,7 @@ public class PlayerController : MonoBehaviour
             UIManager.Instance.AddGoonAbilityToInventory(goonToChomp);
             goonToChomp.Kill();
         }
-        _chompIsCoolingDown = true;
+        ChompIsCoolingDown = true;
         StartCoroutine(ChompCoolDown());
     }
     
@@ -468,7 +468,7 @@ public class PlayerController : MonoBehaviour
         IsChomping = false;
         IsFrozen = false;
         yield return new WaitForSeconds(chompCooldown - animWait);
-        _chompIsCoolingDown = false;
+        ChompIsCoolingDown = false;
     }
 
     private IEnumerator EndGame()

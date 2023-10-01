@@ -50,7 +50,6 @@ public class HammerGoon : GoonBase
                 yield return new WaitForSeconds(_pauseBeforeAttack);
                 if (!IsDead)
                 {
-                    Debug.Log("hitting");
                     // Using ability and invoking unity event
                     _animator.Play(ATTACK_ANIM);
                     yield return new WaitForSeconds(0.1f);
