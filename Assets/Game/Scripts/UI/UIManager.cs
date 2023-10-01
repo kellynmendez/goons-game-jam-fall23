@@ -46,6 +46,8 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
+        Cursor.lockState = CursorLockMode.Confined;
+
         // Singleton pattern
         if (Instance == null)
         {
@@ -102,6 +104,10 @@ public class UIManager : MonoBehaviour
             PlayFX(moveThruInventory);
         }
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     public void AddGoonAbilityToInventory(GoonBase goon)
