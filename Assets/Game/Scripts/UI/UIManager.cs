@@ -10,17 +10,12 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
-
     public int Score { get; private set; } = 0;
 
     [Header("Health and Score")]
     [SerializeField] Image[] playerLives;
     [SerializeField] int goonKillPoints = 1000;
     [SerializeField] Text scoreText;
-
-    [Header("Chomp Bar")]
-    [SerializeField] private Slider slider;
-    [SerializeField] private float chompCooldown;
 
     [Header("Inventory")]
     [SerializeField] Texture noAbilityTx;
@@ -51,6 +46,8 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
+        Cursor.lockState = CursorLockMode.Confined;
+
         // Singleton pattern
         if (Instance == null)
         {
@@ -87,14 +84,12 @@ public class UIManager : MonoBehaviour
 
         // Audio source
         _audioSource = GetComponent<AudioSource>();
-
-        //slider.maxValue = chompCooldown;
     }
 
     private void Update()
     {
         // Changing goon ability in  inventory
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             slotImages[_currAbilityIndex].texture = inventorySlotTx;
             _currAbilityIndex++;
@@ -108,12 +103,11 @@ public class UIManager : MonoBehaviour
             PlayerController.Instance.SetCombatAbility(_goonInventory[_currAbilityIndex]);
             PlayFX(moveThruInventory);
         }
-        // Slider update
-        //slider.value += speed * Time.deltaTime;
-        //if (slider.value >= slider.maxValue)
-        //{
-            
-        //}
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     public void AddGoonAbilityToInventory(GoonBase goon)
@@ -172,6 +166,7 @@ public class UIManager : MonoBehaviour
     {
         _goonInventory[_currAbilityIndex] = new NoCombatAbility();
         abilityImages[_currAbilityIndex].texture = noAbilityTx;
+        abilityNumText[_currAbilityIndex].text = "0";
         PlayerController.Instance.SetCombatAbility(_goonInventory[_currAbilityIndex]);
     }
 

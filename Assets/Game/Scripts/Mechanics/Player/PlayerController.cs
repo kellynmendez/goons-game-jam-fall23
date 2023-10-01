@@ -15,7 +15,9 @@ public class PlayerController : MonoBehaviour
     public bool IsInvincible { get; set; } = false;
     public bool IsUsingGoonAbility { get; set; } = false;
     public bool IsChomping { get; set; } = false;
+    public bool ChompIsCoolingDown { get; set; } = false;
     public bool IsFrozen { get; set; } = false;
+    public bool InKnockback { get; set; } = false;
     #endregion
 
     #region serialized variables
@@ -82,7 +84,6 @@ public class PlayerController : MonoBehaviour
     private int _numDashes;
     private int _numHammers;
     private int _numPutts;
-    private bool _chompIsCoolingDown = false;
 
     // Animations
     protected const string IDLE_ANIM = "Idle";
@@ -145,7 +146,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // If using goon-given ability
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !IsFrozen && !InKnockback)
         {
             if (_combatAbility is NoCombatAbility)
             {
@@ -158,7 +159,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         // If chomping
-        else if (!_chompIsCoolingDown && Input.GetMouseButtonDown(1))
+        else if (!ChompIsCoolingDown && !IsFrozen && !InKnockback && Input.GetMouseButtonDown(1))
         {
             Chomp();
         }
@@ -209,10 +210,10 @@ public class PlayerController : MonoBehaviour
         else if (_combatAbility is HammerCombatAbility)
         {
             _numHammers--;
-            UIManager.Instance.UpdateCurrentAbilityText(_numHammers);
-            PlayFX(hammerAbilityClip);
             animator.Play(HAMMER_ANIM);
-
+            PlayFX(hammerAbilityClip);
+            StartCoroutine(FreezePlayerTransform(0.5f));
+            
             if (_numHammers <= 0)
             {
                 UIManager.Instance.RemoveGoonAbilityFromInventory();
@@ -329,6 +330,7 @@ public class PlayerController : MonoBehaviour
         IsFrozen = true;
         transform.forward = GetMouseDirection();
         yield return new WaitForSeconds(duration);
+        UIManager.Instance.UpdateCurrentAbilityText(_numHammers);
         IsFrozen = false;
     }
 
@@ -383,6 +385,7 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator Knockback(Vector3 knockbackDir)
     {
+        InKnockback = true;
         float startTime = Time.time;
         Vector3 dashDirection = _controller.transform.forward;
         float tempTime = 0;
@@ -399,6 +402,7 @@ public class PlayerController : MonoBehaviour
             _controller.Move(knockbackDir * currKnockbackSpeed * Time.deltaTime);
             yield return null;
         }
+        InKnockback = false;
     }
 
     private IEnumerator ChompCoroutine()
@@ -453,7 +457,7 @@ public class PlayerController : MonoBehaviour
             UIManager.Instance.AddGoonAbilityToInventory(goonToChomp);
             goonToChomp.Kill();
         }
-        _chompIsCoolingDown = true;
+        ChompIsCoolingDown = true;
         StartCoroutine(ChompCoolDown());
     }
     
@@ -464,7 +468,7 @@ public class PlayerController : MonoBehaviour
         IsChomping = false;
         IsFrozen = false;
         yield return new WaitForSeconds(chompCooldown - animWait);
-        _chompIsCoolingDown = false;
+        ChompIsCoolingDown = false;
     }
 
     private IEnumerator EndGame()

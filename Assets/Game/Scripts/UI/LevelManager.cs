@@ -8,7 +8,7 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             if (SceneManager.GetActiveScene().name == "Controls")
             {
@@ -18,6 +18,11 @@ public class LevelManager : MonoBehaviour
             {
                 SceneManager.LoadScene("MainMenu");
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
         }
     }
 }
