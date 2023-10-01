@@ -10,6 +10,7 @@ public class BulletPool : MonoBehaviour
     private List<GameObject> _bullets;
     private bool _IsPlayersPool;
     private Collider _thisObjsCollider;
+    private Collider _playersKillableEnemies;
 
     private void Awake()
     {

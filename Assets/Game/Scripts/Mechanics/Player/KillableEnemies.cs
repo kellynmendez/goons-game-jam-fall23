@@ -7,6 +7,7 @@ public class KillableEnemies : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log($"entered by {other.name}");
         if (other.CompareTag("Goon"))
         {
             GoonBase goon = other.GetComponent<GoonBase>();

@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     //[SerializeField] float chompCooldown = 2f;
     [SerializeField] UnityEvent OnChomp = null;
     [SerializeField] float chompCooldown = 3f;
+    [SerializeField] Collider _killableGoonsCollider;
 
     [Header("Dash Settings")]
     [SerializeField] float dashSpeed = 20f;
@@ -300,7 +301,7 @@ public class PlayerController : MonoBehaviour
 
     public ShieldCombatAbility GetPlayerShieldCombatAbility()
     {
-        return new ShieldCombatAbility(this, this, null, invincibilityDuration, shieldInvincibilityVFX);
+        return new ShieldCombatAbility(this, this, invincibilityDuration, shieldInvincibilityVFX);
     }
 
     public DashCombatAbility GetPlayerSpeedCombatAbility()
@@ -474,5 +475,10 @@ public class PlayerController : MonoBehaviour
         Time.timeScale = 1;
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         SceneManager.LoadScene(nextSceneIndex);
+    }
+
+    public Collider GetKillableEnemiesCollider()
+    {
+        return _killableGoonsCollider;
     }
 }

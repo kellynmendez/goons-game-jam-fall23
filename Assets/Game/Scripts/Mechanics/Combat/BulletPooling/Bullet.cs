@@ -14,6 +14,12 @@ public class Bullet : MonoBehaviour
     private Vector3 _initialForward;
     private bool _isPlayersBullet;
     private Collider _thisObjsCollider;
+    private Collider _playersKillableEnemies;
+
+    private void Awake()
+    {
+        _playersKillableEnemies = PlayerController.Instance.GetKillableEnemiesCollider();
+    }
 
     public void SetIsPlayersBullet(bool isPlayersBullet)
     {
@@ -71,7 +77,7 @@ public class Bullet : MonoBehaviour
             player?.Hurt(this.transform.forward);
             Deactivate();
         }
-        else if (!_isPlayersBullet && !(_thisObjsCollider == other))
+        else if (other.gameObject.layer == 9)
         {
             Deactivate();
         }

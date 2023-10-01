@@ -6,16 +6,14 @@ public class ShieldCombatAbility : ICombatAbility
 {
     private MonoBehaviour _mono;
     private PlayerController _player;
-    private GoonBase _goon;
     private float _inviDuration;
     ParticleSystem _invincibilityVFX;
 
-    public ShieldCombatAbility(MonoBehaviour mono, PlayerController player, GoonBase goon, 
+    public ShieldCombatAbility(MonoBehaviour mono, PlayerController player,
         float inviDuration, ParticleSystem invincibilityVFX)
     {
         _mono = mono;
         _player = player;
-        _goon = goon;
         _inviDuration = inviDuration;
         _invincibilityVFX = invincibilityVFX;
     }

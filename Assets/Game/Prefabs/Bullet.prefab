@@ -28,7 +28,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6588184674030203009}
+  - {fileID: 4413467913301030982}
   m_Father: {fileID: 4135031002176769183}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -130,7 +130,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!1001 &6694414424448653162
+--- !u!1001 &4230411478694961069
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -182,10 +182,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -7511558181221131132, guid: 47c9d7c6c9283b24e88b9f7559c8871e, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 579fe92065c65ec42ba22d7c13cc656f, type: 2}
     - target: {fileID: 919132149155446097, guid: 47c9d7c6c9283b24e88b9f7559c8871e, type: 3}
       propertyPath: m_Name
       value: Bulet_GEO
@@ -195,8 +191,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47c9d7c6c9283b24e88b9f7559c8871e, type: 3}
---- !u!4 &6588184674030203009 stripped
+--- !u!4 &4413467913301030982 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 47c9d7c6c9283b24e88b9f7559c8871e, type: 3}
-  m_PrefabInstance: {fileID: 6694414424448653162}
+  m_PrefabInstance: {fileID: 4230411478694961069}
   m_PrefabAsset: {fileID: 0}

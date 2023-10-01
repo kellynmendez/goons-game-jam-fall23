@@ -9972,6 +9972,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   chompCooldown: 3
+  _killableGoonsCollider: {fileID: 0}
   dashSpeed: 16
   dashDuration: 0.3
   dashCooldown: 0.1
@@ -14983,12 +14984,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 647311482244347256}
-  - component: {fileID: 3035229009100832132}
   - component: {fileID: 8544475650194477726}
   - component: {fileID: 225794806266070252}
-  m_Layer: 6
+  - component: {fileID: 4632593773896886619}
+  m_Layer: 0
   m_Name: KillableEnemies
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15002,33 +15003,12 @@ Transform:
   m_GameObject: {fileID: 6969350822720575272}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.86, z: 1.262}
-  m_LocalScale: {x: 3.6637838, y: 1.8417, z: 2.0547783}
+  m_LocalScale: {x: 1.1, y: 1.8417, z: 1.49}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1235821819836860548}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3035229009100832132
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6969350822720575272}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.52, y: 1.48, z: 0.85}
-  m_Center: {x: 0, y: -0.12, z: -0}
 --- !u!54 &8544475650194477726
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -15068,6 +15048,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 853d4112e2d119b4a89fd13f23a9fcc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &4632593773896886619
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6969350822720575272}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7653962569285738210
 GameObject:
   m_ObjectHideFlags: 0
