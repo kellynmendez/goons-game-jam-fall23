@@ -358,6 +358,7 @@ public class PlayerController : MonoBehaviour
 
     public void Kill()
     {
+        Debug.Log("PLAYER KILLED");
         OnDeath?.Invoke();
         IsDead = true;
         this.enabled = false;

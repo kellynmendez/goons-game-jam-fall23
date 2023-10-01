@@ -198,7 +198,7 @@ public class UIManager : MonoBehaviour
             }
         }
         
-        StartFlash(0.25f, 0.5f, flashColor);
+        //StartFlash(0.25f, 0.5f, flashColor);
     }
 
     public void PlayFX(AudioClip sfx)
