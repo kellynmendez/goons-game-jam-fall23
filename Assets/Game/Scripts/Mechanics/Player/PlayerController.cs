@@ -411,7 +411,7 @@ public class PlayerController : MonoBehaviour
         IsFrozen = true;
         transform.forward = GetMouseDirection();
 
-        float animWait = 0.3f;
+        float animWait = 0.1f;
         yield return new WaitForSeconds(animWait);
 
         OnChomp.Invoke();
