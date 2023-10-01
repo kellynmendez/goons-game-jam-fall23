@@ -32,6 +32,7 @@ public class ShieldCombatAbility : ICombatAbility
 
     private IEnumerator MakeInvincible()
     {
+        AbilityUsedUp();
         if (_player != null)
         {
             _player.IsInvincible = true;
@@ -43,6 +44,5 @@ public class ShieldCombatAbility : ICombatAbility
             _player.IsInvincible = false;
             _invincibilityVFX.Stop();
         }
-        AbilityUsedUp();
     }
 }

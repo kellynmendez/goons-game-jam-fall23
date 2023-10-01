@@ -969,7 +969,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &734612678
 Transform:
   m_ObjectHideFlags: 0
@@ -2022,7 +2022,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1423682648
 Transform:
   m_ObjectHideFlags: 0
@@ -2051,7 +2051,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goonObjectList:
-  - {fileID: 7055575647181373438, guid: 12e2dffd104de6d42928f7d60f064e7f, type: 3}
+  - {fileID: 4336282167769449114, guid: 4e5fff781f167884880ede933fa23f36, type: 3}
   _spawnTime: 2
   _spawnDelay: 8
 --- !u!1 &1424005170
@@ -3412,7 +3412,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &3116133480820785155
 GameObject:
   m_ObjectHideFlags: 0
@@ -3429,7 +3429,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &3116133481623003692
 GameObject:
   m_ObjectHideFlags: 0
@@ -3446,7 +3446,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &3116133482021546906
 GameObject:
   m_ObjectHideFlags: 0
@@ -3463,7 +3463,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &3147136097077806140
 MonoBehaviour:
   m_ObjectHideFlags: 0
