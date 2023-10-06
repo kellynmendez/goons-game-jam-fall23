@@ -2,32 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Player only uses this, not putt putt goon (putt putt's combat ability is different than
-/// the player's)
-/// </summary>
 public class PuttPuttCombatAbility : ICombatAbility
 {
     private PlayerController _player;
-    private ParticleSystem _puttPuttRing;
+    private List<GoonBase> _killableGoons;
+    private ParticleSystem _puttRing;
 
-    public PuttPuttCombatAbility(PlayerController player, ParticleSystem puttPuttRing)
+    public PuttPuttCombatAbility(PlayerController player, List<GoonBase> killableGoons, ParticleSystem puttRing)
     {
         _player = player;
-        _puttPuttRing = puttPuttRing;
+        _killableGoons = killableGoons;
+        _puttRing = puttRing;
     }
 
     public void UseAbility()
     {
         _player.IsUsingGoonAbility = true;
+        _puttRing.Play();
 
-        if (_puttPuttRing != null)
+        if (_killableGoons.Count == 0)
         {
-            _puttPuttRing.Play();
+            Debug.Log("Nothing to putt putt!");
         }
         else
         {
-            Debug.LogError("No particle was given to use putt putt ability.");
+            // Damage all goons in killable goons list
+            for (int i = 0; i < _killableGoons.Count; i++)
+            {
+                GoonBase goonToKill = _killableGoons[i].GetComponent<GoonBase>();
+                goonToKill.Hurt();
+            }
         }
 
         _player.IsUsingGoonAbility = false;

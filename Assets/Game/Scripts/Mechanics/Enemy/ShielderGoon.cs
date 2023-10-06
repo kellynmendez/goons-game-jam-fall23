@@ -15,7 +15,7 @@ public class ShielderGoon : GoonBase
 
     public override void Hurt()
     {
-        if (livesLeft > 1)
+        if (livesLeft > 1 && !IsDead)
         {
             StartCoroutine(PlayShieldVFX());
         }

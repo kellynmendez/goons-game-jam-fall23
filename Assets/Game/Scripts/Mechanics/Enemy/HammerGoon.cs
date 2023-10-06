@@ -9,7 +9,6 @@ public class HammerGoon : GoonBase
     [SerializeField] float _attackInterval = 2.5f;
     [SerializeField] float _pauseBeforeAttack = 0.5f;
     [SerializeField] Collider _hitCollider;
-    [SerializeField] ParticleSystem _shieldVFX;
 
     private HitCombatAbility _hitAbility;
 

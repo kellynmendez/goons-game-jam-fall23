@@ -37,7 +37,6 @@ public class PlayerController : MonoBehaviour
     //[SerializeField] float chompCooldown = 2f;
     [SerializeField] UnityEvent OnChomp = null;
     [SerializeField] float chompCooldown = 3f;
-    [SerializeField] Collider _killableGoonsCollider;
 
     [Header("Dash Settings")]
     [SerializeField] float dashSpeed = 20f;
@@ -78,6 +77,7 @@ public class PlayerController : MonoBehaviour
     private CharacterController _controller;
     private Camera _mainCamera;
     private List<GoonBase> _killableGoons;
+    private List<GoonBase> _killableGoonsRing;
 
     // Tracking goon ability uses
     private int _numShots;
@@ -116,6 +116,7 @@ public class PlayerController : MonoBehaviour
         // Filling in references
         _controller = GetComponent<CharacterController>();
         _killableGoons = new List<GoonBase>();
+        _killableGoonsRing = new List<GoonBase>();
         _audioSource = GetComponent<AudioSource>();
         _livesLeft = lives;
 
@@ -210,6 +211,7 @@ public class PlayerController : MonoBehaviour
         else if (_combatAbility is HammerCombatAbility)
         {
             _numHammers--;
+            UIManager.Instance.UpdateCurrentAbilityText(_numHammers);
             animator.Play(HAMMER_ANIM);
             PlayFX(hammerAbilityClip);
             StartCoroutine(FreezePlayerTransform(0.5f));
@@ -292,6 +294,16 @@ public class PlayerController : MonoBehaviour
     {
         _killableGoons.Remove(goon);
     }
+
+    public void AddToKillableGoonsRingList(GoonBase goon)
+    {
+        _killableGoonsRing.Add(goon);
+    }
+
+    public void RemoveFromKillableGoonsRingList(GoonBase goon)
+    {
+        _killableGoonsRing.Remove(goon);
+    }
     #endregion
 
     #region Get Combat Abilities
@@ -317,7 +329,7 @@ public class PlayerController : MonoBehaviour
 
     public PuttPuttCombatAbility GetPlayerPuttPuttCombatAbility()
     {
-        return new PuttPuttCombatAbility(this, puttPuttRingVFX);
+        return new PuttPuttCombatAbility(this, _killableGoonsRing, puttPuttRingVFX);
     }
     #endregion
 
@@ -330,7 +342,6 @@ public class PlayerController : MonoBehaviour
         IsFrozen = true;
         transform.forward = GetMouseDirection();
         yield return new WaitForSeconds(duration);
-        UIManager.Instance.UpdateCurrentAbilityText(_numHammers);
         IsFrozen = false;
     }
 
@@ -479,10 +490,5 @@ public class PlayerController : MonoBehaviour
         Time.timeScale = 1;
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         SceneManager.LoadScene(nextSceneIndex);
-    }
-
-    public Collider GetKillableEnemiesCollider()
-    {
-        return _killableGoonsCollider;
     }
 }

@@ -14,12 +14,6 @@ public class Bullet : MonoBehaviour
     private Vector3 _initialForward;
     private bool _isPlayersBullet;
     private Collider _thisObjsCollider;
-    private Collider _playersKillableEnemies;
-
-    private void Awake()
-    {
-        _playersKillableEnemies = PlayerController.Instance.GetKillableEnemiesCollider();
-    }
 
     public void SetIsPlayersBullet(bool isPlayersBullet)
     {
