@@ -119,16 +119,17 @@ public class GoonBase : MonoBehaviour
 
     public void Kill()
     {
-        if (IsDead) return;
-        
         // Add goon to inactive goon spawn list and remove from active list
         spawner.RemoveFromActiveGoonsList(this.gameObject);
         spawner.AddToInactiveGoonsList(this.gameObject);
+        
+        if (IsDead) return;
 
         OnDeath?.Invoke();
 
         // Remove goon from killable goons lists (if in it)
         PlayerController.Instance.RemoveFromKillableGoonsList(this);
+        PlayerController.Instance.AddToKillableGoonsRingList(this);
 
         // Update score
         UIManager.Instance.IncrementScore();

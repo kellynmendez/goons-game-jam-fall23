@@ -25,6 +25,7 @@ public class KillableEnemiesRing : MonoBehaviour
             if (goon != null && goon.gameObject.activeSelf)
             {
                 PlayerController.Instance.RemoveFromKillableGoonsRingList(goon);
+                Debug.Log($"Removed {goon.name}");
             }
         }
     }

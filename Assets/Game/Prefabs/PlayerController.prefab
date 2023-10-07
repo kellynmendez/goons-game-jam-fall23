@@ -5097,7 +5097,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.13836467, g: 0.32630855, b: 1, a: 1}
+      maxColor: {r: 1, g: 0.6109485, b: 0.1372549, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -9992,7 +9992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcda56316b643be42941a672476cb694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lives: 3
+  lives: 100
   visualsToDeactivate: {fileID: 4897008808647662104}
   OnHurt:
     m_PersistentCalls:
@@ -10088,7 +10088,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0
