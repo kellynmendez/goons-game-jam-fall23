@@ -4885,7 +4885,6 @@ GameObject:
   - component: {fileID: 1505056514613995558}
   - component: {fileID: 1728024789272228486}
   - component: {fileID: 4852570530899516726}
-  - component: {fileID: 3753138072301652770}
   m_Layer: 0
   m_Name: PuttPuttRing_PS
   m_TagString: Player
@@ -8552,7 +8551,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 1
+    enabled: 0
     serializedVersion: 4
     type: 1
     collisionMode: 0
@@ -9761,18 +9760,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &3753138072301652770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4150211900860794618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f385e7d53e5de6f4caf1e2d62eefde5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4897008808647662104
 GameObject:
   m_ObjectHideFlags: 0
