@@ -9992,7 +9992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcda56316b643be42941a672476cb694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lives: 100
+  lives: 3
   visualsToDeactivate: {fileID: 4897008808647662104}
   OnHurt:
     m_PersistentCalls:
